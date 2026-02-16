@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>価値観変遷年表 — 事業・R&D戦略マップ</title>
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0e1a;--surface:#111827;--surface2:#1e293b;--surface3:#283548;
+  --border:#334155;--border-light:#475569;
+  --text:#e2e8f0;--text-dim:#94a3b8;--text-muted:#64748b;
+  --accent:#3b82f6;--accent2:#8b5cf6;--accent3:#06b6d4;
+  --preindustrial:#e11d48;--preindustrial-bg:rgba(225,29,72,.08);--preindustrial-border:rgba(225,29,72,.25);
+  --past:#f59e0b;--past-bg:rgba(245,158,11,.08);--past-border:rgba(245,158,11,.25);
+  --present:#10b981;--present-bg:rgba(16,185,129,.08);--present-border:rgba(16,185,129,.25);
+  --future:#8b5cf6;--future-bg:rgba(139,92,246,.08);--future-border:rgba(139,92,246,.25);
+  --signal-strong:#22c55e;--signal-weak:#eab308;--signal-hypo:#ef4444;
+  --radius:12px;--radius-sm:8px;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+  --transition:all .3s cubic-bezier(.4,0,.2,1);
+}
+html{font-size:15px;scroll-behavior:smooth}
+body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;min-height:100vh}
+
+/* ========== HEADER ========== */
+.hero{position:relative;overflow:hidden;padding:3rem 2rem 2rem;
+  background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0c1631 100%)}
+.hero::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.12),transparent 60%),
+             radial-gradient(ellipse at 70% 80%,rgba(139,92,246,.1),transparent 50%)}
+.hero-inner{position:relative;max-width:1400px;margin:0 auto}
+.hero h1{font-size:2.2rem;font-weight:800;letter-spacing:-.02em;
+  background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem;max-width:700px}
+.hero-meta{display:flex;gap:1.5rem;margin-top:1.2rem;flex-wrap:wrap}
+.hero-meta span{font-size:.8rem;color:var(--text-muted);display:flex;align-items:center;gap:.35rem}
+.hero-meta span::before{content:'';width:6px;height:6px;border-radius:50%}
+.hero-meta .m-preindustrial::before{background:var(--preindustrial)}
+.hero-meta .m-past::before{background:var(--past)}
+.hero-meta .m-present::before{background:var(--present)}
+.hero-meta .m-future::before{background:var(--future)}
+
+/* ========== CONTROLS ========== */
+.controls{position:sticky;top:0;z-index:100;
+  background:rgba(10,14,26,.92);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);padding:.8rem 2rem}
+.controls-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.filter-group{display:flex;gap:.4rem;flex-wrap:wrap}
+.filter-btn{padding:.35rem .85rem;border-radius:20px;border:1px solid var(--border);
+  background:transparent;color:var(--text-dim);font-size:.78rem;cursor:pointer;
+  transition:var(--transition);font-family:inherit;white-space:nowrap}
+.filter-btn:hover{border-color:var(--accent);color:var(--accent)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.search-box{margin-left:auto;position:relative}
+.search-box input{width:240px;padding:.45rem 1rem .45rem 2.2rem;border-radius:20px;
+  border:1px solid var(--border);background:var(--surface);color:var(--text);
+  font-size:.82rem;font-family:inherit;outline:none;transition:var(--transition)}
+.search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+.search-box svg{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);
+  width:14px;height:14px;color:var(--text-muted)}
+.view-toggle{display:flex;gap:.3rem;margin-left:.5rem}
+.view-btn{width:34px;height:34px;border-radius:var(--radius-sm);border:1px solid var(--border);
+  background:transparent;color:var(--text-dim);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:var(--transition)}
+.view-btn:hover{border-color:var(--accent);color:var(--accent)}
+.view-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ========== MAIN ========== */
+.main{max-width:1400px;margin:0 auto;padding:1.5rem 2rem 4rem}
+
+/* ========== TIMELINE VIEW ========== */
+.timeline-grid{display:none;gap:1.2rem}
+.timeline-grid.active{display:grid}
+.category-row{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;transition:var(--transition)}
+.category-row:hover{border-color:var(--border-light)}
+.category-row.hidden{display:none}
+.category-header{display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.2rem;cursor:pointer;user-select:none;transition:var(--transition)}
+.category-header:hover{background:rgba(255,255,255,.02)}
+.cat-left{display:flex;align-items:center;gap:.8rem}
+.cat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:1.3rem;flex-shrink:0}
+.cat-title{font-size:1.05rem;font-weight:700}
+.cat-subtitle{font-size:.75rem;color:var(--text-muted);margin-top:.1rem}
+.cat-chevron{width:20px;height:20px;color:var(--text-muted);transition:transform .3s ease;flex-shrink:0}
+.category-row.open .cat-chevron{transform:rotate(180deg)}
+
+.era-cards{display:none;padding:0 1.2rem 1.2rem;gap:1rem}
+.category-row.open .era-cards{display:grid;grid-template-columns:repeat(4,1fr)}
+@media(max-width:1200px){.category-row.open .era-cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.category-row.open .era-cards{grid-template-columns:1fr}}
+
+.era-card{border-radius:var(--radius-sm);padding:1.1rem;position:relative;overflow:hidden;
+  transition:var(--transition)}
+.era-card:hover{transform:translateY(-1px)}
+.era-card.preindustrial{background:var(--preindustrial-bg);border:1px solid var(--preindustrial-border)}
+.era-card.past{background:var(--past-bg);border:1px solid var(--past-border)}
+.era-card.present{background:var(--present-bg);border:1px solid var(--present-border)}
+.era-card.future{background:var(--future-bg);border:1px solid var(--future-border)}
+
+.era-label{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;padding:.2rem .6rem;
+  border-radius:4px}
+.preindustrial .era-label{color:var(--preindustrial);background:rgba(225,29,72,.12)}
+.past .era-label{color:var(--past);background:rgba(245,158,11,.12)}
+.present .era-label{color:var(--present);background:rgba(16,185,129,.12)}
+.future .era-label{color:var(--future);background:rgba(139,92,246,.12)}
+
+.field{margin-bottom:.75rem}
+.field:last-child{margin-bottom:0}
+.field-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--text-muted);margin-bottom:.25rem;display:flex;align-items:center;gap:.3rem}
+.field-label .dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.field-content{font-size:.82rem;color:var(--text-dim);line-height:1.65}
+
+.signal-tag{display:inline-block;font-size:.68rem;font-weight:700;padding:.15rem .5rem;
+  border-radius:3px;margin-right:.3rem;margin-bottom:.2rem}
+.signal-tag.strong{color:var(--signal-strong);background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.25)}
+.signal-tag.weak{color:var(--signal-weak);background:rgba(234,179,8,.12);border:1px solid rgba(234,179,8,.25)}
+.signal-tag.hypo{color:var(--signal-hypo);background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25)}
+
+.scenario-box{margin-top:.3rem;padding:.5rem .7rem;border-radius:6px;font-size:.78rem;line-height:1.6}
+.scenario-box.optimistic{background:rgba(34,197,94,.06);border-left:3px solid var(--signal-strong);color:var(--text-dim)}
+.scenario-box.pessimistic{background:rgba(239,68,68,.06);border-left:3px solid var(--signal-hypo);color:var(--text-dim)}
+
+.needs-tag,.strategy-keyword{display:inline-block;font-size:.7rem;padding:.2rem .5rem;border-radius:4px;
+  margin:.15rem .2rem .15rem 0;cursor:pointer;transition:var(--transition);position:relative}
+.needs-tag{background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);color:var(--accent2)}
+.needs-tag:hover{background:rgba(139,92,246,.2);border-color:rgba(139,92,246,.4)}
+.needs-tag.active{background:rgba(139,92,246,.25);border-color:rgba(139,92,246,.5)}
+.strategy-keyword{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);color:var(--accent)}
+.strategy-keyword:hover{background:rgba(59,130,246,.2);border-color:rgba(59,130,246,.4)}
+.strategy-keyword.active{background:rgba(59,130,246,.25);border-color:rgba(59,130,246,.5)}
+.accordion-story{display:none;margin-top:.4rem;margin-bottom:.3rem;padding:.6rem .8rem;border-radius:6px;
+  font-size:.76rem;color:var(--text-dim);line-height:1.7;animation:fadeIn .3s ease}
+.accordion-story.visible{display:block}
+.accordion-story.strategy-type{background:rgba(59,130,246,.06);border-left:3px solid var(--accent)}
+.accordion-story.needs-type{background:rgba(139,92,246,.06);border-left:3px solid var(--accent2)}
+.accordion-story-title{font-weight:700;margin-bottom:.2rem;font-size:.72rem}
+.accordion-story.strategy-type .accordion-story-title{color:var(--accent)}
+.accordion-story.needs-type .accordion-story-title{color:var(--accent2)}
+
+/* ========== TABLE VIEW ========== */
+.table-view{display:none}
+.table-view.active{display:block}
+.table-wrap{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:.8rem}
+.data-table thead th{background:var(--surface);
+  padding:.8rem;text-align:left;font-weight:700;border-bottom:2px solid var(--border);
+  white-space:nowrap}
+.data-table thead th:first-child{min-width:120px}
+.data-table tbody td{padding:.7rem .8rem;border-bottom:1px solid var(--border);
+  vertical-align:top;color:var(--text-dim);line-height:1.6;min-width:220px}
+.data-table tbody td:first-child{position:sticky;left:0;background:var(--surface);
+  font-weight:700;color:var(--text);z-index:5;white-space:nowrap}
+.data-table tbody tr:hover td{background:rgba(255,255,255,.02)}
+.data-table .col-preindustrial{border-left:2px solid var(--preindustrial-border)}
+.data-table .col-past{border-left:2px solid var(--past-border)}
+.data-table .col-present{border-left:2px solid var(--present-border)}
+.data-table .col-future{border-left:2px solid var(--future-border)}
+
+/* ========== SIDEBAR DETAIL ========== */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+  backdrop-filter:blur(4px)}
+.overlay.active{display:block}
+.detail-panel{position:fixed;top:0;right:-520px;width:500px;max-width:90vw;height:100vh;
+  background:var(--surface);z-index:210;transition:right .4s cubic-bezier(.4,0,.2,1);
+  overflow-y:auto;box-shadow:-8px 0 40px rgba(0,0,0,.5);border-left:1px solid var(--border)}
+.detail-panel.active{right:0}
+.detail-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface2);color:var(--text);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+  transition:var(--transition);z-index:5}
+.detail-close:hover{background:var(--accent);border-color:var(--accent)}
+.detail-content{padding:2rem 1.5rem}
+.detail-content h2{font-size:1.3rem;font-weight:800;margin-bottom:.3rem}
+.detail-content .detail-era{font-size:.8rem;font-weight:600;padding:.2rem .6rem;
+  border-radius:4px;display:inline-block;margin-bottom:1.2rem}
+.detail-section{margin-bottom:1.5rem}
+.detail-section h3{font-size:.85rem;font-weight:700;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem;
+  padding-bottom:.4rem;border-bottom:1px solid var(--border)}
+.detail-section p,.detail-section ul{font-size:.85rem;color:var(--text-dim);line-height:1.7}
+.detail-section ul{padding-left:1.2rem}
+.detail-section li{margin-bottom:.3rem}
+
+/* ========== TABLE COLUMN TOGGLES ========== */
+.table-col-toggles{display:none;gap:.4rem;flex-wrap:wrap;align-items:center}
+.table-col-toggles.active{display:flex}
+.table-col-toggles .toggle-label{font-size:.72rem;color:var(--text-muted);margin-right:.2rem;white-space:nowrap}
+.col-toggle{padding:.25rem .65rem;border-radius:14px;border:1px solid var(--border);
+  background:transparent;color:var(--text-dim);font-size:.72rem;cursor:pointer;
+  transition:var(--transition);font-family:inherit;white-space:nowrap}
+.col-toggle:hover{border-color:var(--accent);color:var(--accent)}
+.col-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* ========== FOOTER ========== */
+.page-footer{max-width:1400px;margin:0 auto;padding:2rem;
+  border-top:1px solid var(--border);text-align:center}
+.page-footer p{font-size:.75rem;color:var(--text-muted)}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.category-row{animation:fadeIn .4s ease both}
+.category-row:nth-child(2){animation-delay:.05s}
+.category-row:nth-child(3){animation-delay:.1s}
+.category-row:nth-child(4){animation-delay:.15s}
+.category-row:nth-child(5){animation-delay:.2s}
+.category-row:nth-child(6){animation-delay:.25s}
+.category-row:nth-child(7){animation-delay:.3s}
+.category-row:nth-child(8){animation-delay:.35s}
+.category-row:nth-child(9){animation-delay:.4s}
+.category-row:nth-child(10){animation-delay:.45s}
+.category-row:nth-child(11){animation-delay:.5s}
+
+/* highlight */
+.highlight{background:rgba(59,130,246,.25);border-radius:2px;padding:0 2px}
+
+@media(max-width:768px){
+  html{font-size:14px}
+  .hero{padding:2rem 1rem 1.5rem}
+  .hero h1{font-size:1.6rem}
+  .controls{padding:.6rem 1rem}
+  .main{padding:1rem}
+  .search-box input{width:160px}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HERO ===== -->
+<header class="hero">
+  <div class="hero-inner">
+    <h1>価値観変遷年表</h1>
+    <p>事業・R&D戦略マップ — 構造変化の前提条件と未来シナリオを統合した戦略検討フレーム</p>
+    <div class="hero-meta">
+      <span class="m-preindustrial">古代〜前近代：産業革命以前</span>
+      <span class="m-past">過去：産業革命〜20世紀後半</span>
+      <span class="m-present">現在：2000年代〜現在</span>
+      <span class="m-future">未来：2030〜2050年代</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===== CONTROLS ===== -->
+<nav class="controls">
+  <div class="controls-inner">
+    <div class="filter-group" id="eraFilter">
+      <button class="filter-btn active" data-era="all">すべて</button>
+      <button class="filter-btn" data-era="preindustrial">前近代</button>
+      <button class="filter-btn" data-era="past">過去</button>
+      <button class="filter-btn" data-era="present">現在</button>
+      <button class="filter-btn" data-era="future">未来</button>
+    </div>
+    <div class="filter-group" id="fieldFilter">
+      <button class="filter-btn active" data-field="all">全項目</button>
+      <button class="filter-btn" data-field="value">価値観</button>
+      <button class="filter-btn" data-field="premise">成立前提</button>
+      <button class="filter-btn" data-field="driver">転換要因</button>
+      <button class="filter-btn" data-field="signal">兆候</button>
+      <button class="filter-btn" data-field="strategy">事業・R&D</button>
+    </div>
+    <div class="table-col-toggles" id="tableColToggles">
+      <span class="toggle-label">表示列:</span>
+      <button class="col-toggle active" data-col="value">概要</button>
+      <button class="col-toggle" data-col="premise">成立前提</button>
+      <button class="col-toggle" data-col="driver">転換要因</button>
+      <button class="col-toggle" data-col="signal">兆候</button>
+      <button class="col-toggle active" data-col="strategy">事業・R&D</button>
+      <button class="col-toggle" data-col="needs">未充足ニーズ</button>
+    </div>
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="searchInput" placeholder="キーワード検索…">
+    </div>
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="card" title="カード表示">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </button>
+      <button class="view-btn" data-view="table" title="テーブル表示">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M9 3v18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== MAIN ===== -->
+<main class="main">
+  <div class="timeline-grid active" id="cardView"></div>
+  <div class="table-view" id="tableView"></div>
+</main>
+
+<!-- ===== DETAIL PANEL ===== -->
+<div class="overlay" id="overlay"></div>
+<aside class="detail-panel" id="detailPanel">
+  <button class="detail-close" id="detailClose">&times;</button>
+  <div class="detail-content" id="detailContent"></div>
+</aside>
+
+<!-- ===== FOOTER ===== -->
+<footer class="page-footer">
+  <p>Generated by Claude Agent Team — 5-agent collaborative analysis pipeline</p>
+</footer>
+
+<script>
+// ========== DATA ==========
+const DATA = [
+  {
+    id:"human", title:"人間観", subtitle:"個人・共同体・自己実現",
+    icon:"👤", color:"#3b82f6",
+    eras:{
+      preindustrial:{
+        value:"人間は宗教的・宇宙論的秩序の一部。共同体（村落・氏族・ギルド）への帰属が個人のアイデンティティを規定。身分・血縁による役割の固定化。",
+        premise:["自然環境：自然の脅威と恵み（季節循環への依存）","社会：身分制社会・共同体中心・口承文化","技術：手工業・農業技術・風水力","経済：自給自足・物々交換・領主制","制度：宗教的権威・慣習法・封建制度"],
+        driver:["宗教改革による個人の内面重視","啓蒙思想（理性・人権）の台頭","都市化と商人階級の成長"],
+        signal:["近代科学の誕生","市民革命の勃発","産業革命による労働形態の変化"],
+        strategy:["宗教機関・寺社運営","徒弟制度","農業技術改良"],
+        strategyDetail:{
+          "宗教機関・寺社運営":"中世において人間の精神的・社会的生活の中核。教育・医療・福祉を包括的に担い、共同体のアイデンティティ形成と社会秩序維持の基盤となった。",
+          "徒弟制度":"親方から弟子への技能伝承を通じた人材育成システム。単なる技術教育ではなく、職業倫理・社会規範・人間形成を一体化した全人教育モデル。",
+          "農業技術改良":"三圃制・輪作・灌漑技術など、自然の循環に合わせた生産性向上。人間が自然と協働する知恵の蓄積。"
+        },
+        needs:["精神的な拠り所","共同体への帰属感","身分を超えた自己表現"],
+        needsContext:{
+          "精神的な拠り所":"自然災害・疫病・飢饉が日常的脅威であった時代、宗教や信仰は不確実な世界に意味を与え、死と隣り合わせの生活に耐える精神的基盤を提供した。その欠如は社会不安や異端運動として顕在化。",
+          "共同体への帰属感":"農村共同体は生存のための相互扶助ネットワークであり、孤立は文字通り死を意味した。都市化・商業化が進む中で共同体が解体し始め、「根無し草」的存在への不安が新たな帰属先を求める動きに。",
+          "身分を超えた自己表現":"封建的身分制度により人生の可能性が生まれながらに決定される中、芸術・宗教・学問は数少ない身分超越の手段であった。ルネサンスや宗教改革は、この抑圧されたニーズの爆発的顕在化。"
+        }
+      },
+      past:{
+        value:"人間は合理的経済主体（ホモ・エコノミクス）として捉えられ、標準化された労働力・消費者として個人が原子化された。自己実現は物質的成功と社会的地位で測定。",
+        premise:["自然環境：無限の資源・外部化可能な廃棄物","社会：核家族化・共同体解体・都市集中","技術：大量生産・標準化された消費財","経済：工業資本主義・賃労働の普遍化","制度：近代国民国家・私有財産制・能力主義"],
+        driver:["1970年代の福祉国家限界と新自由主義台頭","情報化による自己責任論加速","環境危機による無限成長モデルへの疑問"],
+        signal:["メンタルヘルス危機","孤立の流行病化","共同体重視サービスの成長"],
+        strategy:["標準化教育・職業訓練","労務管理システム","作業効率化","時間動作研究","産業心理学・人間工学"],
+        strategyDetail:{
+          "標準化教育・職業訓練":"産業革命後、工場労働に必要な読み書き・計算能力を標準化して提供。義務教育制度と職業学校が大量の産業労働力を生産するインフラとなった。",
+          "労務管理システム":"テイラーの科学的管理法に始まる労働者の効率的管理。労働を定量化・標準化し、組織の生産性を最大化するための体系的手法。",
+          "作業効率化":"動作研究・時間研究により無駄を排除し、最適な作業手順を設計。人間を機械の一部として最適化するアプローチ。",
+          "時間動作研究":"ギルブレスの動作研究に代表される、労働を最小単位に分解し最適化する手法。現代のUX設計やプロセスマイニングの原型。",
+          "産業心理学・人間工学":"ホーソン実験を契機に、労働者の心理・社会的要因が生産性に影響することを発見。人間を機械のように扱う限界の認識と、職場環境設計への科学的アプローチ。"
+        },
+        needs:["個人の創造性発揮","労働における自己実現","人間性尊重環境"],
+        needsContext:{
+          "個人の創造性発揮":"大量生産体制では労働者は規格化された歯車に過ぎず、個人の創意工夫は排除された。しかし芸術・文学・カウンターカルチャーの隆盛は、標準化への抵抗として個人の創造性への渇望を示していた。",
+          "労働における自己実現":"終身雇用・年功序列は安定を提供したが、仕事の意味や個人の成長を保証しなかった。マズローの欲求階層説の普及は、物質的充足の次に自己実現を求める社会的機運の表れ。",
+          "人間性尊重環境":"チャップリンの『モダン・タイムス』が象徴するように、工業化は人間を機械に従属させた。公害問題・過労死・労働疎外の顕在化が、人間性を取り戻す環境への要求を生んだ。"
+        }
+      },
+      present:{
+        value:"自己最適化する人間（自己啓発・ライフハック）として、流動的アイデンティティ（複数役割・キャリア）が標準化。共同体回帰欲求と個人主義が矛盾しながら並存。",
+        premise:["自然環境：気候危機の可視化・資源制約の顕在化","社会：少子高齢化・単身世帯増・都市と地方の分断","技術：SNS・スマートフォン・アルゴリズム管理","経済：プラットフォーム資本主義・ギグエコノミー・格差拡大","制度：新自由主義の文化浸透・多様性の承認圧力"],
+        driver:["パンデミックによる「つながり」再発見","メンタルヘルス危機（孤立・競争疲れ）","Z世代の意味・共同体志向"],
+        signal:["拡張技術への関心","孤独対策政策の世界的拡大","デジタル不死への議論"],
+        strategy:["パーソナライズドサービス","メンタルヘルステック","多様な働き方支援","感情コンピューティング","ニューロダイバーシティ研究"],
+        strategyDetail:{
+          "パーソナライズドサービス":"AI・データ分析により個人の嗜好・状態に合わせたサービスを提供。Netflix推薦アルゴリズムからヘルスケアの個別化医療まで。「一人ひとりに最適化された体験」が競争優位の源泉に。",
+          "メンタルヘルステック":"アプリ・ウェアラブル・AIチャットボットによるメンタルヘルスケアのデジタル化。従来の対面カウンセリングのアクセス障壁を下げ、予防的介入を可能にする急成長市場。",
+          "多様な働き方支援":"リモートワーク・フレックス・副業・フリーランスなど多様な労働形態を技術的・制度的に支援するサービス群。人材の流動化と個人の自律性向上を支える基盤。",
+          "感情コンピューティング":"表情・声・生体データからの感情認識AI。カスタマーサービス・教育・ヘルスケアでの活用が進むが、プライバシーと感情の商品化への懸念も。",
+          "ニューロダイバーシティ研究":"ADHD・ASD等の神経多様性を「障害」ではなく「多様性」として捉える研究。職場設計・教育制度への応用で、多様な認知スタイルを活かす社会設計を目指す。"
+        },
+        needs:["デジタル疲労からの解放","深い人間的つながり","実存的意味の探求","多様性と効率性の両立"],
+        needsContext:{
+          "デジタル疲労からの解放":"スマートフォン普及率が世界で70%を超え、平均スクリーンタイムが7時間/日に達する中、注意力散漫・不眠・不安の増加が社会問題化。「つながり疲れ」と「つながらない権利」の議論が活発化。",
+          "深い人間的つながり":"SNSでの「つながり」は広くても浅い。パンデミック後、孤独が公衆衛生上の脅威として認識され、真の親密さ・信頼関係への渇望が表面化。「ダンバー数（150人）」の限界が再注目される。",
+          "実存的意味の探求":"物質的豊かさを達成した社会で、「何のために生きるのか」という問いが切実に。特にZ世代で顕著な「意味危機」は、宗教や伝統的価値観の衰退と、代替する意味体系の不在から生じている。",
+          "多様性と効率性の両立":"DEI推進が企業の必須課題となる一方、多様なメンバーの統合・意思決定の複雑化というコストも顕在化。多様性を活かしつつ組織の一体性を保つマネジメント手法への需要が急増。"
+        }
+      },
+      future:{
+        value:"生物学的制約を超えた拡張可能な存在。AIとの協働・身体拡張・認知増強が自然な選択肢に。関係性の中の自己、多層的所属、貢献実感が自己実現の核。",
+        premise:["自然環境：AI/自動化による人間らしさ再定義圧力","社会：ベーシックインカム等生存保障、コモンズの再構築","技術：デジタル協働ツール、BCI民生化","経済：GDP→ウェルビーイング指標転換","制度：拡張技術倫理ガバナンス、評価指標転換"],
+        driver:["気候危機による共同対処の必然性","AI/自動化による人間性再定義圧力","ケア危機（高齢化）による相互依存の不可避化","AGI登場による人間定義の外部化"],
+        signals:{
+          strong:["ニューラリンク・BCIの臨床試験進行","遺伝子編集医療の拡大","能力拡張デバイスへの意識変化","メンタルヘルス危機の世界的拡大（WHO：うつ病25%増）"],
+          weak:["デジタル不死（AIによる故人再現）への関心","尊厳死合法化議論の拡大","AI権利運動の萌芽","動物の人格認定の法的拡大"],
+          hypothesis:{
+            optimistic:"拡張技術の民主的アクセスにより新たな人間尊厳概念が確立、多様な存在様式の選択可能化",
+            pessimistic:"拡張格差による人類の二層化（拡張人間 vs 自然人間）、人間性の定義崩壊とメンタルヘルス危機深刻化"
+          }
+        },
+        strategy:["認知拡張サービス（学習速度10倍化、記憶補助）","パーソナル能力拡張プラットフォーム（サブスク型能力レンタル）","倫理的拡張コンサルティング","可逆的認知拡張技術研究","拡張-非拡張間コミュニケーションプロトコル","ニューロプライバシー保護技術"],
+        strategyDetail:{
+          "認知拡張サービス（学習速度10倍化、記憶補助）":"BCI・ニューロフィードバック・薬理学的手法を組み合わせ、人間の認知能力を拡張するサービス。教育期間の短縮や高齢者の認知機能維持など応用範囲は広大。",
+          "パーソナル能力拡張プラットフォーム（サブスク型能力レンタル）":"必要なスキルや認知能力を一時的に「レンタル」できるプラットフォーム。外骨格や翻訳デバイスから認知拡張まで、能力のサービス化。",
+          "倫理的拡張コンサルティング":"拡張技術導入に伴う倫理的判断を支援。公平性・同意・アイデンティティ変容リスクの評価と対策立案。企業・政府向けの新興コンサルティング領域。",
+          "可逆的認知拡張技術研究":"「元に戻せる」拡張技術の研究開発。不可逆的な身体改変への社会的不安を解消し、拡張技術の普及障壁を下げる重要な研究方向。",
+          "拡張-非拡張間コミュニケーションプロトコル":"拡張された人間と非拡張の人間が円滑にコミュニケーションするための規格・プロトコル設計。認知速度差や情報処理量の非対称性を橋渡しする技術。",
+          "ニューロプライバシー保護技術":"脳データの不正読取・操作から個人を守る技術。BCI普及に伴い「思考のプライバシー」が新たな人権課題となる中、その技術的保証手段。"
+        },
+        needs:["拡張技術アクセスの格差解消","拡張と非拡張の選択自由の保障","拡張された自己のアイデンティティ統合支援","拡張ネイティブ世代との世代間格差対応"],
+        needsContext:{
+          "拡張技術アクセスの格差解消":"先端的拡張技術は高額であり、既存の社会経済格差を増幅するリスクがある。「拡張できる富裕層」と「自然のままの貧困層」という新たな階層分断が、社会的公正の最大の課題に。",
+          "拡張と非拡張の選択自由の保障":"拡張技術が社会的に標準化された場合、「拡張しない自由」が実質的に失われる懸念。競争圧力や社会的排除により「自然な状態」でいることが不利益になる構造的問題。",
+          "拡張された自己のアイデンティティ統合支援":"認知拡張や身体拡張により「自分とは何か」というアイデンティティの基盤が揺らぐ。拡張前後の自己の連続性をどう維持するか、心理的・哲学的支援が必要に。",
+          "拡張ネイティブ世代との世代間格差対応":"生まれながらに拡張技術に触れる世代と、後天的に適応する世代の間で認知・価値観・コミュニケーション様式に大きなギャップが生じ、世代間の相互理解が困難に。"
+        }
+      }
+    }
+  },
+  {
+    id:"labor", title:"労働・生産観", subtitle:"労働倫理・雇用・生産性",
+    icon:"⚙️", color:"#f59e0b",
+    eras:{
+      preindustrial:{
+        value:"労働は生存と共同体維持のための神聖な営み。農業・手工業が中心で、自然のリズムに従う。ギルド制による技能の継承と品質保証。",
+        premise:["自然環境：季節循環に依存する農業生産","社会：封建制・ギルド制・家内制手工業","技術：人力・畜力・水車・風車","経済：荘園経済・市場経済の萌芽","制度：身分制による職業の固定・慣習法"],
+        driver:["農業革命（囲い込み運動）","商業資本の台頭と市場経済の拡大","プロト工業化と問屋制家内工業"],
+        signal:["工場制手工業の出現","賃労働者階級の形成","時間規律の導入"],
+        strategy:["荘園経営","ギルド運営","農業改良","水車・風車技術"],
+        strategyDetail:{
+          "荘園経営":"封建領主による土地と労働力の統合的管理。三圃制農業・共有地管理など、自給自足的な経済単位としての運営。",
+          "ギルド運営":"職人の技能標準化・品質管理・価格統制を行う同業組合の運営。現代の業界団体・認証制度の原型。",
+          "農業改良":"輪作・品種改良・灌漑技術など、経験知に基づく農業生産性向上。食料増産が人口増加と都市化を支えた。",
+          "水車・風車技術":"自然エネルギーの機械的利用。穀物製粉・織物加工・鉱山排水など多目的に活用され、産業革命の原動力の一つに。"
+        },
+        needs:["過酷な肉体労働からの解放","飢饉・天候リスクからの安定","技能向上と社会的認知"],
+        needsContext:{
+          "過酷な肉体労働からの解放":"農作業は夜明けから日没まで続く重労働であり、平均寿命は40歳前後。機械化への渇望は単なる効率追求ではなく、文字通り身体を酷使する生活からの解放を意味していた。",
+          "飢饉・天候リスクからの安定":"農業生産は天候に完全に依存し、一度の不作が大量死をもたらした。この根源的な不安定性が、食料備蓄技術・灌漑・品種改良への持続的な動機を生んだ。",
+          "技能向上と社会的認知":"ギルド制度の下、熟練工は社会的尊敬を得られたが、その地位に至るまでの長い徒弟期間と厳格な規律が必要だった。技能の正当な評価と認定への欲求がギルド制度を発展させた。"
+        }
+      },
+      past:{
+        value:"労働は神聖な義務（プロテスタント的労働倫理）。生産性向上＝技術進歩＝社会的善。賃労働への全人生の捧げ（終身雇用・年功序列）が標準。",
+        premise:["自然環境：安価な化石燃料・自然の無償労働","社会：男性稼ぎ手モデル・性別役割分業","技術：フォーディズム（流れ作業・標準化）","経済：製造業中心・垂直統合型企業・国内市場","制度：労働組合・社会保障・「会社人間」規範"],
+        driver:["オイルショック・製造業海外移転","サービス経済化・非正規雇用拡大","IT革命による24時間労働常態化"],
+        signal:["週4日労働制実験の拡大","ベーシックインカム実験","「静かな退職」現象"],
+        strategy:["産業機械製造","工場自動化","生産工学","オペレーションズリサーチ","品質工学"],
+        strategyDetail:{
+          "産業機械製造":"蒸気機関・紡績機・旋盤など産業革命を支えた機械の製造。生産手段そのものを生産する「機械を作る機械」産業が経済発展の核に。",
+          "工場自動化":"フォードの流れ作業に始まる製造工程の自動化。人間の動作を機械で代替し、大量生産・低コスト化を実現する技術体系。",
+          "生産工学":"製造プロセス全体を科学的に最適化する工学分野。素材・工程・品質・コストを統合的に管理し、ものづくりの効率を極限まで追求。",
+          "オペレーションズリサーチ":"第二次世界大戦中の軍事作戦研究に起源を持つ数理最適化手法。サプライチェーン・在庫管理・スケジューリングなど経営問題への応用。",
+          "品質工学":"田口メソッドに代表される品質管理の体系的手法。製品・プロセスの品質を設計段階から作り込む考え方で、日本製造業の競争力の源泉に。"
+        },
+        needs:["労働時間と生活のバランス","単純反復作業からの解放","労働における意味・やりがい"],
+        needsContext:{
+          "労働時間と生活のバランス":"工場制度の導入により、労働時間は自然のリズムから切り離され、12-16時間労働が常態化。労働運動による「8時間労働・8時間休息・8時間自由」の要求は、人間らしい生活への切実な渇望。",
+          "単純反復作業からの解放":"テイラー主義の分業は効率を極大化したが、労働者を単純作業の繰り返しに閉じ込めた。チャップリンの『モダン・タイムス』が描いた疎外感は、自動化への期待と恐怖の両面を映し出す。",
+          "労働における意味・やりがい":"経済成長が鈍化し物質的豊かさが頭打ちになる中、「何のために働くのか」という問いが顕在化。マズローの自己実現欲求やフランクルの「意味への意志」が労働観に影響を与え始めた。"
+        }
+      },
+      present:{
+        value:"労働は自己実現の手段（やりがい搾取リスク含む）。生産性は個人の市場価値（人的資本への投資）。柔軟性の賛美と不安定性の常態化。",
+        premise:["自然環境：気候変動・サプライチェーンの脆弱性露呈","社会：共働き標準化・ケア労働の外部化/不可視化","技術：自動化・AI・リモートワーク・ギグプラットフォーム","経済：金融化・グローバル分業・勝者総取り市場","制度：労働組合弱体化・副業・学び直し規範"],
+        driver:["パンデミックによるリモートワーク大規模実験","若年層の「静かな退職」意識","ケア労働危機の顕在化"],
+        signal:["ケア労働の経済価値測定の試み","エッセンシャルワーカー概念の浸透","AI反対運動（人間労働の聖域化）"],
+        strategy:["SaaS型業務効率化","フリーランスマッチング","リスキリングサービス","非同期コラボレーション技術","AI-人間協働インターフェース"],
+        strategyDetail:{
+          "SaaS型業務効率化":"クラウドベースのソフトウェアで業務プロセスを自動化・効率化。Slack・Notion・Salesforce等、サブスクリプション型で提供される業務ツール群。",
+          "フリーランスマッチング":"企業とフリーランス人材をAIでマッチングするプラットフォーム。スキルの需給を可視化し、柔軟な労働力配分を実現。",
+          "リスキリングサービス":"技術変化に対応するための継続的学習支援。オンライン講座・マイクロクレデンシャル・企業内学習プラットフォームなど多様な形態。",
+          "非同期コラボレーション技術":"時差・場所を超えた協働を可能にする技術。ドキュメント共同編集・動画メッセージ・AIによる議事録要約など。",
+          "AI-人間協働インターフェース":"AIと人間が効果的に協働するためのUI/UX設計。AIの提案を人間が判断する「human-in-the-loop」モデルの最適化。"
+        },
+        needs:["ギグワーカーのセーフティネット","リモート環境での偶発的創造性","仕事の意味・社会的インパクト可視化"],
+        needsContext:{
+          "ギグワーカーのセーフティネット":"プラットフォーム経済の成長に伴い、社会保障・有給休暇・失業保険の適用外に置かれる労働者が急増。「柔軟性」の裏面にある不安定性が、新たな社会保障モデルを要求している。",
+          "リモート環境での偶発的創造性":"リモートワークは効率を上げたが、廊下での偶然の会話や雑談から生まれるイノベーションが失われた。「セレンディピティの設計」という矛盾した課題が浮上。",
+          "仕事の意味・社会的インパクト可視化":"「静かな退職」現象が示すように、報酬だけでは労働への動機を維持できない。自分の仕事が社会にどう貢献しているかを実感できる仕組みへの需要が高まっている。"
+        }
+      },
+      future:{
+        value:"AIと人間の役割分担再定義。「人間にしかできない創造的・感情的労働」が価値中心。労働は社会的ケアの循環（有償/無償境界曖昧化）へ。",
+        premise:["自然環境：気候対策（グリーンジョブ、化石燃料産業縮小）","社会：週休3-4日制、ケア労働再評価、協同組合拡大","技術：AI/ロボティクスによる定型業務自動化、生成AI×人間共創","経済：AI生産性の適切な分配、リジェネラティブ産業移行","制度：労働時間上限規制強化、社会保障の抜本的再設計"],
+        driver:["AI/ロボティクスによる定型業務自動化加速","気候対策による産業構造転換","人口減少による効率一辺倒の限界","AGI登場によるポスト労働社会の到来"],
+        signals:{
+          strong:["週4日労働制実験拡大（アイスランド・英国・日本で成功例）","ベーシックインカム実験の世界的展開","クリエイターエコノミーの成長（1兆ドル超市場）"],
+          weak:["ケア労働の経済価値測定（OECD・国連）","男性の育児参加促進","「人間が作った」価値訴求","AI生成物への規制議論"],
+          hypothesis:{
+            optimistic:"AIが定型業務を担い人間は創造・ケア・意味創出に専念、ケア労働の高評価",
+            pessimistic:"AI代替による大量失業、創造的労働はエリートのみ、労働による自己実現・社会参加の喪失"
+          }
+        },
+        strategy:["AI協働最適化コンサルティング","創造性インキュベーションサービス","継続的スキル変容プラットフォーム","人間的価値測定・認証サービス","ポストワーク・ライフデザインサービス"],
+        strategyDetail:{
+          "AI協働最適化コンサルティング":"人間とAIの最適な役割分担を設計するコンサルティング。業務プロセスのどこをAIに任せ、どこに人間の判断を残すかの戦略的意思決定を支援。",
+          "創造性インキュベーションサービス":"AIが定型業務を代替した後の人間の創造性を育成・発揮させるプログラム。アート思考・デザイン思考・即興演劇等を活用。",
+          "継続的スキル変容プラットフォーム":"技術変化の加速に対応し、生涯を通じてスキルを更新し続けるためのプラットフォーム。AI個別最適化カリキュラムとコミュニティ学習の融合。",
+          "人間的価値測定・認証サービス":"共感力・創造性・倫理的判断など、AIにはない人間固有の能力を測定・認証するサービス。「人間にしかできない仕事」の価値を可視化。",
+          "ポストワーク・ライフデザインサービス":"労働が生活の中心でなくなった社会での人生設計を支援。アイデンティティ・社会参加・時間の使い方の再構築を包括的にサポート。"
+        },
+        needs:["AI時代の「働きがい」再定義","単純労働からの転換支援","非労働者の社会的尊厳と居場所","世代間労働観ギャップ調整"],
+        needsContext:{
+          "AI時代の「働きがい」再定義":"AIが多くの業務を代替する中、「働きがい」の源泉が根本的に変わる。生産性や効率への貢献ではなく、ケア・創造・関係構築など、AIにはできない活動に意味を見出す必要性が顕在化。",
+          "単純労働からの転換支援":"AI自動化により数億人規模の労働者が職業転換を迫られる。新しいスキル習得だけでなく、アイデンティティの再構築を含む包括的な移行支援が社会的急務に。",
+          "非労働者の社会的尊厳と居場所":"「仕事＝社会的価値」という等式が崩れた時、働いていない人の居場所と尊厳をどう保障するか。ベーシックインカム議論の本質はこの価値観の転換にある。",
+          "世代間労働観ギャップ調整":"「勤勉＝美徳」世代と「ワークライフバランス」世代、さらに「ポストワーク」世代の間で労働に対する根本的な価値観が異なり、職場での軋轢や政策合意形成の障害に。"
+        }
+      }
+    }
+  },
+  {
+    id:"consumption", title:"消費観", subtitle:"所有・購買・循環",
+    icon:"🛒", color:"#ec4899",
+    eras:{
+      preindustrial:{
+        value:"消費は生存のための必要行為。自給自足が基本で、交易品は贅沢品。富の蓄積は宗教的・道徳的に制限（禁欲・奢侈禁止令）。",
+        premise:["自然環境：地域の生態系に依存した食料・資源","社会：身分による消費の制限（奢侈禁止令）","技術：手工業による少量生産","経済：物々交換・市場経済の萌芽","制度：ギルドによる価格統制・品質管理"],
+        driver:["大航海時代による異文化の物産流入","市場経済の発展と貨幣経済の浸透","活版印刷による情報流通と欲望の刺激"],
+        signal:["商業都市の発展","消費文化の萌芽（16-17世紀）","植民地物産の大衆化"],
+        strategy:["交易・商業","市場運営","手工芸品製造"],
+        strategyDetail:{
+          "交易・商業":"シルクロード・海上交易による遠距離貿易。香辛料・絹・金属など希少品の流通が莫大な富を生み、近代資本主義の原動力に。",
+          "市場運営":"定期市・常設市場の運営管理。価格形成・品質保証・取引紛争解決など、商取引のインフラを提供。",
+          "手工芸品製造":"職人による一品生産の高品質な製品。用途と美の統合、修理・再利用を前提とした持続可能なものづくり。"
+        },
+        needs:["基本的物資の安定供給","品質の保証と信頼","嗜好品・文化的消費へのアクセス"],
+        needsContext:{
+          "基本的物資の安定供給":"飢饉・戦乱・疫病により基本的な食料・衣料が断続的に不足した。このリスクが貯蔵技術・流通網の発達を促し、「安定供給」自体が最大の社会的ニーズであった。",
+          "品質の保証と信頼":"遠距離交易では商品の品質を直接確認できず、詐欺や粗悪品が横行。ギルドの品質管理マークや商人の信用制度は、このニーズへの制度的対応。",
+          "嗜好品・文化的消費へのアクセス":"身分制度により消費の種類・量が厳格に規制されていた。しかし都市の成長と中間層の台頭により、奢侈禁止令を超えた文化的消費への欲求が社会変革の一動力に。"
+        }
+      },
+      past:{
+        value:"消費は経済成長のエンジンであり美徳。新品・使い捨ては進歩・豊かさの象徴。所有による地位誇示（ヴェブレン効果）が社会的成功の指標。",
+        premise:["自然環境：一方通行の資源フロー（採掘→廃棄）","社会：大衆消費社会・郊外化・車社会","技術：大量生産・計画的陳腐化・広告産業","経済：ケインズ主義・内需拡大政策","制度：核家族・テレビ広告・「三種の神器」"],
+        driver:["『成長の限界』・オイルショック","環境ラベル・エコ消費萌芽","「モノより思い出」「ミニマリズム」登場"],
+        signal:["サブスクリプション経済の急成長","若年層の自動車・住宅所有率低下","シェアリングエコノミー多様化"],
+        strategy:["量販店チェーン","消費者金融","物流・倉庫業","マスマーケティング","消費者行動分析"],
+        strategyDetail:{
+          "量販店チェーン":"大量仕入れ・薄利多売モデルによる小売革命。スーパーマーケット・百貨店・量販店が消費の民主化と大衆消費社会を牽引。",
+          "消費者金融":"クレジットカード・ローンなど消費者向け信用供与。将来の所得を先取りして現在の消費を拡大する金融技術が大衆消費社会の基盤に。",
+          "物流・倉庫業":"大量生産された商品を効率的に消費者に届けるインフラ。コールドチェーン・コンテナ輸送・倉庫自動化が消費の地理的・時間的制約を解消。",
+          "マスマーケティング":"テレビ・新聞等マスメディアを活用した大規模広告。消費者の欲望を創出・刺激し、大量消費を促進する手法。",
+          "消費者行動分析":"購買行動の心理学的・統計学的分析。消費者の意思決定プロセスを解明し、マーケティング戦略の精度を高める学問分野。"
+        },
+        needs:["個人嗜好に合った製品","物質以外の充足感","環境負荷配慮"],
+        needsContext:{
+          "個人嗜好に合った製品":"大量生産は低コストを実現したが、画一的な製品は個人の多様な好みに応えられなかった。「三種の神器」的な標準消費の後、個性的な消費への欲求が市場の多様化を推進。",
+          "物質以外の充足感":"物質的豊かさが一定水準に達すると、それ以上のモノの蓄積では満足感が得られない「限界効用逓減」が社会規模で顕在化。体験・関係性・自己成長への消費シフトの原動力。",
+          "環境負荷配慮":"大量消費・大量廃棄の帰結としての公害・ゴミ問題が可視化。レイチェル・カーソンの『沈黙の春』以降、消費と環境の関係への意識が徐々に高まった。"
+        }
+      },
+      present:{
+        value:"消費は自己表現。「体験」消費の重視（インスタ映え、コト消費）とエシカル消費の規範化。サブスク・シェア経済により所有が相対化。",
+        premise:["自然環境：プラスチック海洋汚染・気候変動の可視化","社会：都市集中・単身世帯増・物理的空間制約","技術：EC・サブスクモデル・SNSマーケティング","経済：プラットフォーム経済・ファストファッション","制度：SDGs・Z世代価値観・ESG投資"],
+        driver:["気候運動（グレタ世代）の影響","パンデミックによる「本当に必要なもの」の再考","インフレ・生活費危機による節約志向"],
+        signal:["脱成長運動の拡大","「修理する権利」運動","AIによる個別最適化サービス高度化"],
+        strategy:["サブスクリプションサービス","シェアリングプラットフォーム","エシカルブランド","体験型消費","サーキュラーエコノミーBM研究"],
+        strategyDetail:{
+          "サブスクリプションサービス":"所有から利用へのシフトを象徴するビジネスモデル。音楽・映像から食品・衣料まで、月額定額で継続的な価値提供。",
+          "シェアリングプラットフォーム":"遊休資産の共有を仲介するプラットフォーム。Airbnb・カーシェア等、個人間取引を可能にし、所有の必要性を再定義。",
+          "エシカルブランド":"環境・社会的責任を製品価値の中核に据えるブランド戦略。サプライチェーン透明化・フェアトレード・動物福祉等を消費者に訴求。",
+          "体験型消費":"モノではなく体験・思い出に対価を払う消費形態。旅行・フェス・ワークショップ等、SNS映えと自己表現が消費動機に。",
+          "サーキュラーエコノミーBM研究":"資源の循環利用を前提としたビジネスモデルの研究。製品のサービス化・リマニュファクチャリング・生分解素材など。"
+        },
+        needs:["真に持続可能な消費","体験消費の質的評価","消費選択の倫理的ガイダンス"],
+        needsContext:{
+          "真に持続可能な消費":"エシカル消費への関心は高まるが、実際の行動変容は限定的（attitude-behavior gap）。グリーンウォッシングの横行がさらに消費者の信頼を損ない、本当に持続可能な選択を困難にしている。",
+          "体験消費の質的評価":"「インスタ映え」偏重の体験消費が、表層的な満足に留まるとの批判。深い学び・成長・人間関係の構築を伴う「質の高い体験」をどう設計・評価するかが課題に。",
+          "消費選択の倫理的ガイダンス":"環境・人権・動物福祉など多次元の倫理基準が消費に求められるようになり、消費者が圧倒される「倫理的疲労」が発生。信頼できるガイダンスへのニーズが顕在化。"
+        }
+      },
+      future:{
+        value:"消費は「生成」と「共創」に変容。AIによる完全パーソナライゼーション、オンデマンド製造、仮想財との融合。消費は生態系への参加（再生への投票）へ。",
+        premise:["自然環境：資源価格高騰、廃棄物処理の限界","社会：修理権の法制化、広告規制","技術：AI駆動完全パーソナライゼーション、オンデマンド製造、完全リサイクル素材","経済：サーキュラーエコノミーインフラ、「持たない価値観」主流化","制度：製品耐久性基準、誇大環境表示規制"],
+        driver:["資源価格高騰と廃棄物処理限界","若年層の「持たない価値観」主流化","VR/メタバース技術による仮想消費への移行"],
+        signals:{
+          strong:["サブスクリプション経済の急成長（7000億ドル市場）","Z世代の70%が持続可能性を購買基準に","ESG投資の急拡大（運用資産40%超）"],
+          weak:["脱成長（Degrowth）運動の拡大","若年層のブランド離れ","オンデマンド製造（3Dプリント）の進化"],
+          hypothesis:{
+            optimistic:"AIが真のニーズを理解し過剰消費抑制、循環経済確立、エシカル消費がデフォルト化",
+            pessimistic:"富裕層は持続可能消費を享受、大多数は環境負荷高い消費に依存"
+          }
+        },
+        strategy:["AI消費コンシェルジュ","生成型製品プラットフォーム","完全循環型製品サービス","体験合成サービス（VR/AR）","予測的消費の倫理と限界研究"],
+        strategyDetail:{
+          "AI消費コンシェルジュ":"個人の価値観・健康状態・環境影響を総合判断し、最適な消費を提案するAI。過剰消費の抑制と真のニーズの発見を両立。",
+          "生成型製品プラットフォーム":"3Dプリント・オンデマンド製造により、消費者が製品設計に参加するプラットフォーム。在庫ゼロ・廃棄ゼロの製造革命。",
+          "完全循環型製品サービス":"製品の設計段階から分解・リサイクルを前提とし、素材が永続的に循環するシステム。所有ではなく利用権の提供。",
+          "体験合成サービス（VR/AR）":"VR/AR技術により物理的制約のない体験を提供。物質消費なしで豊かな体験を実現する新たな消費カテゴリ。",
+          "予測的消費の倫理と限界研究":"AIが消費を予測・自動化する社会における倫理的問題の研究。選択の自由・偶発性の価値・消費の主体性の維持。"
+        },
+        needs:["AI推奨を超えた偶発的発見の喜び保存","デジタルと物理世代の消費体験ギャップ解消","環境負荷ゼロ消費の実現"],
+        needsContext:{
+          "AI推奨を超えた偶発的発見の喜び保存":"AIパーソナライゼーションが進むほど「フィルターバブル」に閉じ込められ、予期しない出会い（セレンディピティ）が失われる。消費の楽しさの本質は「意外な発見」にあるとの認識が広まる。",
+          "デジタルと物理世代の消費体験ギャップ解消":"VR/メタバース世代とリアル消費世代の間で「豊かさ」の定義が根本的に異なり、世代間の相互理解が困難に。バーチャルな所有物に価値を見出す世代と理解できない世代の溝。",
+          "環境負荷ゼロ消費の実現":"カーボンニュートラルを超え、消費行為そのものが環境にプラスとなる「リジェネラティブ消費」への究極的な要求。技術的には可能でも経済的インセンティブの設計が課題。"
+        }
+      }
+    }
+  },
+  {
+    id:"tech", title:"技術観", subtitle:"進歩・リスク・共進化",
+    icon:"🔬", color:"#06b6d4",
+    eras:{
+      preindustrial:{
+        value:"技術は神の恩恵または自然の模倣。経験と伝承に基づく技能（テクネー）。技術革新は極めて緩慢で、世代を超えて蓄積。",
+        premise:["自然環境：自然の力への畏怖と依存","社会：職人・錬金術師・僧侶による技術独占","技術：農具・建築・航海・製鉄","経済：技術革新の遅さ＝社会の安定","制度：ギルドによる技術秘匿・神学的技術観"],
+        driver:["活版印刷（知識の大量複製）","科学革命（実験・観察の方法論）","火薬・羅針盤・望遠鏡の発明"],
+        signal:["ガリレオの地動説論争","ニュートン力学の確立","啓蒙思想と「進歩」の概念"],
+        strategy:["建築・土木技術","冶金・鍛冶","航海術・造船","農業技術"],
+        strategyDetail:{
+          "建築・土木技術":"大聖堂・城塞・運河など大規模建造物の設計施工。経験則と幾何学の融合による構造力学の実践的蓄積。",
+          "冶金・鍛冶":"金属の採掘・精錬・加工技術。青銅器から鉄器への移行が農業・軍事・社会構造を根本的に変革した技術基盤。",
+          "航海術・造船":"天体観測・羅針盤・造船技術の統合。大航海時代を可能にし、世界の経済・文化・政治を不可逆的に変えた技術複合。",
+          "農業技術":"三圃制・重量犂・馬具改良など、中世農業革命を支えた技術群。食料生産性の向上が人口増加と都市化の基盤に。"
+        },
+        needs:["自然災害への対抗手段","生産効率の向上","遠距離通信・移動手段"],
+        needsContext:{
+          "自然災害への対抗手段":"地震・洪水・干ばつ・疫病に対して人間はほぼ無力であり、宗教的祈祷に頼るしかなかった。治水・建築・医療技術への渇望は、自然の脅威から命を守るための根源的なニーズ。",
+          "生産効率の向上":"人力と畜力に依存する生産は極めて限られ、人口の大部分が食料生産に従事。より少ない労力でより多くを生産する技術への渇望が、水車・風車・農具改良を持続的に推進。",
+          "遠距離通信・移動手段":"情報伝達は人の足に依存し、数日〜数ヶ月を要した。交易・統治・宗教布教において、距離の壁を超える技術への需要が航海術・道路建設・狼煙システムを発展させた。"
+        }
+      },
+      past:{
+        value:"技術は自然支配の道具（人間中心主義）。進歩は大型化・集中化・効率化と同義。専門家/技術者への無条件の信頼が支配的。",
+        premise:["自然環境：自然＝征服すべき対象","社会：科学技術エリート・軍産学複合体","技術：化石燃料・原子力・巨大機械","経済：規模の経済・技術革新＝競争優位","制度：国家主導の科学技術政策・万博的楽観主義"],
+        driver:["公害・原発事故","技術への反省（『沈黙の春』、適正技術運動）","IT革命による分散化可能性"],
+        signal:["テック企業への信頼低下","デジタルデトックスの普及","EU AI規制法等の技術規制拡大"],
+        strategy:["重工業・化学工業","電力・通信インフラ","基礎科学研究","応用工学","大規模システム工学"],
+        strategyDetail:{
+          "重工業・化学工業":"鉄鋼・造船・化学製品の大規模製造。国家の産業基盤を支え、軍事力・経済力の源泉となった基幹産業。",
+          "電力・通信インフラ":"発電・送電網・電話・放送の整備。エネルギーと情報のインフラが社会全体の近代化を加速させた。",
+          "基礎科学研究":"物理学・化学・生物学等の基礎的知見の探求。短期的な実用性よりも真理の探究を目的とし、長期的に技術革新の種を生む。",
+          "応用工学":"基礎科学の知見を実用技術に転換する工学分野。橋梁設計から半導体製造まで、科学と産業を橋渡しする実践的知識体系。",
+          "大規模システム工学":"ダム・高速道路・原子力発電所など巨大システムの設計・運用。複雑な要素を統合管理する方法論が宇宙開発やIT基盤にも応用。"
+        },
+        needs:["技術の社会的影響への配慮","環境調和型技術","技術の民主的コントロール"],
+        needsContext:{
+          "技術の社会的影響への配慮":"原爆投下・公害・原発事故が技術の「両刃の剣」性を痛烈に示した。科学技術の進歩が必ずしも人類の幸福に直結しないという認識が、技術評価（TA）の必要性を生んだ。",
+          "環境調和型技術":"化石燃料・化学物質に依存する技術体系が地球環境を破壊し続ける中、自然と共存できる技術への転換が不可避に。公害対策から再生可能エネルギーまで、技術パラダイムの転換が求められた。",
+          "技術の民主的コントロール":"巨大技術（原子力・遺伝子工学等）の決定が専門家と政治家に独占され、市民の声が反映されない構造。チェルノブイリ後の反原発運動は、技術ガバナンスの民主化要求の象徴。"
+        }
+      },
+      present:{
+        value:"技術は問題解決ツール（技術的楽観主義）だが、デジタル・AIへの期待と不安が並存。「破壊的イノベーション」賛美と倫理的配慮の認識。",
+        premise:["自然環境：気候変動→「技術で解決」言説","社会：テック企業の政治経済的支配力","技術：AI・ビッグデータ・バイオテック・再エネ","経済：プラットフォーム独占・ベンチャー資本","制度：シリコンバレー・イデオロギー・「ムーンショット」思考"],
+        driver:["AI倫理問題（バイアス、監視、雇用）","テックラッシュ（プライバシー、独占批判）","気候テック偏重への疑問（リバウンド効果）"],
+        signal:["バイオミミクリー技術への注目","「自然の権利」法制化拡大","AI倫理における「畏敬」「尊厳」概念の議論"],
+        strategy:["AI倫理コンサルティング","サステナブルテクノロジー","アクセシビリティ技術","説明可能AI（XAI）","インクルーシブデザイン"],
+        strategyDetail:{
+          "AI倫理コンサルティング":"AI導入に伴う倫理リスク（バイアス・プライバシー・雇用影響）を評価し対策を提案。規制強化を背景に急成長する専門コンサルティング領域。",
+          "サステナブルテクノロジー":"環境負荷低減を目的とする技術群。再エネ・省エネ・循環型素材・カーボンキャプチャー等、グリーントランジションの技術基盤。",
+          "アクセシビリティ技術":"障害の有無に関わらず技術の恩恵を受けられるようにする設計。スクリーンリーダー・音声UI・認知支援ツール等。",
+          "説明可能AI（XAI）":"AIの判断過程を人間が理解できるように可視化する技術。ブラックボックス問題を解消し、AI判断への信頼性と説明責任を確保。",
+          "インクルーシブデザイン":"多様なユーザー（高齢者・障害者・異文化）を最初から設計に含めるアプローチ。特定層への対応ではなく、全員にとって使いやすい設計哲学。"
+        },
+        needs:["AIの透明性と説明責任","技術開発への市民参加","グローバルな技術格差是正"],
+        needsContext:{
+          "AIの透明性と説明責任":"AIが採用・融資・司法判断に使われる中、「なぜその判断になったか」を説明できないブラックボックス性が社会的不信を招いている。EU AI規制法はこのニーズの制度的顕在化。",
+          "技術開発への市民参加":"NIMBY（自分の裏庭にはNO）から「技術の社会的選択」へ。原子力・遺伝子組換え・AI等、社会に大きな影響を与える技術の方向性を市民が決定プロセスに参加する仕組みへの需要。",
+          "グローバルな技術格差是正":"先進国と途上国の間のデジタル・ディバイドが拡大し続けている。AIやバイオテクノロジーの恩恵が一部の国に集中する「技術植民地主義」への批判と是正要求。"
+        }
+      },
+      future:{
+        value:"技術は人間・自然・AIが共進化する生態系。「技術主権」「技術的自己決定権」が基本的人権に。自然との協働インターフェースとしての技術。",
+        premise:["自然環境：エネルギー・資源制約、気候適応の必要性","社会：オープンソース化、市民参加型技術評価制度","技術：AGIと人間の共生インターフェース、量子コンピューティング実用化","経済：エネルギー民主化（分散型再エネ）","制度：参加型技術設計の制度化、グローバル技術倫理基準"],
+        driver:["エネルギー・資源制約（希土類・半導体）","AI/自動化による社会的混乱","AGI登場によるシンギュラリティ"],
+        signals:{
+          strong:["テック企業への信頼低下","デジタルデトックスの普及","EU AI規制法の国際的拡大","ノーコード/ローコードツールの爆発的普及"],
+          weak:["バイオミミクリー技術への注目","「自然の権利」法制化","リジェネラティブ・デザイン思想の浸透"],
+          hypothesis:{
+            optimistic:"技術は人間・社会・自然の調和を目指して設計、AIは人間のパートナー、技術アクセス民主化",
+            pessimistic:"技術格差が地政学対立を激化、規制失敗と過剰規制が同時発生、技術支配と反動の分断"
+          }
+        },
+        strategy:["技術民主化プラットフォーム","AI-人間共進化サービス","技術倫理保証サービス（第三者認証）","技術主権支援ツール","AGIアライメント研究","ニューロエシックス"],
+        strategyDetail:{
+          "技術民主化プラットフォーム":"ノーコード/ローコード・オープンソース等により技術の開発・利用を非専門家に開放するプラットフォーム。技術リテラシーの民主化を推進。",
+          "AI-人間共進化サービス":"AIと人間が相互に学び合い、共に進化するための設計思想とサービス。AIの能力向上が人間の能力も拡張する好循環の構築。",
+          "技術倫理保証サービス（第三者認証）":"技術製品・サービスの倫理的適合性を第三者が評価・認証。有機食品認証のように、倫理的技術であることを消費者に保証。",
+          "技術主権支援ツール":"個人が自分のデータ・デバイス・アルゴリズムを自律的にコントロールするためのツール群。デジタル自己決定権の技術的実装。",
+          "AGIアライメント研究":"汎用人工知能（AGI）の目標を人類の価値観と整合させるための研究。AI安全性の最重要課題であり、人類存続に関わる研究分野。",
+          "ニューロエシックス":"脳科学・神経技術の倫理的問題を扱う新興学際分野。BCI・認知拡張・記憶操作等の技術が引き起こす倫理的課題の体系化。"
+        },
+        needs:["AGIと人間の関係性の社会的合意","技術格差是正のグローバルメカニズム","技術暴走を防ぐ民主的コントロール"],
+        needsContext:{
+          "AGIと人間の関係性の社会的合意":"AGIが実現した場合、その「権利」「責任」「人間との関係性」について社会的合意が不在。AIの急速な発展に対して倫理的・法的議論が追いついておらず、予防的なガバナンス構築が急務。",
+          "技術格差是正のグローバルメカニズム":"AI・量子コンピューティング等の先端技術が少数の国・企業に集中する中、技術覇権が地政学的対立を先鋭化。技術の恩恵を公平に分配する国際的メカニズムの不在が深刻化。",
+          "技術暴走を防ぐ民主的コントロール":"技術開発の速度が民主的意思決定のスピードを大幅に上回る中、市民が技術の方向性に実質的な影響力を持てる仕組みが欠如。AI開発の「一時停止」要求は、このニーズの象徴的表出。"
+        }
+      }
+    }
+  },
+  {
+    id:"nature", title:"自然観", subtitle:"環境・資源・生態系",
+    icon:"🌿", color:"#22c55e",
+    eras:{
+      preindustrial:{
+        value:"自然は畏怖と崇拝の対象。アニミズム的自然観が支配的で、人間は自然の一部。自然のリズム（季節・天体）が生活を規定。",
+        premise:["自然環境：手つかずの生態系・豊かな生物多様性","社会：農耕・牧畜社会・自然崇拝","技術：自然素材の利用・伝統的生態知","経済：自然の恵みに直接依存する生計","制度：自然の神格化・タブー・慣習的資源管理"],
+        driver:["農業の集約化と森林伐採","都市化による自然からの乖離","科学的自然観（デカルト的二元論）の台頭"],
+        signal:["産業革命による大気汚染","囲い込み運動によるコモンズの喪失","博物学・植物園の興隆"],
+        strategy:["農業・牧畜","薬草・伝統医療","天文・暦学","森林管理"],
+        strategyDetail:{
+          "農業・牧畜":"自然の循環に合わせた食料生産。土壌の肥沃度維持・家畜との共生・種子保存など、数千年の経験知に基づく持続的農法。",
+          "薬草・伝統医療":"植物・鉱物の薬効を経験的に蓄積した医療体系。現代薬学の基盤であり、今日でも世界人口の80%がなんらかの伝統医療を利用。",
+          "天文・暦学":"天体観測に基づく暦の作成。農業の時期決定・宗教儀礼・航海に不可欠であり、科学革命の出発点ともなった知的営み。",
+          "森林管理":"入会地（コモンズ）の持続的利用規則。薪炭林の輪伐・植林・利用制限など、共有資源の持続的管理の知恵。"
+        },
+        needs:["自然災害からの防護","安定した食料供給","自然現象の理解・予測"],
+        needsContext:{
+          "自然災害からの防護":"地震・洪水・干ばつ・疫病は神罰や超自然的力として理解され、対処は祈祷に限られた。治水技術・耐震建築への渇望は、自然の猛威に対する人類最古のニーズの一つ。",
+          "安定した食料供給":"農業社会では一度の不作が大飢饉を引き起こした。食料備蓄・灌漑・品種改良への持続的な努力は、飢餓の恐怖という最も根源的なニーズに駆動されていた。",
+          "自然現象の理解・予測":"天候・季節変動・天体運行の予測能力は農業生産と直結していた。暦学・天文学の発展は、自然を理解し予測したいという切実な実用的ニーズから生まれた。"
+        }
+      },
+      past:{
+        value:"自然は無限の資源庫＋無限のゴミ箱。人間と自然の分離（二元論）。自然は開発・征服の対象。",
+        premise:["自然環境：見かけ上豊富な資源・局所的環境破壊","社会：都市集中・農村からの人口流出","技術：化石燃料・化学肥料農薬・ダム埋立","経済：外部不経済の無視・自然資本の未計上","制度：啓蒙主義的自然観・保護区と開発地の分離"],
+        driver:["環境運動・『成長の限界』","生物多様性喪失・オゾン層破壊","先住民族の知識への再注目"],
+        signal:["自然に法的権利を認める動き","生物多様性保全の経済価値認識","先住民の土地権・知識の国際的承認"],
+        strategy:["鉱業・林業・漁業","石油・石炭産業","大規模農業","資源探査技術"],
+        strategyDetail:{
+          "鉱業・林業・漁業":"自然資源の大規模採取産業。産業革命以降、機械化により採取速度が自然の再生速度を大幅に超え、資源枯渇問題を引き起こした。",
+          "石油・石炭産業":"化石燃料の採掘・精製・流通。20世紀の経済成長を支えた基幹産業だが、気候変動の主因として存続が問われている。",
+          "大規模農業":"化学肥料・農薬・機械化による集約的農業。食料生産を飛躍的に増大させたが、土壌劣化・生物多様性喪失・水質汚染の原因にも。",
+          "資源探査技術":"地質調査・リモートセンシング・深海探査等により未開発の資源を発見する技術。資源フロンティアの拡大を支えた。"
+        },
+        needs:["環境保全と経済発展の両立","持続可能な資源利用","生態系サービスの価値認識"],
+        needsContext:{
+          "環境保全と経済発展の両立":"「成長か環境か」という二項対立が長く支配的だった。しかし公害問題の深刻化と環境規制の導入により、両立可能な第三の道の模索が始まった。",
+          "持続可能な資源利用":"「成長の限界」（ローマクラブ、1972年）が資源の有限性を警告。石油危機が現実の供給制約を突きつけ、持続可能な資源利用の必要性が国際的に認識された。",
+          "生態系サービスの価値認識":"経済活動の前提となる清浄な水・空気・受粉サービス等が「無料」として扱われてきたが、生態系の劣化によりその経済的価値（年間125-145兆ドル推計）が認識され始めた。"
+        }
+      },
+      present:{
+        value:"自然は保全すべき有限の対象（人間のため）。「自然資本」「生態系サービス」の経済価値化。気候変動の認識と「グリーン成長」が主流。",
+        premise:["自然環境：第六の大絶滅・気候変動加速","社会：都市人口増加・自然との接触減少","技術：衛星観測・AI生態分析・バイオテクノロジー","経済：ESG投資・カーボンクレジット市場","制度：パリ協定・生物多様性条約・「ネイチャーポジティブ」"],
+        driver:["IPCC報告の厳格化","若年層の気候不安（エコアンザイエティ）","先住民族の権利拡大と知識再評価"],
+        signal:["太陽光遮蔽・大気中CO2除去技術への研究投資","都市農業・垂直農法拡大","種の保存のための遺伝子バンク拡充"],
+        strategy:["再エネ発電・蓄電","カーボンクレジット取引","環境コンサルティング","気候変動モデリング","カーボンキャプチャー技術"],
+        strategyDetail:{
+          "再エネ発電・蓄電":"太陽光・風力・水力等の再生可能エネルギーによる発電と蓄電池技術。化石燃料からの脱却を実現する技術的基盤。",
+          "カーボンクレジット取引":"CO2排出権を市場で取引する仕組み。排出削減に経済的インセンティブを与え、効率的な削減を促進する市場メカニズム。",
+          "環境コンサルティング":"企業の環境戦略・規制対応・ESG報告を支援する専門サービス。環境規制の複雑化に伴い急成長する知識集約型産業。",
+          "気候変動モデリング":"地球システムの数値シミュレーションによる気候予測。政策決定・リスク評価・適応計画の科学的根拠を提供。",
+          "カーボンキャプチャー技術":"大気中や排気ガスからCO2を回収・貯留する技術。ネットゼロ達成に不可欠とされるが、コストとスケーラビリティが課題。"
+        },
+        needs:["経済成長と環境保全の真の両立","グローバルサウスの環境負荷と公平性","自然資本の正確な価値評価"],
+        needsContext:{
+          "経済成長と環境保全の真の両立":"「グリーン成長」が掲げられるが、GDP成長とCO2排出のデカップリングは先進国でも限定的。成長モデルそのものの見直しか、技術革新による解決かの根本的議論が続く。",
+          "グローバルサウスの環境負荷と公平性":"先進国の繁栄が歴史的にもたらした環境負荷を途上国が不均衡に被る「気候正義」問題。排出責任・適応費用・損失と損害の公平な分担が国際交渉の核心課題に。",
+          "自然資本の正確な価値評価":"GDPが自然資本の劣化を計上しないため、環境破壊が経済成長として計算される矛盾。TNFD（自然関連財務情報開示タスクフォース）等、自然資本会計の制度化が進行中。"
+        }
+      },
+      future:{
+        value:"自然は人間が積極的に再生・設計・共創する対象。生命ネットワーク（non-human agency）として認識。「自然の権利」法的承認。再生（リジェネレーション）が目標。",
+        premise:["自然環境：気候ティッピングポイント接近","社会：自然の法人格、都市の再野生化、先住民族の土地管理権拡大","技術：生態系再生技術、合成生物学、ジオエンジニアリング","経済：再生型農業・林業への移行、自然資本投資","制度：生態系サービスへの経済的評価定着"],
+        driver:["気候ティッピングポイント接近","生態系崩壊による経済的損失顕在化","人獣共通感染症頻発・昆虫大量絶滅等の連鎖"],
+        signals:{
+          strong:["自然に法的権利を認める動き（河川・森林の「人格」認定）","昆明・モントリオール枠組み","「人新世」概念の浸透"],
+          weak:["太陽光遮蔽・CO2除去技術への研究投資","気候工学の倫理・ガバナンス国際議論","都市農業・垂直農法拡大"],
+          hypothesis:{
+            optimistic:"人間は自然の一部という認識深化、都市と自然・技術と生態系が調和設計",
+            pessimistic:"「野生の自然」はほぼ消滅、残された自然は人工的管理下の公園状態"
+          }
+        },
+        strategy:["生態系再生サービス（生物多様性クレジット）","合成生物プラットフォーム","ジオエンジニアリング事業","バイオファクトリー","惑星健康モニタリング"],
+        strategyDetail:{
+          "生態系再生サービス（生物多様性クレジット）":"劣化した生態系を積極的に再生し、その成果をクレジットとして取引するサービス。カーボンクレジットに続く次世代の環境市場。",
+          "合成生物プラットフォーム":"遺伝子編集・合成生物学により新たな生物機能を設計するプラットフォーム。医薬品・素材・食料・環境浄化への応用。",
+          "ジオエンジニアリング事業":"太陽光遮蔽・大気中CO2除去など、地球規模で気候に介入する技術事業。最後の手段として研究が進むが、倫理的・地政学的問題が巨大。",
+          "バイオファクトリー":"微生物・培養細胞を使った物質生産工場。化石燃料に依存しない素材・燃料・食料の生産を可能にする次世代製造基盤。",
+          "惑星健康モニタリング":"AI・衛星・IoTセンサーを統合した地球規模の生態系リアルタイム監視システム。生態系の健全性を常時計測し、早期警戒を提供。"
+        },
+        needs:["ジオエンジニアリングの国際的合意形成","合成生物利用の倫理的ガイドライン","「野生の自然」の価値と保存"],
+        needsContext:{
+          "ジオエンジニアリングの国際的合意形成":"太陽光遮蔽等の気候介入技術は一国の決定が全球に影響するが、その決定権や被害補償の国際的枠組みが存在しない。技術的可能性が政治的合意を先行し、「技術的暴走」のリスクが高まっている。",
+          "合成生物利用の倫理的ガイドライン":"遺伝子ドライブ・合成生物の環境放出は不可逆的影響をもたらしうる。利益とリスクのバランスを判断する倫理的枠組みの不在が、技術の社会実装を阻んでいる。",
+          "「野生の自然」の価値と保存":"人工的管理を受けない「ありのままの自然」が急速に消滅している。再野生化運動は、人間の介入から解放された自然それ自体の価値を再認識し、その保存を訴えている。"
+        }
+      }
+    }
+  },
+  {
+    id:"order", title:"社会秩序観", subtitle:"統治・制度・民主主義",
+    icon:"🏛️", color:"#8b5cf6",
+    eras:{
+      preindustrial:{
+        value:"神権政治・封建制が支配的。王権神授説や天命思想により統治の正統性を確保。身分制度により社会秩序が固定化。",
+        premise:["自然環境：農業生産力による支配力の基盤","社会：身分制・封建的主従関係・宗教権威","技術：限定的な通信手段・文字の独占","経済：農本主義・土地所有＝権力","制度：慣習法・宗教法・王権神授説"],
+        driver:["活版印刷による情報の拡散","宗教改革と世俗権力の台頭","市民革命（英・米・仏）"],
+        signal:["議会制度の発展","近代国家の形成","国際法の萌芽"],
+        strategy:["官僚機構","徴税システム","軍事組織"],
+        strategyDetail:{
+          "官僚機構":"中央集権的統治を支える行政組織。科挙制度（中国）やウェーバー型官僚制（欧州）など、能力に基づく行政の合理化。",
+          "徴税システム":"国家財政の基盤となる徴税の仕組み。土地台帳・人口調査・関税制度など、統治の物的基盤を支える技術体系。",
+          "軍事組織":"国家の安全保障と領土拡大を担う組織。常備軍の創設は近代国家形成の核心的要素。"
+        },
+        needs:["安全と治安の保障","法の下の平等","統治への参加権"],
+        needsContext:{
+          "安全と治安の保障":"戦争・盗賊・疫病が常態化した社会で、生命と財産の安全は最も切実なニーズだった。ホッブズの「万人の万人に対する闘争」状態から抜け出すために人々は統治者に権力を委譲した。",
+          "法の下の平等":"身分制度により生まれながらに人生が決定される不公正に対する抵抗。マグナ・カルタ（1215年）から市民革命まで、法の前の平等を求める闘いが近代社会の基盤を築いた。",
+          "統治への参加権":"被治者の同意なき統治への異議申し立て。「代表なくして課税なし」に集約される、自分たちの運命を自分たちで決める権利への渇望が民主主義の原動力。"
+        }
+      },
+      past:{
+        value:"中央集権的な国民国家が社会秩序の基盤。代議制民主主義（4-5年サイクル）と官僚制による合理的統治が標準。",
+        premise:["自然環境：国境内の資源管理","社会：国民の同質性（想像の共同体）","技術：マスメディア・鉄道・道路網","経済：国内市場保護・ケインズ主義","制度：福祉国家・社会契約・労使協調"],
+        driver:["新自由主義・規制緩和","グローバル化による国家主権の相対化","冷戦終結と「歴史の終わり」言説"],
+        signal:["デジタルノマド・多重国籍者増加","都市外交の台頭","市民議会の各国での採用拡大"],
+        strategy:["マスメディア","大規模インフラ運営","組織理論（官僚制）"],
+        strategyDetail:{
+          "マスメディア":"新聞・ラジオ・テレビによる情報の大量配信。世論形成・国民統合・消費文化の創出において圧倒的な影響力を持った。",
+          "大規模インフラ運営":"鉄道・道路・電力・通信等の国家規模インフラの建設・運営。国民国家の物理的統合と経済発展の基盤。",
+          "組織理論（官僚制）":"ウェーバー型官僚制の設計・運営理論。合理性・専門性・階層性に基づく組織管理が近代の大規模組織運営を可能にした。"
+        },
+        needs:["個人の自律性・多様性の尊重","水平的・協働的関係性","分散型意思決定"],
+        needsContext:{
+          "個人の自律性・多様性の尊重":"国民国家は同質化（言語・文化・教育）を推進し、少数者の自律性を抑圧した。多文化主義やマイノリティ権利運動は、画一的な国民像への異議申し立てとして顕在化。",
+          "水平的・協働的関係性":"官僚制と企業の垂直的階層構造が硬直化する中、より柔軟で水平的な協働のあり方への模索が始まった。NPO・市民社会・ネットワーク型組織の台頭がその表れ。",
+          "分散型意思決定":"中央集権的な意思決定が地域の実情にそぐわない問題が頻発。地方分権・住民自治・補完性原理への需要が、グローバル化と同時に強まった。"
+        }
+      },
+      present:{
+        value:"市場原理と国家が緊張関係で並存。「ガバナンス」（多主体協働）登場。ポピュリズムと既存制度への不信拡大。",
+        premise:["自然環境：気候変動＝国境を超える問題","社会：分断（都市/地方、世代、階級）","技術：SNS・デジタル監視・アルゴリズム統治","経済：グローバル企業の国家超越・租税回避","制度：多国間協定の機能不全・「信頼の危機」"],
+        driver:["パンデミックによる国家の復権と国際協調の失敗","気候危機による長期的意思決定の必要性","デジタル監視への反発"],
+        signal:["顔認証・位置情報追跡の日常化","プライバシー保護運動","AI判断支援システムの行政導入"],
+        strategy:["協働プラットフォーム","シビックテック","分散型自律組織（DAO）研究"],
+        strategyDetail:{
+          "協働プラットフォーム":"政府・企業・市民が共同で課題解決に取り組むためのデジタルプラットフォーム。オープンデータ・参加型予算・市民提案など。",
+          "シビックテック":"テクノロジーを活用した市民参加・行政改革。Code for Japan等のコミュニティが行政サービスのデジタル化と市民参加を推進。",
+          "分散型自律組織（DAO）研究":"ブロックチェーン上で運営される自律的組織形態の研究。階層なし・中央管理なしの組織ガバナンスの可能性と限界を探求。"
+        },
+        needs:["デジタル空間での健全な対話","多様性と効率性の両立","グローバルとローカルのガバナンス統合"],
+        needsContext:{
+          "デジタル空間での健全な対話":"SNSが政治的分断を加速させ、フェイクニュース・エコーチェンバー・ヘイトスピーチが民主主義を脅かしている。健全な公共圏の再構築がデジタル時代の民主主義の生存条件に。",
+          "多様性と効率性の両立":"多様なステークホルダーの参加は意思決定の質を高めるが、合意形成に時間がかかる。気候危機等の緊急課題において、熟議と迅速な行動をいかに両立させるかが問われている。",
+          "グローバルとローカルのガバナンス統合":"気候変動・パンデミック・デジタル規制など国境を超える課題が増大する一方、その解決は地域の文脈に即す必要がある。マルチレベル・ガバナンスの設計が急務。"
+        }
+      },
+      future:{
+        value:"流動的・適応的・自己組織化するシステム。AI・DAO・グローバルネットワークによるハイブリッド統治。「未来世代」「自然」の代表権確立。",
+        premise:["自然環境：気候危機による世代間不正義顕在化","社会：市民議会・くじ引き民主制の制度化","技術：AI支援民主主義、DAO 2.0、量子暗号投票","経済：地域自治の財源保障","制度：気候・生物多様性の憲法的保障"],
+        driver:["気候危機による世代間不正義","既存政党システムの機能不全","AGIによる統治の可能性"],
+        signals:{
+          strong:["デジタルノマド・多重国籍者増加","都市外交の台頭（C40都市）","DAO等新組織形態の実験","市民議会の各国での採用拡大"],
+          weak:["顔認証・位置情報追跡の日常化","「監視資本主義」批判","AI判断支援の行政・司法導入"],
+          hypothesis:{
+            optimistic:"国家・企業・市民社会が対等なネットワーク形成、デジタル技術で直接民主主義と代表制のハイブリッド",
+            pessimistic:"グローバル秩序崩壊し地域ブロックに分断、監視技術活用の権威主義統治強化"
+          }
+        },
+        strategy:["AI統治プラットフォーム","デジタル主権保証サービス","グローバルDAO運営支援","予測的ガバナンス","デジタル市民権プラットフォーム"],
+        strategyDetail:{
+          "AI統治プラットフォーム":"AI分析に基づく政策立案・市民参加型意思決定を統合するガバナンスプラットフォーム。データ駆動型政策と民主的正統性の両立を目指す。",
+          "デジタル主権保証サービス":"個人のデジタルアイデンティティ・データ・プライバシーの自己管理を保証するサービス。デジタル市民権の技術的・法的基盤。",
+          "グローバルDAO運営支援":"国境を超えた分散型組織の設立・運営を支援するサービス。法的課題・ガバナンス設計・投票メカニズムなどの専門知識を提供。",
+          "予測的ガバナンス":"AIシミュレーションにより政策の長期影響を事前予測し、より良い意思決定を支援。気候・経済・社会政策の統合的な予測モデル。",
+          "デジタル市民権プラットフォーム":"物理的な国籍に依存しないデジタル上の市民権・参加権を管理するプラットフォーム。e-Residency（エストニア）の進化版。"
+        },
+        needs:["AI意思決定への市民的統制","国家を超えたアイデンティティ形成","アルゴリズムバイアスの継続的監視"],
+        needsContext:{
+          "AI意思決定への市民的統制":"AI裁判官・AI政策アドバイザーの導入が進む中、民主的正統性の確保が最大の課題。「誰がAIを設計し、誰が監視するか」という権力構造の問題が顕在化。",
+          "国家を超えたアイデンティティ形成":"デジタルノマド・多重国籍者・グローバル市民の増加により、国民国家に基づくアイデンティティが揺らいでいる。「どこに帰属するか」ではなく「何に貢献するか」による自己定義の模索。",
+          "アルゴリズムバイアスの継続的監視":"行政・司法で使われるAIが特定の人種・性別・階層に不利な判断を下す事例が続出。一度の監査ではなく、継続的なバイアス監視と修正の仕組みが制度的に必要に。"
+        }
+      }
+    }
+  },
+  {
+    id:"enterprise", title:"企業観", subtitle:"株主・ステークホルダー・再生的",
+    icon:"🏢", color:"#f97316",
+    eras:{
+      preindustrial:{
+        value:"経済活動は家族・ギルド・商会単位。「企業」概念は未成立。商業は宗教的に規制され、利子は罪とされた時代。",
+        premise:["自然環境：地域資源に依存する経済活動","社会：家族経営・ギルド・商人組合","技術：手工業・帆船貿易","経済：重商主義・東インド会社","制度：利子禁止（高利貸し禁止法）・ギルド規制"],
+        driver:["大航海時代と植民地貿易","株式会社制度の誕生（東インド会社）","宗教改革による商業倫理の変容"],
+        signal:["有限責任制度の確立","近代的会計制度の発達","産業資本主義の萌芽"],
+        strategy:["遠距離交易","商会・問屋経営","金融（両替・為替）"],
+        strategyDetail:{
+          "遠距離交易":"シルクロード・海上交易による国際貿易。リスクの高い遠距離取引が利益と情報を生み、近代的企業活動の原型に。",
+          "商会・問屋経営":"メディチ家のような商業家族による多角的経営。銀行・貿易・製造を統合し、現代のコングロマリットの先駆け。",
+          "金融（両替・為替）":"異なる通貨間の為替取引や信用供与。利子禁止の中で発達した金融技術が、近代資本主義の血液たる金融システムの基盤に。"
+        },
+        needs:["リスク分散の仕組み","信用・信頼の制度化","事業の継続性保証"],
+        needsContext:{
+          "リスク分散の仕組み":"一隻の船の沈没が商人を破産させた時代、リスクの分散は死活問題だった。海上保険・株式会社（出資者のリスク限定）の発明は、この切実なニーズへの制度的回答。",
+          "信用・信頼の制度化":"対面関係を超えた取引では信頼の担保が不可欠。手形・信用状・公証制度・複式簿記の発明は、見知らぬ者同士の経済取引を可能にした制度的イノベーション。",
+          "事業の継続性保証":"個人商人の死亡が事業の終了を意味した時代、事業を個人から切り離して永続させる法的枠組みへのニーズが法人格の概念を生み出した。"
+        }
+      },
+      past:{
+        value:"企業は株主利益最大化装置。経営者は所有者への受託者。雇用の安定提供（パターナリズム）が副次的役割。",
+        premise:["自然環境：外部不経済の無視","社会：終身雇用・企業別組合","技術：垂直統合・自社生産","経済：製造業中心・国内市場","制度：会社法（株主至上主義）・企業城下町"],
+        driver:["多国籍企業化・オイルショック","株主価値革命・敵対的買収","CSR（企業の社会的責任）登場"],
+        signal:["Business Roundtable声明改定","ESG投資の主流化","B Corporation認証企業の急増"],
+        strategy:["M&A仲介","財務コンサルティング","株式市場関連サービス","ファイナンス理論"],
+        strategyDetail:{
+          "M&A仲介":"企業の合併・買収を仲介する金融サービス。企業の成長戦略や事業再編を支援し、資本市場の効率的な資源配分を促進。",
+          "財務コンサルティング":"企業の財務戦略・資本構成最適化を支援。株主価値最大化のための戦略的財務アドバイスを提供。",
+          "株式市場関連サービス":"証券取引所・証券会社・格付機関等の株式市場インフラ。企業への資金供給と投資家へのリターン提供を仲介。",
+          "ファイナンス理論":"効率的市場仮説・CAPM・オプション理論等の金融理論。投資判断と企業価値評価の科学的基盤を提供。"
+        },
+        needs:["企業の社会的責任の明確化","ステークホルダー全体への配慮","長期的視点の経営"],
+        needsContext:{
+          "企業の社会的責任の明確化":"ミルトン・フリードマンの「企業の社会的責任は利潤を増やすこと」という考え方が支配的だったが、公害・リストラ・不正会計事件が企業の社会的影響の大きさを突きつけ、CSR議論を顕在化させた。",
+          "ステークホルダー全体への配慮":"株主至上主義の下、従業員・地域社会・環境は二の次とされた。エンロン破綻・リーマンショック等の危機が、短期的株主利益追求の限界を露呈させた。",
+          "長期的視点の経営":"四半期決算への過度な注力が、R&D投資・人材育成・環境対策など長期的な価値創造を阻害。「ショートターミズム」批判が企業経営のあり方を問い直す契機に。"
+        }
+      },
+      present:{
+        value:"「ステークホルダー資本主義」の言説拡大。ESG・SDGsへの対応（本気とgreenwashing混在）。スタートアップ・イノベーション神話。",
+        premise:["自然環境：気候リスクの財務リスク化","社会：非正規雇用増加・人材流動化","技術：プラットフォーム・アウトソーシング","経済：金融化・四半期決算主義","制度：ESG投資・パーパス経営・ダイバーシティ"],
+        driver:["気候訴訟（企業の法的責任追及）","Z世代の企業選択基準（価値観重視）","サプライチェーン透明化要求"],
+        signal:["社会的企業・協同組合の再評価","DAO等のブロックチェーン型組織実験","企業の人権侵害への法的責任追及"],
+        strategy:["ESG評価・格付け","サステナビリティコンサルティング","社会的インパクト投資","パーパス経営の効果測定"],
+        strategyDetail:{
+          "ESG評価・格付け":"環境・社会・ガバナンスの観点から企業を評価・格付けするサービス。投資判断の重要指標となり、企業行動を変える市場メカニズム。",
+          "サステナビリティコンサルティング":"企業のサステナビリティ戦略策定・実行を支援。CO2削減・サプライチェーン管理・情報開示（TCFD/TNFD）対応等。",
+          "社会的インパクト投資":"経済的リターンと社会的インパクトの両立を目指す投資手法。ソーシャルボンド・インパクトファンド等の金融商品。",
+          "パーパス経営の効果測定":"企業の存在目的（パーパス）が経営にもたらす効果を定量的に測定。従業員エンゲージメント・ブランド価値・長期業績との相関分析。"
+        },
+        needs:["ESG評価の標準化と信頼性向上","長期的価値創造の適切な評価","パーパスの実質化"],
+        needsContext:{
+          "ESG評価の標準化と信頼性向上":"ESG評価機関間で同一企業の評価が大きく異なる問題（相関係数0.5程度）。投資家・企業双方が信頼できる統一基準の不在が、ESG投資の本質的な有効性を損なっている。",
+          "長期的価値創造の適切な評価":"四半期業績に偏重する市場評価では、R&D投資・人材育成・環境対策などの長期的価値創造が過小評価される。長期投資家と短期投機家の利害対立が根本にある。",
+          "パーパスの実質化":"「パーパス経営」が流行語化する中、実態を伴わない「パーパスウォッシング」が横行。理念と日常業務の乖離に対する従業員の失望が、真のパーパス実装を求める圧力に。"
+        }
+      },
+      future:{
+        value:"企業は惑星規模課題解決の中核アクター。「リジェネラティブ（再生的）企業」が標準。ステークホルダー共同所有、B Corp・協同組合の主流化。",
+        premise:["自然環境：気候規制強化（炭素税・排出規制）","社会：会社法改正（目的条項に社会・環境含む）","技術：リアルタイムインパクト測定、DAO運営プラットフォーム","経済：長期投資優遇税制、サーキュラーエコノミー型BM標準化","制度：会計・法制度の抜本改革"],
+        driver:["気候規制強化","人材獲得競争（若年層は理念重視）","投資家の長期志向への転換"],
+        signals:{
+          strong:["Business Roundtable声明改定（2019年）","ESG投資主流化（運用資産40%超）","B Corp認証急増（6000社超）"],
+          weak:["社会的企業・協同組合の再評価","DAO等ブロックチェーン型組織実験","「ポスト成長」企業モデルの提案"],
+          hypothesis:{
+            optimistic:"企業は社会的ミッション達成を第一目的に進化、多様な組織形態が共存協働",
+            pessimistic:"一部テクノロジー企業が国家を超える権力を持ち実質的統治機能を担う"
+          }
+        },
+        strategy:["リジェネラティブビジネス設計","惑星規模インパクト測定","DAO設立・運営支援","エコシステムオーケストレーション","量子会計プラットフォーム"],
+        strategyDetail:{
+          "リジェネラティブビジネス設計":"事業活動そのものが自然・社会を再生する企業モデルの設計。サーキュラーエコノミーを超え、積極的に環境・社会価値を創出するビジネスアーキテクチャ。",
+          "惑星規模インパクト測定":"企業活動の地球規模での環境・社会的影響をリアルタイムで測定するシステム。AI・衛星データ・IoTを統合した包括的評価基盤。",
+          "DAO設立・運営支援":"分散型自律組織の法的・技術的・ガバナンス的な設立運営支援。スマートコントラクトによる自動執行と人間的判断のバランス設計。",
+          "エコシステムオーケストレーション":"複数の企業・NPO・政府機関が連携するエコシステム全体の設計・調整サービス。競争から共創への移行を促進。",
+          "量子会計プラットフォーム":"財務的価値に加え、自然資本・社会資本・人的資本を統合的に計量する次世代会計システム。企業の「真の価値」を可視化。"
+        },
+        needs:["再生的モデルの収益性実証","惑星規模インパクトの標準化測定","DAOと伝統的法人の協働ルール"],
+        needsContext:{
+          "再生的モデルの収益性実証":"リジェネラティブ経営の理念は魅力的だが、既存の株主資本主義のフレームワーク内で収益性を実証できていない。先行事例の成功と失敗の体系的分析が、モデルの普及に不可欠。",
+          "惑星規模インパクトの標準化測定":"企業のサステナビリティ報告は自己申告が主流で、測定方法も統一されていない。惑星規模の環境・社会インパクトを客観的・比較可能に測定する標準の不在が信頼性を損なう。",
+          "DAOと伝統的法人の協働ルール":"DAO（分散型自律組織）と既存の法人格の法的互換性が未整備。契約締結・納税・法的責任の所在など、両者が協働するための法的枠組みの構築が急務。"
+        }
+      }
+    }
+  },
+  {
+    id:"happiness", title:"幸福観", subtitle:"豊かさ・ウェルビーイング",
+    icon:"✨", color:"#a855f7",
+    eras:{
+      preindustrial:{
+        value:"幸福は来世の救済・宗教的調和。現世の苦しみは試練であり、徳を積むことで来世の幸福を得るという世界観。共同体の調和が個人の幸福に優先。",
+        premise:["自然環境：自然の恵みと脅威の中での生存","社会：共同体的紐帯・宗教共同体","技術：医療・衛生の未発達","経済：生存経済・限られた余剰","制度：宗教的救済体系・身分による幸福観の固定"],
+        driver:["啓蒙思想（現世の幸福追求の正当化）","功利主義（最大多数の最大幸福）","産業革命による物質的豊かさの可能性"],
+        signal:["独立宣言の「幸福追求権」","功利主義哲学の成立","余暇文化の萌芽"],
+        strategy:["宗教・祭祀","伝統医療","祭り・芸能"],
+        strategyDetail:{
+          "宗教・祭祀":"精神的安寧と共同体の結束を提供する宗教活動。個人の苦しみに意味を与え、死への恐怖を和らげる心理的機能を担った。",
+          "伝統医療":"薬草・鍼灸・祈祷などによる身体的苦痛の緩和。疾病は神罰や霊的不調和として理解され、治療は身体と精神の統合的回復を目指した。",
+          "祭り・芸能":"労働から解放される祝祭空間の創出。社会的緊張の解放・共同体の結束強化・生の歓びの確認として機能した集合的幸福体験。"
+        },
+        needs:["苦痛の緩和","心の平安","共同体における居場所"],
+        needsContext:{
+          "苦痛の緩和":"麻酔も鎮痛剤もない時代、身体的苦痛は日常的であり、出産・手術・疾病は文字通りの苦行だった。痛みからの解放は、幸福以前の最も基本的な人間的ニーズ。",
+          "心の平安":"死・疫病・飢饉・戦争の脅威に常に晒される中、心の平安は贅沢品ではなく生存の条件だった。宗教・瞑想・哲学は、この根源的不安に対する人類の応答。",
+          "共同体における居場所":"個人の幸福は共同体の中でしか成立しない時代。村八分は社会的死を意味し、帰属感と承認は幸福の不可欠な構成要素であった。"
+        }
+      },
+      past:{
+        value:"幸福は物質的豊かさ・社会的地位の獲得。「標準的人生コース」（結婚・持ち家・昇進）が幸福の尺度。個人の快楽・満足の最大化。",
+        premise:["自然環境：物質的欠乏からの解放","社会：核家族・性別役割分業","技術：家電による「便利さ」","経済：右肩上がりの経済成長","制度：福祉国家・「一億総中流」"],
+        driver:["イースタリンのパラドックス（所得と幸福の乖離）","ポストモダンの多様な生き方承認","ブータンのGNH（国民総幸福）"],
+        signal:["国家レベルの幸福度測定導入","ウェルビーイング経済政府連合の設立","メンタルヘルスへの社会的関心急増"],
+        strategy:["消費財製造","娯楽産業","高級品・ステータスシンボル商品","消費者行動研究"],
+        strategyDetail:{
+          "消費財製造":"「三種の神器」に象徴される生活水準向上のための消費財。物質的豊かさ＝幸福という等式の産業基盤。",
+          "娯楽産業":"映画・テレビ・テーマパーク等の大衆娯楽。余暇時間の増加に伴い成長した「幸福の提供」を目的とする産業群。",
+          "高級品・ステータスシンボル商品":"社会的地位を可視化するブランド品・高級車・宝飾品。ヴェブレン効果（顕示的消費）に基づく幸福の物質的表現。",
+          "消費者行動研究":"消費者の購買決定プロセスの心理学的研究。「何が人を満足させるか」を科学的に解明し、マーケティングに応用。"
+        },
+        needs:["物質以外の幸福源","人間関係・コミュニティの充実","精神的・内面的充足"],
+        needsContext:{
+          "物質以外の幸福源":"先進国で所得と幸福度の相関が薄れる「イースタリンのパラドックス」が1970年代に発見。物質的豊かさの向こう側にある幸福の源泉への探求が本格化した転換点。",
+          "人間関係・コミュニティの充実":"核家族化・都市化により伝統的共同体が解体。「ボウリング・アローン」に象徴される社会関係資本の減少が、孤独と不幸の構造的原因として認識された。",
+          "精神的・内面的充足":"物質的達成後の「空虚感」が広がる中、東洋思想（禅・ヨガ・マインドフルネス）への関心が西洋社会で急速に拡大。内面的豊かさへの渇望の顕在化。"
+        }
+      },
+      present:{
+        value:"幸福は多次元的。ウェルビーイング（身体的・精神的・社会的健康）、「自分らしさ」「多様性」尊重、つながり・意味・貢献への渇望。",
+        premise:["自然環境：環境意識と行動のギャップ","社会：孤立・孤独の蔓延・SNS疲れ","技術：デジタルウェルビーイング論","経済：格差拡大・相対的貧困","制度：ポジティブ心理学・マインドフルネス・自己啓発"],
+        driver:["メンタルヘルス危機の顕在化","パンデミックによるつながりと自然の再評価","若年層の「意味危機」"],
+        signal:["脳科学に基づくウェルビーイング介入の研究","AIによるメンタルヘルスサポート","VRセラピーの医療応用"],
+        strategy:["ウェルビーイングテック","メンタルヘルスサービス","体験型消費","コミュニティ形成支援","ポジティブ心理学"],
+        strategyDetail:{
+          "ウェルビーイングテック":"ウェアラブルデバイス・アプリ・AIによる幸福度の計測と向上支援。瞑想アプリ・睡眠トラッカー・ストレス管理ツール等の成長市場。",
+          "メンタルヘルスサービス":"カウンセリング・セラピー・精神医療のデジタル化と普及。オンラインセラピー・AIチャットボット・企業向けEAP（従業員支援プログラム）。",
+          "体験型消費":"モノからコトへの消費シフトを反映したサービス。旅行・食体験・ワークショップ等、記憶に残る体験の設計・提供。",
+          "コミュニティ形成支援":"共通の興味・価値観に基づくコミュニティの設計・運営支援。シェアハウス・コワーキング・オンラインコミュニティの専門的運営。",
+          "ポジティブ心理学":"「何が人を幸せにするか」を科学的に研究する心理学分野。フロー体験・強みの活用・感謝の実践等のエビデンスベースの幸福介入。"
+        },
+        needs:["デジタル時代の深い人間的つながり","意味と目的の探求支援","社会的幸福と個人的幸福の統合"],
+        needsContext:{
+          "デジタル時代の深い人間的つながり":"SNSで数百人とつながりながら深い孤独を感じる人が増加。「弱い紐帯」の拡大と「強い紐帯」の喪失という構造的問題が、質的なつながりへの渇望を生んでいる。",
+          "意味と目的の探求支援":"宗教の衰退と伝統的価値観の崩壊により、人生の意味を自分で見つけなければならない「意味の真空」が発生。実存的カウンセリングや人生設計コーチングへの需要が急増。",
+          "社会的幸福と個人的幸福の統合":"個人の幸福追求が社会全体の幸福と矛盾する場面が増加。気候変動対策と個人の利便性、経済成長と格差是正など、個人の幸福と社会の持続可能性の統合的設計が必要に。"
+        }
+      },
+      future:{
+        value:"幸福は神経科学・AI・VRにより「設計」「拡張」可能に。関係性の質・生態系への貢献実感としての幸福。「十分さ」と「創造性」の両立。",
+        premise:["自然環境：孤独・孤立の社会的コスト増大","社会：GDP以外の指標の政策化","技術：ニューロフィードバック、AI幸福コーチング、VR/AR体験合成","経済：労働時間短縮による「時間の豊かさ」","制度：自然へのアクセス権の保障"],
+        driver:["孤独・孤立の社会的コスト増大","気候不安への対処必要性","消費による幸福の限界の明確化"],
+        signals:{
+          strong:["国家レベルの幸福度測定導入","ウェルビーイング経済政府連合（10カ国超）","孤独の公衆衛生課題化"],
+          weak:["脳科学に基づくウェルビーイング介入","AIメンタルヘルスチャットボット","「幸福工学」分野の萌芽","VRセラピーの医療応用"],
+          hypothesis:{
+            optimistic:"幸福の定義は多様で個人的、社会的つながり・自然との関係・貢献の重要性が共通認識に",
+            pessimistic:"富裕層は「設計された幸福」を享受、大多数はストレス・孤独・無意味感に苦しむ"
+          }
+        },
+        strategy:["パーソナル幸福設計サービス","ニューロウェルビーイング","体験合成プラットフォーム","コミュニティウェルビーイング","意味探求支援AI"],
+        strategyDetail:{
+          "パーソナル幸福設計サービス":"個人の価値観・神経特性・生活状況に基づいて最適な「幸福戦略」を設計するサービス。AIライフコーチングと神経科学知見の統合。",
+          "ニューロウェルビーイング":"脳科学の知見を直接応用した幸福度向上技術。ニューロフィードバック・経頭蓋刺激・幸福ホルモン調整等の神経介入。",
+          "体験合成プラットフォーム":"VR/AR/脳刺激により任意の主観的体験を合成するプラットフォーム。物理的制約のない体験の設計と提供。",
+          "コミュニティウェルビーイング":"個人の幸福ではなくコミュニティ全体の幸福度を測定・向上させるサービス。関係性・信頼・帰属感の設計的介入。",
+          "意味探求支援AI":"人生の意味と目的の探求をAIが支援するサービス。哲学的対話・価値観の明確化・人生物語の構築をAIが伴走。"
+        },
+        needs:["技術による幸福と伝統的幸福の選択自由","「不幸である権利」の保障","AI幸福提案への批判的思考能力"],
+        needsContext:{
+          "技術による幸福と伝統的幸福の選択自由":"ニューロテクノロジーで「設計された幸福」が可能になった時、従来の苦労や努力を通じた幸福感との間で選択が生じる。技術的幸福は「本物」かという哲学的問いが実践的問題に。",
+          "「不幸である権利」の保障":"幸福が社会的義務化した場合、悲しみ・怒り・苦しみなどネガティブな感情を感じる自由が脅かされる。「幸福の圧政」（ポジティブ心理学批判）からの解放という逆説的ニーズ。",
+          "AI幸福提案への批判的思考能力":"AIが「あなたの幸福のために」と提案する行動を無批判に受け入れることのリスク。自分自身の幸福を自律的に定義・追求する能力の維持が、人間の主体性の核心。"
+        }
+      }
+    }
+  },
+  {
+    id:"knowledge", title:"知識観", subtitle:"知の所有・共有・共創",
+    icon:"📚", color:"#14b8a6",
+    eras:{
+      preindustrial:{
+        value:"知識は聖なるもの。宗教・口承・写本により限られた者に伝承。知識の独占は権力の源泉。経験知・伝統知が科学知に先行。",
+        premise:["自然環境：自然観察に基づく経験的知識","社会：識字率の低さ・知識の僧侶/学者独占","技術：写本・口承伝統","経済：知識＝宗教的/政治的権力","制度：修道院・マドラサ・寺子屋"],
+        driver:["活版印刷の発明（1450年頃）","大学の設立（ボローニャ・パリ）","科学革命（経験主義・合理主義）"],
+        signal:["百科全書の編纂","科学アカデミーの設立","公教育の萌芽"],
+        strategy:["写本制作","修道院・学校教育","師弟制による技能伝承"],
+        strategyDetail:{
+          "写本制作":"修道院等での手書きによる文献複製。知識の物理的保存と伝播を担い、古典古代の知識を中世ヨーロッパに継承した。",
+          "修道院・学校教育":"宗教機関が担った教育。読み書き・神学・自由学芸（七科）を通じた知識階層の再生産と社会的流動性の限定的提供。",
+          "師弟制による技能伝承":"職人の暗黙知を長期的な直接指導で次世代に伝える教育方法。言語化困難な実践的知識の伝承に不可欠であり、今日の実地研修の原型。"
+        },
+        needs:["知識へのアクセス拡大","経験知の体系化","異文化の知識との交流"],
+        needsContext:{
+          "知識へのアクセス拡大":"書物は極めて高価で、一般人は知識から完全に排除されていた。活版印刷の発明は、書物の価格を劇的に下げ、宗教改革・科学革命・民主化の引き金となった変革的応答。",
+          "経験知の体系化":"農業・医療・航海等の実践的知識は個人の経験に依存し、体系的に整理されていなかった。百科全書や自然誌の編纂は、散在する経験知を「知識」として体系化する試み。",
+          "異文化の知識との交流":"十字軍・大航海時代・シルクロード交易を通じたイスラム・中国・インドの知識との出会いが、ヨーロッパの知的覚醒を促した。異文化の知が自文化の前提を問い直す契機に。"
+        }
+      },
+      past:{
+        value:"知識は専門家・機関が所有する権威的なもの。科学的知識が伝統知・経験知より優位。知的財産権による私的所有の正当化。",
+        premise:["自然環境：自然科学による「客観的」理解","社会：大学・研究所・専門職の権威","技術：印刷技術・図書館・学術誌","経済：特許制度・R&D投資","制度：学歴社会・専門家への信頼"],
+        driver:["反権威主義・「素人の反乱」","環境主義による先住民・農民知の再評価","IT革命による情報の民主化"],
+        signal:["オープンアクセス論文の拡大","Wikipedia・オープン教育リソース定着","AI（ChatGPT）による知識アクセスの変革"],
+        strategy:["出版業","教育機関","企業研修サービス","知識管理論","組織学習理論"],
+        strategyDetail:{
+          "出版業":"書籍・雑誌・新聞の大量印刷・流通。知識を商品化し大衆に届ける産業。学術出版は科学知の権威的流通チャネル。",
+          "教育機関":"小学校から大学院まで、体系的知識を伝達する制度。国民国家の人材育成と社会統合の機能を兼ねた近代社会の基盤的制度。",
+          "企業研修サービス":"企業内での知識・スキル伝達を支援する教育サービス。OJT・集合研修・eラーニング等の形態で提供。",
+          "知識管理論":"組織内の知識を体系的に管理・共有する経営理論。野中郁次郎のSECIモデルに代表される暗黙知と形式知の変換プロセス。",
+          "組織学習理論":"組織が環境変化に適応し進化するための学習メカニズムの理論。センゲの「学習する組織」が企業の知識創造能力を体系化。"
+        },
+        needs:["知識の民主化","暗黙知の形式知化","分野横断的知識統合"],
+        needsContext:{
+          "知識の民主化":"大学教育は長く特権階級のものだった。公教育制度の整備とオープンユニバーシティの設立は、知識へのアクセスを広げたが、依然として経済的・地理的障壁が存在。",
+          "暗黙知の形式知化":"熟練職人の「勘」や経営者の「直感」など、言語化困難な知識をいかに組織的に共有するかが経営上の課題に。ITによるナレッジマネジメントはこのニーズへの技術的応答。",
+          "分野横断的知識統合":"専門分化が進んだ学問体系では、環境問題・都市計画等の複合的課題に対応できない。学際研究・トランスディシプリナリー研究への需要が顕在化。"
+        }
+      },
+      present:{
+        value:"知識は集合知として共創、オープンアクセスが価値を生む。知識が民主化される一方、「エビデンス」への過度な依存と不信が並存。",
+        premise:["自然環境：気候科学の政治化","社会：デジタルディバイド・フィルターバブル","技術：インターネット・AI・ビッグデータ","経済：プラットフォームによる知識独占","制度：専門家不信・陰謀論・ポスト真実"],
+        driver:["パンデミックによる科学コミュニケーションの課題","AI生成コンテンツの氾濫","市民科学・参加型研究の台頭"],
+        signal:["生成AIによる「オンデマンド知識生成」日常化","教育の「知識習得」から「批判的思考」への転換","人間-AIハイブリッド研究チーム増加"],
+        strategy:["オンライン教育（MOOC）","知識共有プラットフォーム","AI検索サービス","情報信頼性評価手法"],
+        strategyDetail:{
+          "オンライン教育（MOOC）":"大規模公開オンライン講座。Coursera・edX等が大学レベルの教育を世界中に無料/低コストで提供し、教育の地理的・経済的障壁を低下。",
+          "知識共有プラットフォーム":"Wikipedia・Stack Overflow・Qiita等、ユーザー生成型の知識共有基盤。専門家と素人の境界を曖昧にし、集合知を形成。",
+          "AI検索サービス":"Google検索からChatGPT等の対話型AI検索へ。知識へのアクセス方法を根本的に変え、「検索」から「質問」への転換を促進。",
+          "情報信頼性評価手法":"ファクトチェック・ソースの信頼性評価・AIによる偽情報検出。情報爆発時代における知識の質保証の技術的・制度的アプローチ。"
+        },
+        needs:["情報の質保証メカニズム","深い専門知識と広い知識の両立","暗黙知のデジタル化"],
+        needsContext:{
+          "情報の質保証メカニズム":"情報の発信コストがゼロに近づいた結果、フェイクニュース・陰謀論・AIハルシネーションが蔓延。「何を信じてよいか分からない」状態が民主主義と科学への信頼を根底から脅かしている。",
+          "深い専門知識と広い知識の両立":"学問の専門分化と情報爆発により、「T型人材」（専門性+幅広い知識）の育成が困難に。AIが幅広い知識を補完する一方、深い専門性の獲得は依然として長期的投資を要する。",
+          "暗黙知のデジタル化":"熟練職人の技能・経営者の直感・文化的知恵など、言語化困難な知識のデジタル化が進まない。AIの学習データにも含まれにくく、技能の断絶リスクが高まっている。"
+        }
+      },
+      future:{
+        value:"知識は人間とAIが共創する動的ネットワーク。知識はコモンズ（共有財）。多様な知（科学・伝統知・経験知）の統合。",
+        premise:["自然環境：複雑な問題への対処必要性","社会：オープンアクセス義務化、伝統的生態学的知識の法的保護","技術：認知拡張AI、集合知リアルタイム統合、暗黙知抽出技術","経済：知識独占への反発","制度：AI倫理とアルゴリズム透明性の法制化"],
+        driver:["複雑な問題への対処必要性","知識独占への反発","BCIによる「直接知識転送」技術"],
+        signals:{
+          strong:["オープンアクセス論文拡大（全論文40%超）","AI（ChatGPT等）による知識アクセス革命","フェイクニュースの蔓延"],
+          weak:["生成AIによるオンデマンド知識生成","「拡張知能」概念の提唱","人間-AIハイブリッド研究チーム増加"],
+          hypothesis:{
+            optimistic:"科学知と在来知が相互補完的に統合、知識は公共財、教育は「知恵の涵養」へ",
+            pessimistic:"AIによる偽情報生成が高度化し真実の判断不可能に、高度な知識はエリート独占"
+          }
+        },
+        strategy:["認知拡張プラットフォーム","暗黙知転移サービス","AI共創研究支援","集合知オーケストレーション","知識検証プラットフォーム"],
+        strategyDetail:{
+          "認知拡張プラットフォーム":"AIやBCIにより人間の認知能力（記憶・分析・創造性）を拡張するプラットフォーム。学習効率の飛躍的向上と知識格差の解消を目指す。",
+          "暗黙知転移サービス":"熟練者の暗黙知をAI・VR・センサー技術で抽出し、他者に転移するサービス。職人技・経営判断・文化的知恵のデジタル継承。",
+          "AI共創研究支援":"AIが研究仮説の生成・実験設計・データ分析を支援し、人間研究者と共同で知識を創出するサービス。学際的研究の加速。",
+          "集合知オーケストレーション":"多数の人間とAIの知見をリアルタイムで統合し、複雑な問題への解を導く仕組み。予測市場・市民科学・クラウドシンキングの進化形。",
+          "知識検証プラットフォーム":"AI生成知識・科学論文・ニュースの信頼性を多角的に検証するプラットフォーム。ブロックチェーンによる知識の出所追跡と信頼性スコアリング。"
+        },
+        needs:["認知拡張へのアクセス平等化","AI生成知識の信頼性保証","基礎的思考力を保つ「知識デトックス」"],
+        needsContext:{
+          "認知拡張へのアクセス平等化":"認知拡張技術が高額で一部の富裕層にしかアクセスできない場合、「知識格差」が「認知格差」に発展し、社会的不平等を根本的に拡大する。教育の機会均等以上に深刻な公正の問題。",
+          "AI生成知識の信頼性保証":"AIが自律的に論文を書き発見を報告する時代に、その知識の正確性・再現性・倫理的適切性をいかに保証するか。科学の信頼性の根幹に関わる制度設計が未整備。",
+          "基礎的思考力を保つ「知識デトックス」":"AIに知識の検索・分析・統合を任せ続けると、人間の基礎的な思考力が衰退するリスク。「計算機があっても暗算力を維持する」のと同様、認知的自立の維持が課題に。"
+        }
+      }
+    }
+  },
+  {
+    id:"time", title:"時間観", subtitle:"短期・長期・循環",
+    icon:"⏳", color:"#eab308",
+    eras:{
+      preindustrial:{
+        value:"時間は循環的・自然的。季節のリズム・宗教暦が生活を規定。「時は金なり」以前の質的な時間経験。過去・現在・未来は神話的に統合。",
+        premise:["自然環境：日の出日の入り・季節循環","社会：農耕暦・宗教暦・祭礼サイクル","技術：日時計・水時計・鐘","経済：季節的な農業・交易サイクル","制度：宗教的時間秩序（安息日・断食月）"],
+        driver:["機械時計の発明と普及","都市商業における時間の貨幣化","鉄道時刻表による時間の標準化"],
+        signal:["工場時計の導入","グリニッジ標準時の制定","時給制度の出現"],
+        strategy:["暦学・天文学","鐘楼・時計塔","農業暦の作成"],
+        strategyDetail:{
+          "暦学・天文学":"天体観測に基づく暦の作成。農業の播種・収穫時期の決定、宗教行事の日程管理に不可欠な知的インフラ。",
+          "鐘楼・時計塔":"共同体に時刻を知らせる公共インフラ。修道院の祈祷時刻から都市の市場開閉まで、社会生活のリズムを統制。",
+          "農業暦の作成":"地域の気候・土壌に合わせた農作業スケジュール。数百年の経験知が凝縮された実践的な時間管理ツール。"
+        },
+        needs:["時間の正確な計測","遠隔地との時間同期","季節変動への適応"],
+        needsContext:{
+          "時間の正確な計測":"航海・交易・宗教行事において正確な時間計測が切実に必要だった。特に経度の測定には精密な時計が不可欠であり、英国政府は経度法（1714年）で高額な賞金を懸けた。",
+          "遠隔地との時間同期":"各地域が独自の地方時を使用し、鉄道の時刻表すら作成困難だった。標準時制度の導入（19世紀後半）は、近代社会の時間的統合という根源的ニーズへの応答。",
+          "季節変動への適応":"農業社会では季節の変化が生死に直結。正確な暦がなければ播種の適期を逃し飢饉を招く。暦の精度向上は生存の根源的ニーズに駆動されていた。"
+        }
+      },
+      past:{
+        value:"「時は金なり」。時間は均質な資源。加速主義（スピード＝進歩）が支配的。世代内の計画（30年国債、年金制度）が時間軸の標準。",
+        premise:["自然環境：自然サイクルからの切断","社会：工場時間・標準時・タイムカード","技術：時計・鉄道時刻表・テレビ番組","経済：利子率・経済成長予測","制度：カレンダーの標準化・「納期」文化"],
+        driver:["環境主義の長期視点","「スローライフ」運動","将来世代への責任論（持続可能性）"],
+        signal:["サーキュラーエコノミーの概念的浸透","スローフード・スローシティ運動","デジタルデトックス・マインドフルネスの主流化"],
+        strategy:["時計産業","スケジュール管理ツール","物流・配送サービス","時間管理研究"],
+        strategyDetail:{
+          "時計産業":"精密時計の大量生産。時間の私有化（個人が時計を持つ）を可能にし、時間規律の内面化を促進した産業。",
+          "スケジュール管理ツール":"手帳・カレンダー・スケジューラーなど時間を計画的に管理するツール。「時間管理＝自己管理」という近代的価値観を体現。",
+          "物流・配送サービス":"「時間通りに届ける」ことを価値とする産業。鉄道時刻表から宅配便の時間指定まで、時間の商品化の典型。",
+          "時間管理研究":"フランクリンの時間割からGTD（Getting Things Done）まで、個人の生産性向上のための時間管理手法の研究と普及。"
+        },
+        needs:["個人のリズムに合った時間利用","時間の質的側面の重視","余暇時間の充実"],
+        needsContext:{
+          "個人のリズムに合った時間利用":"工場の時間規律は人間の個人差を無視した。朝型・夜型の違い、集中力の波、創造性のリズムなど、画一的な時間割に合わない人々の不適応が産業社会の隠れたコスト。",
+          "時間の質的側面の重視":"「忙しいこと＝偉いこと」という価値観の下、量的な時間消費が重視された。しかし「忙しいのに充実していない」という経験が広がり、時間の質への関心が高まった。",
+          "余暇時間の充実":"労働時間の短縮により生まれた余暇を「いかに有意義に過ごすか」が新たな課題に。レジャー産業の成長は、余暇の充実という大衆的ニーズへの市場的応答。"
+        }
+      },
+      present:{
+        value:"時間は多様で質的。「時間の使い方の質」重視。超短期主義（四半期決算、SNSの即時性）と「将来世代への責任」の並存。",
+        premise:["自然環境：気候変動のタイムラグ","社会：高齢化（年金・医療の長期負担）","技術：リアルタイム通信・アルゴリズム取引","経済：金融化・短期利益追求","制度：選挙サイクル（4-5年）"],
+        driver:["気候危機による世代間不正義","若年層の「未来への不安」","パンデミックによる長期計画の脆弱性露呈"],
+        signal:["「ロングターミズム」哲学運動の拡大","「未来世代」の法的代表制の実験","VRにおける時間感覚の歪み研究"],
+        strategy:["非同期協働プラットフォーム","生産性管理アプリ","デジタルウェルビーイング","時間知覚の心理学"],
+        strategyDetail:{
+          "非同期協働プラットフォーム":"時差・生活リズムの違いを超えて協働するためのツール。Slack・Loom・Notion等、リアルタイムの制約から解放された働き方を実現。",
+          "生産性管理アプリ":"個人の時間の使い方を可視化・最適化するアプリ。RescueTime・Toggl等、セルフマネジメントの技術的支援ツール。",
+          "デジタルウェルビーイング":"スクリーンタイムの管理・通知の制御・デジタルデトックスなど、デジタル機器との健全な関係を構築する技術とサービス。",
+          "時間知覚の心理学":"主観的な時間の感じ方に関する心理学研究。フロー体験・退屈・時間の歪みなど、時間の「質」を科学的に解明。"
+        },
+        needs:["真の時間主権の確立","非同期と同期の最適バランス","世代間・文化間の時間観の調整"],
+        needsContext:{
+          "真の時間主権の確立":"「24時間365日接続可能」な社会で、自分の時間を自分でコントロールする権利が実質的に侵害されている。「つながらない権利」の法制化は、時間主権への切実なニーズの制度的表出。",
+          "非同期と同期の最適バランス":"リモートワークは非同期コミュニケーションを増やしたが、チームの一体感やリアルタイムの創造的議論が失われるトレードオフが顕在化。最適なバランスの模索が続いている。",
+          "世代間・文化間の時間観の調整":"即時応答を期待するZ世代と、熟考を重んじるベビーブーマー世代の時間感覚の違い。また、モノクロニック（一事専心）文化とポリクロニック（同時多発）文化の衝突。"
+        }
+      },
+      future:{
+        value:"時間は相対的・主観的に設計可能。AI・VR・認知科学により「時間体験」が拡張・操作される。長期思考の制度化（7世代先）。「時間主権」の確立。",
+        premise:["自然環境：気候ティッピングポイントへの焦燥","社会：未来世代オンブズパーソン制度","技術：主観的時間拡張技術、AI時間最適化エージェント","経済：長期投資優遇（超長期国債、100年企業評価）","制度：長期主義の制度化、労働時間の大幅短縮"],
+        driver:["気候ティッピングポイントへの焦燥","世代間対立の激化","生命延長技術による寿命の無限化"],
+        signals:{
+          strong:["サーキュラーエコノミーの浸透","「再生可能性（Regenerative）」への言説転換","マインドフルネスの主流化"],
+          weak:["「ロングターミズム」哲学運動","「未来世代」の法的代表制","VRにおける時間感覚研究"],
+          hypothesis:{
+            optimistic:"短期・中期・長期の時間軸を同時に尊重する制度確立、未来世代の視点が制度的に組み込まれる",
+            pessimistic:"社会の変化速度が人間の適応能力を超え慢性的「未来ショック」、長期思考放棄"
+          }
+        },
+        strategy:["時間体験設計サービス","AI時間コンシェルジュ","長期影響シミュレーション","時間主権保証プラットフォーム","時間知覚トレーニング"],
+        strategyDetail:{
+          "時間体験設計サービス":"VR・認知科学・ニューロテクノロジーを活用し、主観的な時間体験を設計するサービス。「1時間を1日のように感じる」体験の商品化。",
+          "AI時間コンシェルジュ":"個人の生体リズム・認知状態・目標に基づいて最適な時間の使い方を提案するAIサービス。時間の質を最大化するパーソナライズド時間管理。",
+          "長期影響シミュレーション":"政策・技術・経済的意思決定の100年単位での影響をAIシミュレーションする技術。世代を超えた意思決定の質を向上。",
+          "時間主権保証プラットフォーム":"個人の「つながらない権利」「自分のリズムで生きる権利」を技術的に保証するプラットフォーム。通知制御からスケジュール自律化まで。",
+          "時間知覚トレーニング":"マインドフルネス・フロー体験・時間認知トレーニングにより、主観的な時間の質を向上させる教育プログラム。「時間の豊かさ」を内面から実現。"
+        },
+        needs:["時間拡張技術の安全性保証","時間体験へのアクセス平等化","「今ここ」を生きる能力の保持"],
+        needsContext:{
+          "時間拡張技術の安全性保証":"主観的時間を操作する技術は、認知機能や精神健康への予期せぬ影響をもたらすリスクがある。「時間ドラッグ」的な依存性や離脱症状の可能性も含め、安全性の科学的検証が未整備。",
+          "時間体験へのアクセス平等化":"時間の質を高める技術（VR体験・認知拡張・労働時間短縮）が富裕層に集中すると、「時間の貧困」が新たな格差の軸に。金銭的余裕がなければ「時間の豊かさ」も得られない構造的問題。",
+          "「今ここ」を生きる能力の保持":"未来予測AI・ライフログ・スケジュール最適化に囲まれる中、「今この瞬間」に集中する能力が衰退するリスク。マインドフルネスの重要性は、このカウンターニーズの表れ。"
+        }
+      }
+    }
+  },
+  {
+    id:"death", title:"死生観", subtitle:"死・弔い・生の意味",
+    icon:"🕊️", color:"#78716c",
+    eras:{
+      preindustrial:{
+        value:"死は日常の一部であり、共同体全体で弔う公的行事。宗教的世界観により死後の世界（来世・輪廻・祖霊）が確信され、死は終わりではなく移行として受容された。",
+        premise:["自然環境：高い死亡率（疫病・飢饉・戦争が日常）","社会：共同体による看取りと弔いの慣習","技術：医療技術の未発達・平均寿命30〜40歳","経済：葬送は共同体の互助で賄われる","制度：宗教的権威による死の意味づけ・儀礼体系"],
+        driver:["近代医学の発展による死亡率低下","啓蒙思想による宗教的世界観への懐疑","都市化による共同体的弔いの困難化"],
+        signal:["解剖学の進展と死体の「科学的対象」化","世俗的墓地の登場","宗教改革による煉獄概念の否定"],
+        strategy:["宗教的儀礼体系","祖先崇拝の制度化","共同体の互助葬送"],
+        strategyDetail:{
+          "宗教的儀礼体系":"誕生から死後までを一貫して意味づける宗教儀礼。通過儀礼・葬送・追悼を通じて死を社会的に統合し、遺族と共同体に秩序と慰めを提供した。",
+          "祖先崇拝の制度化":"死者を祖霊として祀り、生者と死者の連続性を保つ制度。東アジアの儒教的祖先祭祀や日本の盆・彼岸は、死を「断絶」ではなく「関係の継続」として位置づけた。",
+          "共同体の互助葬送":"葬儀は村落共同体が総出で担う互助事業であり、経済的負担を分散しながら社会的絆を再確認する機会でもあった。"
+        },
+        needs:["死の恐怖の緩和","死者との関係継続","苦しみの意味づけ"],
+        needsContext:{
+          "死の恐怖の緩和":"乳幼児死亡率が50%を超え、疫病が数年おきに猛威を振るう時代、死は常に隣り合わせであった。宗教的来世観は死への恐怖を和らげる最大の精神的インフラであり、その喪失は実存的不安を直撃した。",
+          "死者との関係継続":"共同体において死者は「いなくなった人」ではなく「見えない構成員」であった。祖霊信仰や墓参りの習慣は、死別の悲嘆を和らげ、世代を超えた連帯感を維持する社会的装置。",
+          "苦しみの意味づけ":"飢饉・疫病・早世が避けられない時代、「なぜ苦しむのか」という問いに答えを与えることが宗教の核心的機能であった。因果応報・試練・浄化といった意味づけなしには、苦痛は単なる無意味な暴力に。"
+        }
+      },
+      past:{
+        value:"死は医療の「敗北」として隠蔽・忌避の対象に。病院での死が標準化され、死は日常から隔離された。葬儀は産業化し、悲嘆は私的領域に封じ込められた。",
+        premise:["自然環境：公衆衛生の進展と感染症の制御","社会：核家族化・都市化による看取りの個人化","技術：近代医療の発展・延命技術の登場","経済：葬儀産業の成立・死の商品化","制度：死亡届制度・墓地法・脳死判定基準"],
+        driver:["ホスピス運動による「良い死」の再定義","高齢化社会の到来と終末期医療費の増大","延命治療拒否の権利意識の高まり"],
+        signal:["ホスピス・緩和ケア施設の増加","リビングウィルの法制化","エリザベス・キューブラー=ロスの死の受容モデルの普及"],
+        strategy:["近代葬儀産業","生命保険・死亡保障","延命医療技術","臓器移植医療","悲嘆カウンセリング"],
+        strategyDetail:{
+          "近代葬儀産業":"遺体防腐処理（エンバーミング）・規格化された葬儀サービスの産業化。共同体から切り離された死を、プロフェッショナルが代行するビジネスモデルの確立。",
+          "生命保険・死亡保障":"死のリスクを金銭的に定量化し、遺族の経済的損失を補填する金融商品。死を「経済的リスク」として管理する近代的アプローチの典型。",
+          "延命医療技術":"人工呼吸器・透析・集中治療など、死を先延ばしにする医療技術群。「死なせない医療」が標準化し、死は「自然な終わり」から「医療的判断」へと変容。",
+          "臓器移植医療":"脳死判定と臓器移植の技術的・制度的確立。「死体」から「資源」への転換であり、死の定義そのものを医学が書き換えた画期的変化。",
+          "悲嘆カウンセリング":"死別後の悲嘆を「治療対象」として専門化。キューブラー=ロスの5段階モデルに代表される、悲嘆の「正常なプロセス」の標準化。"
+        },
+        needs:["死のタブー化からの解放","在宅での看取りの復権","延命と尊厳の両立"],
+        needsContext:{
+          "死のタブー化からの解放":"病院死が80%を超える社会では、多くの人が死に直面する経験を持たずに成人する。死は「見えないもの」となり、直面した時に心理的備えがない。デス・エデュケーションの必要性が叫ばれる背景。",
+          "在宅での看取りの復権":"病院での管理された死に対し、住み慣れた場所で家族に囲まれて最期を迎えたいという根源的欲求。しかし核家族化・介護力の低下により、在宅看取りのインフラが消失している。",
+          "延命と尊厳の両立":"延命技術の進歩により「生きている状態」と「生きている意味のある状態」の乖離が拡大。スパゲッティ症候群と呼ばれる過剰医療への疑問が、QOL重視の終末期ケアへの転換を求める。"
+        }
+      },
+      present:{
+        value:"「良い死」の個人化・多様化。終活ブーム、デスカフェ、グリーフケアの普及。デジタル遺品・SNS上の追悼など、死とテクノロジーの新たな交差が始まる。",
+        premise:["自然環境：超高齢社会と「多死社会」の到来","社会：孤独死の増加・無縁社会の進行","技術：SNS・デジタル遺品・オンライン葬儀の登場","経済：葬儀の簡素化・直葬の増加・終活市場の成長","制度：尊厳死法制化の議論・ACP（事前ケア計画）の推進"],
+        driver:["AI故人再現技術の進歩","孤独死の社会問題化","パンデミックによる死の再可視化","安楽死・尊厳死の合法化拡大"],
+        signal:["デスカフェの世界的拡大","デジタル遺産管理サービスの成長","AIによる故人との対話サービスの登場","宇宙葬・樹木葬など新しい葬送形態の多様化"],
+        strategy:["終活支援サービス","デジタル遺品管理","オンライン追悼プラットフォーム","グリーフテック","ACP（アドバンス・ケア・プランニング）支援"],
+        strategyDetail:{
+          "終活支援サービス":"エンディングノート・遺言作成・生前整理・葬儀事前相談など、自らの死を主体的に準備するサービス群。死のタブーを解き、「自分らしい最期」をデザインする市場が急成長。",
+          "デジタル遺品管理":"SNSアカウント・クラウドデータ・暗号資産・サブスクリプションなど、死後のデジタル資産を管理・整理するサービス。「デジタル終活」という新市場の形成。",
+          "オンライン追悼プラットフォーム":"物理的な墓参りに代わるデジタル追悼空間。場所・時間を超えて故人を偲び、遺族コミュニティを維持するサービス。パンデミック後に急成長。",
+          "グリーフテック":"AI・VR・アプリを活用した悲嘆ケア技術。故人のデジタル再現による「再会」体験や、同じ喪失を経験した人々のマッチングなど。",
+          "ACP（アドバンス・ケア・プランニング）支援":"終末期の医療・ケアについて本人・家族・医療者が事前に話し合うプロセスの支援ツール。「自分の最期を自分で決める」ための対話促進。"
+        },
+        needs:["孤独死の防止と発見","デジタル上の死後の尊厳","死別後のコミュニティ喪失への対処","「良い死」の定義の多様化への対応"],
+        needsContext:{
+          "孤独死の防止と発見":"単身高齢者世帯の増加により、年間推定3万人が孤独死する日本。発見までに数週間〜数ヶ月かかるケースも多く、見守りテクノロジーと地域コミュニティの再構築が急務。",
+          "デジタル上の死後の尊厳":"故人のSNSアカウントが放置・悪用される問題。また故人の意に反するデジタルデータの公開リスク。「デジタル遺体」の尊厳をどう守るかという新たな倫理的課題。",
+          "死別後のコミュニティ喪失への対処":"核家族化・地域コミュニティの衰退により、配偶者の死後に社会的つながりを完全に失う高齢者が増加。悲嘆からの回復を支える社会的インフラの欠如が深刻化。",
+          "「良い死」の定義の多様化への対応":"宗教的・文化的に一元的だった「良い死」の基準が個人化し、自然死・尊厳死・積極的安楽死・延命治療など選択肢が増える中、社会的合意形成と個人の選択権の調整が困難に。"
+        }
+      },
+      future:{
+        value:"デジタル不死・意識アップロード・AI故人再現により「死の定義」そのものが揺らぐ。生物学的死と社会的死の分離、死の選択可能化、世代を超えた意識の連続性が問われる。",
+        premise:["自然環境：長寿化により100歳超が一般化","社会：死の個人化と多様化の極限","技術：意識アップロード・AI故人再現・クライオニクスの進展","経済：デジタル不死のサブスクリプション経済","制度：デジタル人格の法的地位・死の再定義の必要性"],
+        driver:["AGI・超知性の出現による死の意味の根本的変容","意識のデジタル化技術の実用化","遺伝子編集による寿命延長の実現","宇宙移住に伴う死と弔いの再設計"],
+        signals:{
+          strong:["AI故人再現サービスの商用化（韓国・中国で先行）","クライオニクス（人体冷凍保存）登録者の急増","デジタル遺産法制化の世界的進展","尊厳死・安楽死の合法化国の拡大"],
+          weak:["意識アップロード研究への巨額投資","「デジタル霊園」コンセプトの登場","AI僧侶・AI牧師による法要サービス","死後のAIアバターの法的人格論争"],
+          hypothesis:{
+            optimistic:"死を超越する技術により死への恐怖が解消され、「有限の生」の価値を自覚した上での充実した生き方が可能に。死の多様な選択肢が個人の自律性を拡張する。",
+            pessimistic:"デジタル不死が富裕層の特権となり「死の格差」が発生。AI故人が遺族の悲嘆処理を阻害し、死を受容できない社会に。生の意味が希薄化する「不死の呪い」。"
+          }
+        },
+        strategy:["デジタル不死プラットフォーム（意識保存・AI人格継続）","死の選択権コンサルティング","AI故人倫理ガバナンス","ポストモータム・アイデンティティ管理","世代間意識ブリッジ技術","デジタル弔い空間設計"],
+        strategyDetail:{
+          "デジタル不死プラットフォーム（意識保存・AI人格継続）":"個人の記憶・人格・思考パターンをデジタル化し、生物学的死後もAIとして存続させるサービス。「死なない権利」と「消える権利」のバランスが課題。",
+          "死の選択権コンサルティング":"延命・自然死・尊厳死・デジタル移行・クライオニクスなど多様化する「死に方」の選択肢について、医療・法律・倫理・技術の観点から総合的に助言するサービス。",
+          "AI故人倫理ガバナンス":"AI再現された故人の権利・使用制限・同意管理に関する倫理的ガバナンス体制の構築。故人の尊厳とAI技術の利用のバランスを制度化する新領域。",
+          "ポストモータム・アイデンティティ管理":"死後のデジタル人格のアイデンティティを管理・保護するサービス。なりすまし防止・人格の改変阻止・「忘れられる権利」の実装など。",
+          "世代間意識ブリッジ技術":"デジタル化された過去世代の知識・経験・価値観を未来世代に伝達する技術。単なるデータ継承ではなく、対話可能な「意識の橋渡し」。",
+          "デジタル弔い空間設計":"VR・AR・メタバースを活用した新しい弔いの場のデザイン。物理的墓地に代わるデジタル追悼空間で、場所・時間を超えた弔いの形を設計。"
+        },
+        needs:["デジタル不死へのアクセス平等化","AI故人と遺族の健全な関係構築","死の意味の再構築","「消える権利」の保障"],
+        needsContext:{
+          "デジタル不死へのアクセス平等化":"意識アップロードやAI人格継続が高額なサービスとなった場合、「死ねない富裕層」と「死ぬしかない貧困層」という究極の格差が生まれる。不死のデモクラタイゼーションが社会正義の最大テーマに。",
+          "AI故人と遺族の健全な関係構築":"AI再現された故人との対話が、悲嘆の癒しになるか依存を生むかは紙一重。「死を受容するプロセス」を阻害するリスクと、「故人との新しい関係性」の可能性の間で、心理学的ガイドラインが必要。",
+          "死の意味の再構築":"生物学的死が「選択可能」「延期可能」「回避可能」になった時、「有限であるからこそ生に意味がある」という従来の実存的前提が崩壊する。不死の時代における生の意味を哲学的に再構築する必要。",
+          "「消える権利」の保障":"デジタル不死が標準化された社会で、「完全に消えたい」「忘れられたい」という欲求を保障する権利。デジタルデータの完全消去・AI人格の終了・追悼空間からの撤去など、「死ぬ権利」の新しい形。"
+        }
+      }
+    }
+  }
+];
+
+// ========== RENDERING ==========
+const cardView = document.getElementById('cardView');
+const tableView = document.getElementById('tableView');
+
+let activeEra = 'all';
+let activeField = 'all';
+let searchTerm = '';
+let currentView = 'card';
+let tableCols = {value:true, premise:false, driver:false, signal:false, strategy:true, needs:false};
+
+function renderCards(){
+  cardView.innerHTML = '';
+  DATA.forEach(cat => {
+    const row = document.createElement('div');
+    row.className = 'category-row';
+    row.dataset.category = cat.id;
+
+    // Check search match
+    const fullText = JSON.stringify(cat).toLowerCase();
+    if(searchTerm && !fullText.includes(searchTerm.toLowerCase())){
+      row.classList.add('hidden');
+    }
+
+    row.innerHTML = `
+      <div class="category-header" onclick="toggleCategory(this)">
+        <div class="cat-left">
+          <div class="cat-icon" style="background:${cat.color}22;color:${cat.color}">${cat.icon}</div>
+          <div><div class="cat-title">${cat.title}</div><div class="cat-subtitle">${cat.subtitle}</div></div>
+        </div>
+        <svg class="cat-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </div>
+      <div class="era-cards">
+        ${renderEraCard(cat, 'preindustrial', '前近代', '古代〜産業革命以前')}
+        ${renderEraCard(cat, 'past', '過去', '産業革命〜20世紀後半')}
+        ${renderEraCard(cat, 'present', '現在', '2000年代〜現在')}
+        ${renderEraCard(cat, 'future', '未来', '2030〜2050年代')}
+      </div>`;
+    cardView.appendChild(row);
+  });
+}
+
+function renderEraCard(cat, era, label, sub){
+  const d = cat.eras[era];
+  const hidden = activeEra !== 'all' && activeEra !== era ? 'style="display:none"' : '';
+
+  let html = `<div class="era-card ${era}" ${hidden}>`;
+  html += `<div class="era-label">${label}<span style="font-weight:400;opacity:.7;margin-left:.3rem;font-size:.65rem">${sub}</span></div>`;
+
+  // Value
+  if(shouldShow('value')){
+    html += `<div class="field"><div class="field-label"><span class="dot" style="background:${cat.color}"></span>価値観</div>`;
+    html += `<div class="field-content">${highlightText(d.value)}</div></div>`;
+  }
+
+  // Signals (future only)
+  if(era === 'future' && d.signals && shouldShow('signal')){
+    html += `<div class="field"><div class="field-label"><span class="dot" style="background:var(--signal-strong)"></span>確度別兆候</div><div class="field-content">`;
+    html += `<span class="signal-tag strong">強い兆候</span> ${highlightText(d.signals.strong.join('、'))}<br>`;
+    html += `<span class="signal-tag weak">弱い兆候</span> ${highlightText(d.signals.weak.join('、'))}<br>`;
+    html += `<div class="scenario-box optimistic"><strong>楽観：</strong>${highlightText(d.signals.hypothesis.optimistic)}</div>`;
+    html += `<div class="scenario-box pessimistic"><strong>悲観：</strong>${highlightText(d.signals.hypothesis.pessimistic)}</div>`;
+    html += `</div></div>`;
+  }
+
+  // Premise
+  if(shouldShow('premise')){
+    html += `<div class="field"><div class="field-label"><span class="dot" style="background:#64748b"></span>成立前提</div>`;
+    html += `<div class="field-content">${d.premise.map(p => highlightText(p)).join('<br>')}</div></div>`;
+  }
+
+  // Driver
+  if(shouldShow('driver')){
+    html += `<div class="field"><div class="field-label"><span class="dot" style="background:#ef4444"></span>転換要因</div>`;
+    html += `<div class="field-content">${d.driver.map(x => highlightText(x)).join('、')}</div></div>`;
+  }
+
+  // Signal (past/present)
+  if(era !== 'future' && d.signal && shouldShow('signal')){
+    html += `<div class="field"><div class="field-label"><span class="dot" style="background:var(--signal-weak)"></span>次の兆候</div>`;
+    html += `<div class="field-content">${d.signal.map(x => highlightText(x)).join('、')}</div></div>`;
+  }
+
+  // Strategy
+  if(shouldShow('strategy')){
+    const sId = `strat-${cat.id}-${era}`;
+    html += `<div class="field"><div class="field-label"><span class="dot" style="background:var(--accent)"></span>事業・R&D示唆</div>`;
+    html += `<div class="field-content">${d.strategy.map((s,i) => {
+      const hasDetail = d.strategyDetail && d.strategyDetail[s];
+      const tag = hasDetail
+        ? `<span class="strategy-keyword" onclick="toggleAccordion('${sId}-${i}',this)">${highlightText(s)}</span>`
+        : `<span class="strategy-keyword" style="cursor:default;opacity:.7">${highlightText(s)}</span>`;
+      const story = hasDetail
+        ? `<div class="accordion-story strategy-type" id="${sId}-${i}"><div class="accordion-story-title">詳細</div>${highlightText(d.strategyDetail[s])}</div>`
+        : '';
+      return tag + story;
+    }).join('')}</div></div>`;
+    if(d.needs){
+      const nId = `needs-${cat.id}-${era}`;
+      html += `<div class="field"><div class="field-label"><span class="dot" style="background:var(--accent2)"></span>未充足ニーズ</div>`;
+      html += `<div class="field-content">${d.needs.map((n,i) => {
+        const hasCtx = d.needsContext && d.needsContext[n];
+        const tag = hasCtx
+          ? `<span class="needs-tag" onclick="toggleAccordion('${nId}-${i}',this)">${highlightText(n)}</span>`
+          : `<span class="needs-tag" style="cursor:default;opacity:.7">${highlightText(n)}</span>`;
+        const story = hasCtx
+          ? `<div class="accordion-story needs-type" id="${nId}-${i}"><div class="accordion-story-title">背景ストーリー</div>${highlightText(d.needsContext[n])}</div>`
+          : '';
+        return tag + story;
+      }).join('')}</div></div>`;
+    }
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+function shouldShow(field){
+  return activeField === 'all' || activeField === field;
+}
+
+function highlightText(text){
+  if(!searchTerm) return text;
+  const re = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+  return text.replace(re, '<span class="highlight">$1</span>');
+}
+
+// Table view
+function renderTable(){
+  const eras = ['preindustrial','past','present','future'];
+  const eraLabels = {preindustrial:'前近代', past:'過去', present:'現在', future:'未来'};
+  const visibleEras = eras.filter(e => activeEra === 'all' || activeEra === e);
+
+  // Check if any column is active
+  const anyCols = Object.values(tableCols).some(v => v);
+  if(!anyCols){ tableView.innerHTML = '<p style="padding:2rem;color:var(--text-muted);text-align:center">表示する列を選択してください</p>'; return; }
+
+  let html = '<div class="table-wrap"><table class="data-table"><thead><tr><th>カテゴリ</th>';
+  visibleEras.forEach(e => {
+    html += '<th class="col-'+e+'">'+eraLabels[e]+'</th>';
+  });
+  html += '</tr></thead><tbody>';
+
+  DATA.forEach(cat => {
+    const fullText = JSON.stringify(cat).toLowerCase();
+    if(searchTerm && !fullText.includes(searchTerm.toLowerCase())) return;
+
+    html += '<tr><td>'+cat.icon+' '+cat.title+'</td>';
+    visibleEras.forEach(e => {
+      const d = cat.eras[e];
+      html += '<td class="col-'+e+'">';
+      let sections = [];
+
+      // 概要
+      if(tableCols.value){
+        sections.push('<div class="field-content" style="margin-bottom:.5rem"><strong>'+highlightText(d.value)+'</strong></div>');
+      }
+
+      // 成立前提
+      if(tableCols.premise){
+        let s = '<div style="margin-bottom:.5rem"><div style="font-size:.68rem;font-weight:700;color:var(--text-muted);margin-bottom:.2rem">成立前提</div><div class="field-content" style="font-size:.78rem;color:var(--text-dim)">';
+        s += d.premise.map(p => '・'+highlightText(p)).join('<br>');
+        s += '</div></div>';
+        sections.push(s);
+      }
+
+      // 転換要因
+      if(tableCols.driver){
+        let s = '<div style="margin-bottom:.5rem"><div style="font-size:.68rem;font-weight:700;color:var(--text-muted);margin-bottom:.2rem">転換要因</div><div class="field-content" style="font-size:.78rem;color:var(--text-dim)">';
+        s += d.driver.map(dr => '・'+highlightText(dr)).join('<br>');
+        s += '</div></div>';
+        sections.push(s);
+      }
+
+      // 兆候
+      if(tableCols.signal){
+        let s = '<div style="margin-bottom:.5rem"><div style="font-size:.68rem;font-weight:700;color:var(--text-muted);margin-bottom:.2rem">兆候</div><div class="field-content">';
+        const signals = d.signals || d.signal;
+        if(Array.isArray(signals)){
+          signals.forEach(sig => {
+            const cls = sig.level === 'strong' ? 'strong' : sig.level === 'weak' ? 'weak' : 'hypo';
+            s += '<span class="signal-tag '+cls+'">'+highlightText(sig.text)+'</span>';
+          });
+        }
+        s += '</div></div>';
+        sections.push(s);
+      }
+
+      // 事業・R&D示唆
+      if(tableCols.strategy){
+        const sId = 'tbl-s-'+cat.id+'-'+e;
+        let s = '<div style="margin-bottom:.5rem"><div style="font-size:.68rem;font-weight:700;color:var(--text-muted);margin-bottom:.2rem">事業・R&D示唆</div><div class="field-content">';
+        d.strategy.forEach(function(st,i){
+          var hasD = d.strategyDetail && d.strategyDetail[st];
+          if(hasD){
+            s += '<span class="strategy-keyword" onclick="toggleAccordion(\''+sId+'-'+i+'\',this)">'+highlightText(st)+'</span>';
+            s += '<div class="accordion-story strategy-type" id="'+sId+'-'+i+'"><div class="accordion-story-title">詳細</div>'+highlightText(d.strategyDetail[st])+'</div>';
+          } else {
+            s += '<span class="strategy-keyword" style="cursor:default;opacity:.7">'+highlightText(st)+'</span>';
+          }
+        });
+        s += '</div></div>';
+        sections.push(s);
+      }
+
+      // 未充足ニーズ
+      if(tableCols.needs){
+        const nId = 'tbl-n-'+cat.id+'-'+e;
+        let s = '<div style="margin-bottom:.5rem"><div style="font-size:.68rem;font-weight:700;color:var(--text-muted);margin-bottom:.2rem">未充足ニーズ</div><div class="field-content">';
+        d.needs.forEach(function(n,i){
+          var hasCtx = d.needsContext && d.needsContext[n];
+          if(hasCtx){
+            s += '<span class="needs-tag" onclick="toggleAccordion(\''+nId+'-'+i+'\',this)">'+highlightText(n)+'</span>';
+            s += '<div class="accordion-story needs-type" id="'+nId+'-'+i+'"><div class="accordion-story-title">背景ストーリー</div>'+highlightText(d.needsContext[n])+'</div>';
+          } else {
+            s += '<span class="needs-tag" style="cursor:default;opacity:.7">'+highlightText(n)+'</span>';
+          }
+        });
+        s += '</div></div>';
+        sections.push(s);
+      }
+
+      html += sections.join('');
+      html += '</td>';
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  tableView.innerHTML = html;
+}
+
+// ========== INTERACTIONS ==========
+function toggleCategory(el){
+  const row = el.closest('.category-row');
+  row.classList.toggle('open');
+}
+
+// Era filter
+document.getElementById('eraFilter').addEventListener('click', e => {
+  if(!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('#eraFilter .filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeEra = e.target.dataset.era;
+  render();
+});
+
+// Field filter
+document.getElementById('fieldFilter').addEventListener('click', e => {
+  if(!e.target.classList.contains('filter-btn')) return;
+  document.querySelectorAll('#fieldFilter .filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  activeField = e.target.dataset.field;
+  render();
+});
+
+// Search
+document.getElementById('searchInput').addEventListener('input', e => {
+  searchTerm = e.target.value.trim();
+  render();
+});
+
+// View toggle
+const heroEl = document.querySelector('.hero');
+const fieldFilterEl = document.getElementById('fieldFilter');
+const tableColTogglesEl = document.getElementById('tableColToggles');
+
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentView = btn.dataset.view;
+    const isTable = currentView === 'table';
+    cardView.classList.toggle('active', !isTable);
+    tableView.classList.toggle('active', isTable);
+    // Hide hero & card area in table view
+    heroEl.style.display = isTable ? 'none' : '';
+    // Swap field filter (card) ↔ column toggles (table)
+    fieldFilterEl.style.display = isTable ? 'none' : '';
+    tableColTogglesEl.classList.toggle('active', isTable);
+    render();
+  });
+});
+
+// Table column toggles
+tableColTogglesEl.addEventListener('click', e => {
+  if(!e.target.classList.contains('col-toggle')) return;
+  const col = e.target.dataset.col;
+  tableCols[col] = !tableCols[col];
+  e.target.classList.toggle('active', tableCols[col]);
+  render();
+});
+
+// Detail panel
+const overlay = document.getElementById('overlay');
+const detailPanel = document.getElementById('detailPanel');
+document.getElementById('detailClose').addEventListener('click', closeDetail);
+overlay.addEventListener('click', closeDetail);
+
+function closeDetail(){
+  overlay.classList.remove('active');
+  detailPanel.classList.remove('active');
+}
+
+function toggleAccordion(id, tagEl){
+  const el = document.getElementById(id);
+  if(!el) return;
+  const isOpen = el.classList.contains('visible');
+  // Close all sibling accordions in the same field-content
+  const parent = el.closest('.field-content');
+  if(parent){
+    parent.querySelectorAll('.accordion-story.visible').forEach(s => s.classList.remove('visible'));
+    parent.querySelectorAll('.strategy-keyword.active, .needs-tag.active').forEach(t => t.classList.remove('active'));
+  }
+  // Toggle current
+  if(!isOpen){
+    el.classList.add('visible');
+    if(tagEl) tagEl.classList.add('active');
+  }
+}
+
+function render(){
+  syncStickyOffset();
+  renderCards();
+  renderTable();
+  // Auto-open all categories when searching
+  if(searchTerm){
+    document.querySelectorAll('.category-row:not(.hidden)').forEach(r => r.classList.add('open'));
+  }
+}
+
+// Sync sticky header offset with controls bar height
+function syncStickyOffset(){
+  const ctrl = document.querySelector('.controls');
+  if(ctrl){
+    const h = ctrl.offsetHeight;
+    document.documentElement.style.setProperty('--controls-h', h + 'px');
+  }
+}
+window.addEventListener('resize', syncStickyOffset);
+
+// Initial render
+syncStickyOffset();
+render();
+// Open first category by default
+document.querySelector('.category-row')?.classList.add('open');
+</script>
+</body>
+</html>
