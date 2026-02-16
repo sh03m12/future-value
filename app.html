@@ -2186,6 +2186,10 @@ function geoToSvg(lat, lng){
 let mapInitialized = false;
 let compareMode = false;
 let compareSelection = [];
+let researchDB = null;
+let researchDBLoading = false;
+let researchDBError = false;
+let researchToggles = {sources:false, reasoning:false, confidence:false, alternatives:false};
 
 function renderMap(){
   if(!mapInitialized){
@@ -2629,6 +2633,12 @@ function showMapDetail(loc){
   html += '<div class="map-detail-title"><h3>'+loc.name+'</h3><span class="map-detail-en">'+loc.nameEn+'</span>';
   html += '<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);margin-left:.5rem">'+eraLabels[loc.era]+' — '+loc.period+'</span></div>';
   html += '<p class="map-detail-desc">'+loc.description+'</p>';
+  html += '<div class="research-toggles">';
+  html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 推論</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.alternatives?' active':'')+'" data-key="alternatives" onclick="toggleResearchMeta(\'alternatives\')">⚖ 異論</button>';
+  html += '</div>';
   html += '<button class="map-detail-close" onclick="closeMapDetail()">&times;</button>';
   html += '</div>';
   // Premises section with influence badges
@@ -2720,6 +2730,11 @@ function showMapDetail(loc){
       });
     });
   }
+  // Inject research metadata if toggles are on
+  if(Object.values(researchToggles).some(v => v)){
+    if(researchDB) injectResearchIntoDetail(detail);
+    else loadResearchDB().then(() => { if(researchDB) injectResearchIntoDetail(detail); });
+  }
 }
 
 function closeMapDetail(){
@@ -2790,6 +2805,13 @@ function showMapComparison(){
   if(!detail) return;
 
   let html = '<button class="map-compare-close" onclick="closeMapComparison()">&times;</button>';
+  // Research toggles
+  html += '<div class="research-toggles" style="margin-bottom:.6rem">';
+  html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 推論</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.alternatives?' active':'')+'" data-key="alternatives" onclick="toggleResearchMeta(\'alternatives\')">⚖ 異論</button>';
+  html += '</div>';
   // Header
   html += '<div class="map-compare-header">';
   [cityA, cityB].forEach(city => {
@@ -2819,7 +2841,7 @@ function showMapComparison(){
         const premise = city.premises ? (city.premises[i] || '') : '';
         const colonIdx = premise.indexOf('：');
         const text = colonIdx > -1 ? premise.substring(colonIdx + 1) : premise;
-        html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'">'+text+'</div>';
+        html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'" data-city-id="'+city.id+'" data-premise-idx="'+i+'">'+text+'</div>';
       });
       html += '</div></div>';
     }
@@ -2844,7 +2866,7 @@ function showMapComparison(){
           if(vids.includes(cat.id)) sources.push(parseInt(idx));
         });
       }
-      html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'">';
+      html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'" data-city-id="'+city.id+'" data-value-id="'+cat.id+'">';
       html += val;
       if(sources.length > 0){
         html += '<div class="value-premise-sources compact">';
@@ -2861,11 +2883,140 @@ function showMapComparison(){
   detail.innerHTML = html;
   detail.classList.add('active');
   detail.scrollIntoView({behavior:'smooth',block:'start'});
+  // Inject research metadata if toggles are on
+  if(Object.values(researchToggles).some(v => v)){
+    if(researchDB) injectResearchIntoCompare(detail);
+    else loadResearchDB().then(() => { if(researchDB) injectResearchIntoCompare(detail); });
+  }
 }
 
 function closeMapComparison(){
   const detail = document.getElementById('mapCompareDetail');
   if(detail) detail.classList.remove('active');
+}
+
+// ========== RESEARCH METADATA ==========
+async function loadResearchDB(){
+  if(researchDB) return researchDB;
+  if(researchDBLoading) return null;
+  researchDBLoading = true;
+  try {
+    const resp = await fetch('research-db.json');
+    if(!resp.ok) throw new Error('HTTP ' + resp.status);
+    researchDB = await resp.json();
+    researchDBError = false;
+    return researchDB;
+  } catch(e) {
+    console.warn('research-db.json load failed:', e);
+    researchDBError = true;
+    researchDB = null;
+    return null;
+  } finally {
+    researchDBLoading = false;
+  }
+}
+
+function toggleResearchMeta(key){
+  researchToggles[key] = !researchToggles[key];
+  document.querySelectorAll('.research-toggle-btn').forEach(btn => {
+    if(btn.dataset.key) btn.classList.toggle('active', !!researchToggles[btn.dataset.key]);
+  });
+  const anyOn = Object.values(researchToggles).some(v => v);
+  if(anyOn && !researchDB && !researchDBError){
+    loadResearchDB().then(() => refreshResearchDisplay());
+  } else {
+    refreshResearchDisplay();
+  }
+}
+
+function renderResearchMeta(meta){
+  if(!meta) return '';
+  let html = '<div class="research-meta">';
+  if(researchToggles.confidence && meta.confidence){
+    const label = meta.confidence === 'high' ? '高' : meta.confidence === 'medium' ? '中' : '低';
+    html += '<span class="confidence-badge '+meta.confidence+'"><span class="confidence-dot"></span>'+label+'</span>';
+  }
+  if(researchToggles.sources && meta.sources && meta.sources.length > 0){
+    html += '<div class="research-meta-section"><div class="research-meta-label">出典</div>';
+    html += '<div class="research-sources">'+meta.sources.map(s => '・'+s).join('<br>')+'</div></div>';
+  }
+  if(researchToggles.reasoning && meta.reasoning){
+    html += '<div class="research-meta-section"><div class="research-meta-label">推論</div>';
+    html += '<div class="research-reasoning">'+meta.reasoning+'</div></div>';
+  }
+  if(researchToggles.alternatives && meta.alternatives && meta.alternatives.length > 0){
+    html += '<div class="research-meta-section"><div class="research-meta-label">異論</div>';
+    html += '<ul class="research-alternatives">'+meta.alternatives.map(a => '<li>'+a+'</li>').join('')+'</ul></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function refreshResearchDisplay(){
+  document.querySelectorAll('.research-meta').forEach(el => el.remove());
+  document.querySelectorAll('.confidence-badge').forEach(el => el.remove());
+  const anyOn = Object.values(researchToggles).some(v => v);
+  if(!anyOn) return;
+  if(researchDBError){
+    const detail = document.getElementById('mapDetail');
+    if(detail && detail.classList.contains('active')){
+      const header = detail.querySelector('.map-detail-header');
+      if(header){
+        const err = document.createElement('div');
+        err.className = 'research-load-error research-meta';
+        err.textContent = '📡 研究メタデータの読み込みに失敗しました。ローカルサーバー（npx serve .）経由でお試しください。';
+        header.after(err);
+      }
+    }
+    return;
+  }
+  if(!researchDB) return;
+  const detail = document.getElementById('mapDetail');
+  if(detail && detail.classList.contains('active')) injectResearchIntoDetail(detail);
+  const cmpDetail = document.getElementById('mapCompareDetail');
+  if(cmpDetail && cmpDetail.classList.contains('active')) injectResearchIntoCompare(cmpDetail);
+}
+
+function injectResearchIntoDetail(detail){
+  const selectedPt = document.querySelector('.map-point.selected');
+  if(!selectedPt) return;
+  const cityId = selectedPt.dataset.id;
+  const cityMeta = researchDB[cityId];
+  if(!cityMeta) return;
+  // Description
+  if(cityMeta.description){
+    const desc = detail.querySelector('.map-detail-desc');
+    if(desc && !desc.nextElementSibling?.classList?.contains('research-meta')){
+      desc.insertAdjacentHTML('afterend', renderResearchMeta(cityMeta.description));
+    }
+  }
+  // Value cards
+  detail.querySelectorAll('.map-value-card').forEach(card => {
+    const vid = card.dataset.valueId;
+    const meta = cityMeta.values?.[vid];
+    if(meta) card.insertAdjacentHTML('beforeend', renderResearchMeta(meta));
+  });
+  // Premise items
+  detail.querySelectorAll('.map-premise-item').forEach(item => {
+    const idx = item.dataset.premiseIdx;
+    const meta = cityMeta.premises?.[idx];
+    if(meta) item.insertAdjacentHTML('beforeend', renderResearchMeta(meta));
+  });
+}
+
+function injectResearchIntoCompare(detail){
+  // Inject into compare cells
+  detail.querySelectorAll('.map-compare-cell[data-city-id]').forEach(cell => {
+    const cityId = cell.dataset.cityId;
+    const cityMeta = researchDB?.[cityId];
+    if(!cityMeta) return;
+    const vid = cell.dataset.valueId;
+    const pidx = cell.dataset.premiseIdx;
+    let meta = null;
+    if(vid) meta = cityMeta.values?.[vid];
+    else if(pidx !== undefined && pidx !== null) meta = cityMeta.premises?.[pidx];
+    if(meta) cell.insertAdjacentHTML('beforeend', renderResearchMeta(meta));
+  });
 }
 
 // Table view
