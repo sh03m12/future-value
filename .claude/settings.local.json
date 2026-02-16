@@ -16,7 +16,10 @@
       "Bash(git push:*)",
       "Bash(node -e:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(node replace-map.js:*)"
+      "Bash(node replace-map.js:*)",
+      "Bash(node:*)",
+      "Bash(dir:*)",
+      "Bash(npm:*)"
     ]
   }
 }
