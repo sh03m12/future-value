@@ -199,6 +199,66 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .col-toggle:hover{border-color:var(--accent);color:var(--accent)}
 .col-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff}
 
+/* ========== MAP VIEW ========== */
+.map-view{display:none}
+.map-view.active{display:block}
+.map-header{text-align:center;padding:1.2rem 0 .8rem}
+.map-title{font-size:1.3rem;font-weight:800;
+  background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.map-subtitle{font-size:.82rem;color:var(--text-muted);margin-top:.2rem}
+.map-container{position:relative;max-width:1200px;margin:0 auto;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;padding:.8rem}
+#worldMap{width:100%;height:auto;display:block}
+.map-point{cursor:pointer}
+.map-point:hover .point-dot{filter:url(#glow);r:8}
+.point-label{font-size:8px;fill:var(--text);font-weight:600;
+  opacity:0;transition:opacity .15s ease;pointer-events:none}
+.map-point:hover .point-label{opacity:1}
+.map-tooltip{position:absolute;z-index:50;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:.5rem .7rem;
+  pointer-events:none;opacity:0;transition:opacity .15s ease;
+  box-shadow:var(--shadow);max-width:240px;white-space:nowrap}
+.map-tooltip.visible{opacity:1}
+.map-tooltip-name{font-weight:700;font-size:.82rem;color:var(--text)}
+.map-tooltip-period{font-size:.7rem;color:var(--text-muted);margin-top:.1rem}
+.map-legend{display:flex;gap:1rem;justify-content:center;margin-top:.6rem;flex-wrap:wrap}
+.map-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--text-muted)}
+.map-legend-dot{width:8px;height:8px;border-radius:50%}
+
+.map-detail{display:none;margin-top:1.2rem;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.5rem;position:relative;animation:fadeIn .3s ease}
+.map-detail.active{display:block}
+.map-detail-header{position:relative;margin-bottom:1rem;padding-bottom:.8rem;border-bottom:1px solid var(--border)}
+.map-detail-title{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap}
+.map-detail-title h3{font-size:1.15rem;font-weight:800;margin:0}
+.map-detail-en{font-size:.82rem;color:var(--text-muted);font-weight:400}
+.map-detail-desc{font-size:.82rem;color:var(--text-dim);margin-top:.4rem;line-height:1.6}
+.map-detail-close{position:absolute;top:0;right:0;width:30px;height:30px;
+  border-radius:50%;border:1px solid var(--border);background:var(--surface2);
+  color:var(--text);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:1rem;transition:var(--transition)}
+.map-detail-close:hover{background:var(--accent);border-color:var(--accent)}
+.map-detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.7rem}
+.map-value-card{background:var(--surface2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:.7rem;transition:var(--transition)}
+.map-value-card:hover{border-color:var(--border-light)}
+.map-value-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem}
+.map-value-icon{width:26px;height:26px;border-radius:6px;display:flex;
+  align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.map-value-title{font-size:.78rem;font-weight:700;color:var(--text)}
+.map-value-text{font-size:.76rem;color:var(--text-dim);line-height:1.6}
+.map-point.selected .point-dot{animation:pulse 1.5s ease infinite}
+@keyframes pulse{0%,100%{opacity:.9}50%{opacity:.4}}
+@media(max-width:768px){
+  .map-detail-grid{grid-template-columns:1fr}
+  .map-container{padding:.4rem}
+  .point-label{font-size:6px}
+}
+
 /* ========== FOOTER ========== */
 .page-footer{max-width:1400px;margin:0 auto;padding:2rem;
   border-top:1px solid var(--border);text-align:center}
@@ -285,6 +345,9 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
       <button class="view-btn" data-view="table" title="テーブル表示">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M9 3v18"/></svg>
       </button>
+      <button class="view-btn" data-view="map" title="世界地図表示">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </button>
     </div>
   </div>
 </nav>
@@ -293,6 +356,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 <main class="main">
   <div class="timeline-grid active" id="cardView"></div>
   <div class="table-view" id="tableView"></div>
+  <div class="map-view" id="mapView"></div>
 </main>
 
 <!-- ===== DETAIL PANEL ===== -->
@@ -1313,9 +1377,348 @@ const DATA = [
   }
 ];
 
+// ========== MAP LOCATIONS DATA ==========
+const MAP_LOCATIONS = [
+  // --- Preindustrial ---
+  {id:"athens",name:"古代アテネ",nameEn:"Athens",lat:37.97,lng:23.72,era:"preindustrial",period:"紀元前5世紀",
+   description:"民主政治・哲学・市民的徳の発祥地。人間の理性と公共参加を最高の価値とした。",
+   values:{
+     human:"個人の理性と市民としての徳を重視。自由市民のみ政治参加可能で、奴隷・女性は排除された。",
+     labor:"知的労働（哲学・政治参加）を最も高貴な活動とし、肉体労働は奴隷に委ねた。",
+     consumption:"質素を美徳としつつ、祭典や公共建築には惜しまず投資。富の誇示は民主政の敵と見なされた。",
+     tech:"幾何学・天文学・建築技術が発展。技術は自然法則を理解する手段であり、自然への敬意が前提。",
+     nature:"自然はコスモス（秩序）の表現。人間は自然の一部であり、自然の法則に従うことが理性的行為。",
+     order:"直接民主政治を実践。市民全員が政治的意思決定に参加。ただし市民権は成人男性自由民に限定。",
+     enterprise:"個人の商業は認められたが、過度の利益追求は公共の徳に反するとされた。",
+     happiness:"エウダイモニア（善く生きること）が幸福の定義。快楽ではなく徳の実践と知性の行使が源泉。",
+     knowledge:"哲学・対話を通じた真理探究。知はアゴラ・アカデメイアで共有され、議論で深化した。",
+     time:"循環的時間観と直線的歴史意識の共存。季節の祭典と歴史記述が並存。",
+     death:"英雄的死は称賛の対象。死後の魂について多様な哲学的見解が共存。"
+   }},
+  {id:"sparta",name:"スパルタ",nameEn:"Sparta",lat:37.08,lng:22.43,era:"preindustrial",period:"紀元前5世紀",
+   description:"軍事的規律と共同体の一体性を究極まで追求した都市国家。",
+   values:{
+     human:"個人は国家の一部。幼少期から集団生活・軍事訓練で規律と忍耐を徹底的に叩き込まれた。",
+     labor:"軍事訓練が最重要の「労働」。農業は奴隷（ヘロット）が担い、市民は戦士に専念。",
+     consumption:"極端な質素を美徳化。贅沢品の所持は禁止、鉄の貨幣で交易を抑制。",
+     tech:"軍事技術に特化。芸術・学問への関心は低く、実用的な戦闘技術を重視。",
+     nature:"過酷な自然環境を訓練の場として活用。自然との闘争が戦士の資質を鍛えるという信念。",
+     order:"二王制と長老会による寡頭政治。厳格な法律（リュクルゴス体制）で社会を統制。",
+     enterprise:"商業活動を蔑視。土地の均等分配と共食制度で経済的平等を強制。",
+     happiness:"名誉と義務の遂行が幸福。戦場での勇敢さと共同体への貢献が最高の価値。",
+     knowledge:"実践的知識と口承による教育を重視。書物よりも体験と師弟関係による伝達。",
+     time:"永続する制度と不変の法を理想とした。変化ではなく安定・持続を最高の時間観。",
+     death:"戦場での名誉ある死を最高の栄誉とした。「盾の上か盾とともに」帰れと母が息子に告げた。"
+   }},
+  {id:"rome",name:"ローマ帝国",nameEn:"Rome",lat:41.90,lng:12.50,era:"preindustrial",period:"紀元前1世紀〜紀元5世紀",
+   description:"法制度・工学・統治技術の金字塔。多民族帝国の統合と秩序維持の実験場。",
+   values:{
+     human:"市民権を核としたアイデンティティ。被征服民にも市民権を拡大し、統合と忠誠を確保。",
+     labor:"農業を基盤としつつ、大規模インフラ建設（道路・水道・競技場）に膨大な労働力を投入。",
+     consumption:"征服による富の流入で奢侈文化が発展。パンとサーカスで市民を懐柔。",
+     tech:"土木・建築・軍事技術で圧倒的な成果。コンクリート・アーチ・水道橋は技術革新の結晶。",
+     nature:"自然を征服・制御する対象と捉えた。大規模な土地改変と農地開発。",
+     order:"共和政から帝政へ。成文法（ローマ法）が近代法の基礎となる普遍的法体系を構築。",
+     enterprise:"属州からの搾取と交易ネットワークで帝国経済を維持。商人階級が台頭。",
+     happiness:"公共の栄光と市民としての義務遂行が幸福。ストア哲学が内面的平穏を説いた。",
+     knowledge:"ギリシャ文化を吸収・体系化し、法学・修辞学・歴史学を実用的に発展。",
+     time:"帝国の永続を信じる直線的進歩観。「永遠の都ローマ」の神話。",
+     death:"祖先崇拝と葬送行列で死者を公的に顕彰。殉教者の死がキリスト教普及の原動力に。"
+   }},
+  {id:"kyoto",name:"平安京",nameEn:"Kyoto",lat:35.01,lng:135.77,era:"preindustrial",period:"8〜12世紀",
+   description:"日本の宮廷文化の中心地。「もののあはれ」に象徴される繊細な美意識の開花。",
+   values:{
+     human:"身分と血縁が全てを決定。個人の才能は和歌・書道・音楽などの教養で表現された。",
+     labor:"宮廷の儀式・行事の運営が最重要の仕事。農業は地方に委任し貴族は文化活動に従事。",
+     consumption:"衣装・調度品に極度のこだわり。季節感を反映した色の重ね（襲色目）は消費と芸術の融合。",
+     tech:"仮名文字の発明により独自の文学文化が開花。建築は自然との調和を重視した寝殿造。",
+     nature:"自然は鑑賞と詠嘆の対象。四季の移ろいに心を寄せる感性が文化の根幹。",
+     order:"天皇を頂点とする律令制。実質は藤原氏の摂関政治。儀式と先例が統治の基盤。",
+     enterprise:"荘園経済が基盤。商業は市（いち）で限定的に行われ、貴族は直接関与せず。",
+     happiness:"「もののあはれ」を知ることが教養人の条件。はかなさの中に美を見出す感性が幸福の核。",
+     knowledge:"和歌・物語・日記文学が知の中心。『源氏物語』は世界最古の長編小説。",
+     time:"季節の循環と無常観が時間意識の核。「行く川の流れは絶えずして」の感覚。",
+     death:"浄土信仰が浸透し、極楽往生を願う。末法思想が死への恐怖と来世への希望を増幅。"
+   }},
+  {id:"changan",name:"長安（唐）",nameEn:"Chang'an",lat:34.26,lng:108.94,era:"preindustrial",period:"7〜9世紀",
+   description:"唐代の世界最大級の国際都市。シルクロードの東端として多文化が共存。",
+   values:{
+     human:"科挙による能力主義と門閥貴族の伝統が共存。国際都市として多民族の人材を登用。",
+     labor:"農業が基盤だが、交易・工芸が高度に発達。官僚機構が巨大な雇用を創出。",
+     consumption:"シルクロード交易により異国の産物が流入。茶・陶磁器・絹が洗練された消費文化を形成。",
+     tech:"製紙・印刷・火薬・羅針盤の四大発明が世界史を変えた。天文学・医学も高度に発展。",
+     nature:"道教の自然観と儒教の人間中心主義が並存。山水画は自然への畏敬の表現。",
+     order:"中央集権的律令国家。科挙制度が官僚選抜の基準を能力に転換する画期的な制度。",
+     enterprise:"国家統制下の交易が主流だが、民間商業も繁栄。為替（飛銭）が長距離交易を促進。",
+     happiness:"詩文と酒と友情が文人の幸福。李白・杜甫に代表される詩の黄金時代。",
+     knowledge:"儒学・仏教・道教が共存する知的多元主義。百科全書的な類書が知識を体系化。",
+     time:"王朝の興亡を循環として捉える歴史観。天命思想が王朝交代を正当化。",
+     death:"仏教の輪廻転生観と儒教の祖先祭祀、道教の不老不死追求が共存。"
+   }},
+  {id:"mecca",name:"メッカ",nameEn:"Mecca",lat:21.43,lng:39.83,era:"preindustrial",period:"7〜12世紀",
+   description:"イスラーム文明の聖地にして知の中心。科学・哲学・医学が花開いたイスラーム黄金期。",
+   values:{
+     human:"神の前の平等。人種・民族を超えた信仰共同体（ウンマ）が人間のアイデンティティの核。",
+     labor:"労働は礼拝と並ぶ信仰実践。正当な商業活動は神に祝福された行為。",
+     consumption:"適度な享受は許容されるが浪費は禁止。ザカート（喜捨）で富の再分配を義務化。",
+     tech:"代数学・光学・医学・天文学で世界をリード。ギリシャの知を保存・発展させた。",
+     nature:"自然は神の創造物であり、人間はその管理者（ハリーファ）。環境破壊は信仰に反する。",
+     order:"シャリーア（イスラーム法）に基づく統治。カリフ制度が宗教的権威と政治権力を統合。",
+     enterprise:"商業を重視（預言者ムハンマド自身が商人）。利子禁止だが貿易・パートナーシップを奨励。",
+     happiness:"神への服従（イスラーム）と共同体への奉仕が内面的平安をもたらす。",
+     knowledge:"「知識を求めよ、中国に至るまでも」。学問は信仰の義務であり図書館・大学が発展。",
+     time:"創造から最後の審判に至る直線的時間観。日々の礼拝が時間を神聖に構造化。",
+     death:"死は現世から来世への移行。最後の審判で全ての行為が問われるという強い終末論。"
+   }},
+  {id:"tenochtitlan",name:"テノチティトラン",nameEn:"Tenochtitlan",lat:19.43,lng:-99.13,era:"preindustrial",period:"14〜16世紀",
+   description:"湖上に築かれたアステカ帝国の首都。高度な都市計画と独自の宇宙観。",
+   values:{
+     human:"人間は神々への奉仕者。人身供犠に見られるように個人は宇宙秩序維持の道具とされた。",
+     labor:"農業（チナンパ浮遊農法）と交易が経済基盤。職人・戦士・神官が明確な役割分担。",
+     consumption:"カカオ豆を貨幣として使用。市場（ティアンギス）は数万人が集う巨大な交易の場。",
+     tech:"浮遊農法・水道・堤防など高度な水利技術。天文観測による精密な暦法を発達。",
+     nature:"太陽は人間の供犠なしに運行を止めるという宇宙観。自然は神々の闘争の場。",
+     order:"神権政治。皇帝（トラトアニ）は神の代理人として統治。貢納制度で属国を支配。",
+     enterprise:"長距離交易商人（ポチテカ）が重要な社会的地位を占めた。国家と交易は密接に結合。",
+     happiness:"神々への義務遂行と戦士としての名誉が幸福の核。詩と花を愛でる繊細さも共存。",
+     knowledge:"絵文字による記録体系。天文・暦法・医療（薬草学）の知識が口伝と図像で伝承。",
+     time:"52年周期で世界が破滅・再生するという循環的宇宙観。5つの太陽の神話。",
+     death:"死者は行き先が死因で決まる。戦死者と出産死した女性は太陽に伴う最高の栄誉。"
+   }},
+  {id:"varanasi",name:"バラナシ",nameEn:"Varanasi",lat:25.32,lng:83.01,era:"preindustrial",period:"紀元前6世紀〜",
+   description:"ヒンドゥー教最大の聖地。ガンジス河畔で生と死が交差する永遠の都市。",
+   values:{
+     human:"カースト制度が人間の役割を生まれで決定。しかし輪廻を通じた魂の平等性も説かれた。",
+     labor:"ヴァルナ（種姓）に基づく職業の世襲。労働は宇宙秩序（ダルマ）への奉仕。",
+     consumption:"禁欲と享楽の両極が共存。サンニャーシ（出家者）の無所有と王侯の豪奢が並存。",
+     tech:"数学（ゼロの発見・十進法）・冶金術・天文学で世界に先駆けた革新。",
+     nature:"自然は神の顕現。川・山・樹木が神聖視され、自然と信仰が不可分。",
+     order:"ダルマ（法）に基づく秩序。カースト制度は社会の安定装置であると同時に抑圧の構造。",
+     enterprise:"商人カースト（ヴァイシャ）が交易を担う。ギルド（シュレーニー）が商業を組織化。",
+     happiness:"解脱（モクシャ）が究極の幸福。輪廻からの解放を求めてヨーガ・瞑想を実践。",
+     knowledge:"ヴェーダの口承伝承。師弟関係（グル・シシュヤ）による直接的な知の伝達。",
+     time:"ユガ（劫）の循環で宇宙は創造と破壊を繰り返す。人間の時間は宇宙的時間の微小部分。",
+     death:"ガンジス河での火葬が輪廻からの解放（モクシャ）をもたらす。バラナシで死ぬことが最高の幸運。"
+   }},
+  // --- Past (Industrial) ---
+  {id:"london",name:"ロンドン",nameEn:"London",lat:51.51,lng:-0.13,era:"past",period:"18〜19世紀",
+   description:"産業革命の震源地。蒸気機関が世界を変え、近代資本主義が誕生した。",
+   values:{
+     human:"自由主義的個人主義の勃興。人間は合理的な経済主体として自己利益を追求する存在。",
+     labor:"工場労働の出現が労働の本質を変えた。時間規律・分業・賃労働が標準化。",
+     consumption:"大量生産品の登場で消費が民主化。百貨店の誕生が買い物を娯楽に変えた。",
+     tech:"蒸気機関・紡績機・鉄道が生産と移動を革命的に変えた。技術＝進歩という信仰。",
+     nature:"自然は征服すべき資源。石炭採掘と工場排煙でロンドンは「霧の都」に。",
+     order:"議会民主主義の発展。しかし選挙権は財産を持つ男性に限定、漸進的に拡大。",
+     enterprise:"株式会社制度の発展。東インド会社のような巨大企業が帝国主義を支えた。",
+     happiness:"物質的豊かさ＝幸福という功利主義。ベンサムの「最大多数の最大幸福」。",
+     knowledge:"経験主義と科学的方法が知の基準に。ダーウィンの進化論が世界観を根底から変えた。",
+     time:"直線的進歩史観が支配的に。鉄道が時刻表と標準時間を生み出し、時間を商品化。",
+     death:"ヴィクトリア朝の精緻な喪の儀礼。公衆衛生運動が墓地改革を推進。"
+   }},
+  {id:"edo",name:"江戸/東京",nameEn:"Edo/Tokyo",lat:35.68,lng:139.69,era:"past",period:"17〜20世紀",
+   description:"鎖国下で独自に成熟した都市文化。明治維新で急激な近代化を遂げた。",
+   values:{
+     human:"武士道の忠義・名誉と町人文化の粋・通が共存。明治以降「和魂洋才」で近代的個人を模索。",
+     labor:"士農工商の身分秩序が職業を規定。明治以降は殖産興業で工業労働者が急増。",
+     consumption:"鎖国下でリサイクル経済が発達。浮世絵・歌舞伎・吉原は消費と文化の融合。",
+     tech:"和算・本草学など独自の科学技術。明治維新で西洋技術を急速に導入。",
+     nature:"里山文化に見られる自然との共生。花見・月見・雪見は自然を愛でる文化的行為。",
+     order:"幕藩体制による安定した封建秩序。明治維新後は天皇中心の近代国家へ急転換。",
+     enterprise:"商家の家訓に見る長期的経営哲学。三井・住友などが近代財閥へ発展。",
+     happiness:"「足るを知る」の精神と浮世の享楽が共存。義理と人情のバランスが庶民の知恵。",
+     knowledge:"寺子屋による高い識字率。蘭学を通じた西洋知識の摂取。明治で近代教育制度を整備。",
+     time:"時の鐘による不定時法。明治で太陽暦・定時法に転換。効率的時間管理の急速な浸透。",
+     death:"浄土信仰と檀家制度。武士の切腹は名誉ある死の究極形。葬式仏教の定着。"
+   }},
+  {id:"newyork",name:"ニューヨーク",nameEn:"New York",lat:40.71,lng:-74.01,era:"past",period:"19〜20世紀",
+   description:"移民の街、資本主義の象徴。自由と機会の約束が世界中から人を引き寄せた。",
+   values:{
+     human:"「アメリカン・ドリーム」による自己実現の理想。出自ではなく努力で成功できるという信念。",
+     labor:"移民労働力が産業を支えた。労働組合運動と資本家の対立が労働権を形成。",
+     consumption:"大量消費文化の発信地。マディソン街の広告産業が欲望を創出・管理。",
+     tech:"摩天楼・地下鉄・電化が都市生活を革命。メディア技術（新聞・ラジオ・テレビ）の中心。",
+     nature:"自然を制圧して建設された人工都市。セントラルパークは都市内自然の先駆的実験。",
+     order:"移民の「るつぼ」として多元主義を実験。しかし人種差別・階層格差も深刻。",
+     enterprise:"ウォール街が世界金融の中心に。企業家精神と投機的資本主義が共存。",
+     happiness:"自由と物質的成功の追求。しかしジャズ・ビートニクなど反主流文化も開花。",
+     knowledge:"多様な文化の交差が知の革新を促進。大学・美術館・図書館が知の民主化を推進。",
+     time:"「時は金なり」の極致。効率とスピードへの執着が都市のリズムを形成。",
+     death:"多文化の葬送儀礼が共存。産業化された葬儀ビジネスの発祥地。"
+   }},
+  {id:"berlin",name:"ベルリン",nameEn:"Berlin",lat:52.52,lng:13.41,era:"past",period:"20世紀",
+   description:"20世紀のイデオロギー対立の最前線。壁の建設と崩壊が時代を画した。",
+   values:{
+     human:"ワイマールの自由主義→ナチズムの全体主義→東西分断→統一。人間の尊厳の脆さと回復力。",
+     labor:"東の社会主義的労働観と西の市場経済的労働観が壁一枚で隣接。統一後の融合に苦闘。",
+     consumption:"東の計画経済的配給と西の消費文化の極端な対比。壁崩壊後の消費爆発。",
+     tech:"V2ロケットから宇宙開発まで。技術が全体主義にも民主主義にも奉仕しうることの証明。",
+     nature:"戦災からの復興で都市緑化を重視。環境運動（緑の党）の発祥地の一つ。",
+     order:"民主主義→全体主義→分断→再統一。制度が人間の運命を左右することの究極的実例。",
+     enterprise:"戦後復興の「経済の奇跡」。社会的市場経済という第三の道の実験。",
+     happiness:"自由の価値を壁の存在で痛感。統一後のオスタルギー（東への郷愁）が幸福の複雑さを示す。",
+     knowledge:"バウハウスの革新的デザイン思想。アインシュタインを輩出した科学の中心地。",
+     time:"「壁の時間」と「壁なき時間」。歴史の断絶と連続を同時に体験した都市。",
+     death:"ホロコーストという組織的大量殺戮の記憶。記憶の継承と和解が都市のアイデンティティ。"
+   }},
+  {id:"moscow",name:"モスクワ",nameEn:"Moscow",lat:55.76,lng:37.62,era:"past",period:"20世紀",
+   description:"社会主義の実験場。平等の理想と全体主義の現実が交錯した。",
+   values:{
+     human:"集団主義的人間観。「新しい人間」の創造を目指し、個人は社会の歯車とされた。",
+     labor:"労働は神聖な義務。スタハノフ運動に見る労働英雄主義。しかし強制労働も蔓延。",
+     consumption:"計画経済下での配給制。消費の平等を掲げつつ、党幹部の特権消費が存在。",
+     tech:"宇宙開発（スプートニク・ガガーリン）で世界をリード。軍事技術偏重の歪み。",
+     nature:"「自然改造計画」による大規模開発。アラル海の縮小は環境破壊の象徴。",
+     order:"ソビエト共産党による一党独裁。秘密警察と検閲による社会統制。",
+     enterprise:"国有企業が全てを支配。利潤動機の排除は非効率と技術革新の停滞を招いた。",
+     happiness:"「明るい未来」のために現在の犠牲を要求。芸術・スポーツでの卓越が国民的誇りに。",
+     knowledge:"科学・数学教育の徹底。しかしイデオロギーに反する知識（遺伝学等）は弾圧。",
+     time:"共産主義社会の実現に向けた直線的進歩観。五ヵ年計画で時間を国家が管理。",
+     death:"国家のための犠牲的死を美化。大祖国戦争（独ソ戦）の記憶が国家アイデンティティの核。"
+   }},
+  {id:"detroit",name:"デトロイト",nameEn:"Detroit",lat:42.33,lng:-83.05,era:"past",period:"20世紀前半〜後半",
+   description:"自動車産業の聖地。大量生産方式が労働と消費を根底から変えた。",
+   values:{
+     human:"フォーディズムが人間を組立ラインの一部に。しかし高賃金が中産階級を生んだ。",
+     labor:"フォードの流れ作業が生産性を革命的に向上。UAW（自動車労働組合）が労働権を確立。",
+     consumption:"T型フォードが消費の民主化を象徴。自動車が自由と個人主義のアイコンに。",
+     tech:"組立ライン・互換部品・品質管理。大量生産技術の全体系がここで完成。",
+     nature:"工場排煙と郊外スプロール。自動車依存社会が環境負荷を劇的に増加。",
+     order:"企業城下町。ビッグスリーの意思決定が街の運命を左右。人種問題も深刻化。",
+     enterprise:"垂直統合型の巨大企業モデル。GM・フォード・クライスラーが世界の製造業を主導。",
+     happiness:"郊外の一戸建て＋自動車＝アメリカンドリーム。しかし脱工業化後の衰退が深刻。",
+     knowledge:"生産工学・品質管理学の発祥地。デミングの品質哲学が日本経由で世界に波及。",
+     time:"生産サイクルと消費サイクルが時間を支配。モデルチェンジが計画的陳腐化を制度化。",
+     death:"産業の死と都市の衰退。デトロイト破産（2013年）は産業都市の「死」の象徴。"
+   }},
+  // --- Present ---
+  {id:"siliconvalley",name:"シリコンバレー",nameEn:"Silicon Valley",lat:37.39,lng:-122.08,era:"present",period:"2000年代〜",
+   description:"テクノロジー産業のメッカ。「世界を変える」イノベーション文化の中心。",
+   values:{
+     human:"テクノロジストとしての自己実現。「宇宙に凹みをつける」という個人の力への信仰。",
+     labor:"情熱と創造性を前提とした知識労働。長時間労働を「好きなことをしている」と正当化。",
+     consumption:"テクノロジー製品を通じた「体験」の消費。サブスクリプションモデルが所有を解体。",
+     tech:"「テクノロジーは常に解決策」という技術楽観主義。破壊的イノベーションの礼賛。",
+     nature:"デジタルと自然の乖離。しかしクリーンテック投資も盛んで環境意識は高い矛盾。",
+     order:"フラットで非階層的な組織文化を標榜。しかし実質的な権力集中とプラットフォーム独占。",
+     enterprise:"ガレージからユニコーンへ。VC資金によるスタートアップエコシステム。失敗を称賛する文化。",
+     happiness:"仕事＝人生という融合。マインドフルネスとバイオハッキングで生産性と幸福を最適化。",
+     knowledge:"オープンソースとデータ駆動型意思決定。知識は共有されるべきだが、データは囲い込む。",
+     time:"「スピードが全て」。MVPとアジャイル開発で市場投入を最速化。長期計画より迅速な実験。",
+     death:"テクノロジーによる死の超越を志向。トランスヒューマニズム・クライオニクスへの投資。"
+   }},
+  {id:"shenzhen",name:"深圳",nameEn:"Shenzhen",lat:22.54,lng:114.06,era:"present",period:"2000年代〜",
+   description:"40年で漁村から世界のイノベーション工場へ。中国式テクノロジー発展の象徴。",
+   values:{
+     human:"個人の才能と起業家精神を国家目標と一体化。「中国の夢」の実現者としての自己像。",
+     labor:"996（朝9時〜夜9時、週6日）文化に象徴される超長時間労働。速度が全てのハードワーク。",
+     consumption:"デジタル決済による完全キャッシュレス社会。ライブコマースが消費の形態を革新。",
+     tech:"「山寨」（模倣）から自主イノベーションへ。ハードウェア製造とAI研究の世界的拠点。",
+     nature:"急速な都市化の環境コストと、国家主導のグリーン都市転換の両面が共存。",
+     order:"経済特区として規制緩和が実験された。国家資本主義と市場経済のハイブリッド。",
+     enterprise:"華為・テンセント・BYDなどグローバル企業を輩出。政府支援とベンチャー精神の融合。",
+     happiness:"経済的成功と技術的進歩が幸福の指標。しかし「内巻」（過当競争）への疲弊も。",
+     knowledge:"実践的な技術知識を最重視。特許出願数で世界トップクラスの都市。",
+     time:"「深圳速度」—40年で漁村を大都市に。超高速の変化を常態とする時間感覚。",
+     death:"伝統的な祖先崇拝と都市化による葬送の簡素化が交差。デジタル追悼の先進地。"
+   }},
+  {id:"copenhagen",name:"コペンハーゲン",nameEn:"Copenhagen",lat:55.68,lng:12.57,era:"present",period:"2000年代〜",
+   description:"サステナビリティと幸福度の世界モデル。北欧型福祉国家の先進的実験場。",
+   values:{
+     human:"ヒュッゲ（居心地の良さ）に象徴される、競争より共生を重視する人間観。",
+     labor:"ワークライフバランスの先進地。フレキシキュリティ（柔軟な労働市場＋高い社会保障）。",
+     consumption:"サステナブル消費の先端。自転車文化・オーガニック食品・循環経済の実践。",
+     tech:"クリーンテック・風力発電のリーダー。テクノロジーは持続可能性のための手段。",
+     nature:"2025年カーボンニュートラル目標。都市と自然の共生を具体的政策で実現。",
+     order:"高信頼・高福祉社会。高い税負担を受容する社会的合意。透明性と参加を重視。",
+     enterprise:"B Corp認証企業の集積。利益と社会的インパクトの両立を企業の標準に。",
+     happiness:"世界幸福度ランキング常連上位。社会的信頼と平等が幸福の基盤。",
+     knowledge:"オープンデータとデザイン思考。知識は社会課題解決のための公共財。",
+     time:"長期的視点での政策立案。世代を超えた持続可能性を時間軸の基準に。",
+     death:"合理的で簡素な葬送文化。死の脱タブー化とホスピスケアの先進的取り組み。"
+   }},
+  {id:"dubai",name:"ドバイ",nameEn:"Dubai",lat:25.20,lng:55.27,era:"present",period:"2000年代〜",
+   description:"砂漠に出現した未来都市。石油後の経済を見据えた大胆な都市実験。",
+   values:{
+     human:"グローバルエリートの集う国際都市。多国籍労働者が人口の9割を占める特異な構造。",
+     labor:"外国人労働者依存の二重構造。ホワイトカラーの高報酬と建設労働者の過酷な環境が共存。",
+     consumption:"「世界一」の建築物・モール・テーマパーク。スペクタクル消費の極致。",
+     tech:"スマートシティ戦略。ブロックチェーン政府・ドローンタクシー等の未来技術を積極導入。",
+     nature:"砂漠の制約を技術で克服。海水淡水化・人工島建設。しかし環境負荷は深刻。",
+     order:"首長制による迅速な意思決定。経済的自由度は高いが政治的自由は制限的。",
+     enterprise:"フリーゾーン政策で世界中の企業を誘致。税制優遇と規制緩和で起業を促進。",
+     happiness:"物質的豊かさと安全の提供。しかし文化的アイデンティティの希薄さへの懸念も。",
+     knowledge:"世界中の人材を金銭的インセンティブで引き寄せる知識集約戦略。",
+     time:"「50年前は砂漠だった」—驚異的な変化の速度。未来を先取りする時間感覚。",
+     death:"イスラームの葬送儀礼が基本。多国籍社会での多様な死生観の共存。"
+   }},
+  {id:"bhutan",name:"ブータン",nameEn:"Bhutan",lat:27.47,lng:89.64,era:"present",period:"2000年代〜",
+   description:"GNH（国民総幸福量）を国策に掲げる唯一の国。物質的成長より精神的充足を追求。",
+   values:{
+     human:"仏教的人間観。全ての存在は相互に依存し、個人の幸福は他者の幸福と不可分。",
+     labor:"農業中心の経済。GNH理念により労働時間の制限と精神的活動の時間を確保。",
+     consumption:"意図的に消費を抑制。テレビ・インターネットの導入は1999年と遅かった。",
+     tech:"テクノロジーの選択的導入。伝統文化を破壊しない範囲での近代化を慎重に推進。",
+     nature:"憲法で森林面積60%以上を義務化。カーボンネガティブを達成した世界唯一の国。",
+     order:"立憲君主制。2008年に民主化。GNH委員会が全ての政策を幸福度で評価。",
+     enterprise:"外国投資を慎重に制限。観光業は「高価値・低量」モデルで環境と文化を保護。",
+     happiness:"GNHの4本柱：持続可能な開発、文化の保存、環境保護、良い統治。",
+     knowledge:"仏教教育と近代教育の融合。瞑想と科学的思考を両立させる教育モデル。",
+     time:"仏教的な永遠の現在と、世代を超えた持続可能性の長期的視点が共存。",
+     death:"チベット仏教の輪廻転生観。「死の瞑想」が日常的な修行として推奨される。"
+   }},
+  // --- Future ---
+  {id:"singapore",name:"シンガポール",nameEn:"Singapore",lat:1.35,lng:103.82,era:"future",period:"2030年代〜",
+   description:"AIガバナンスとスマートネーション構想のグローバルリーダー。",
+   values:{
+     human:"多民族国家での「メリトクラシー」。AI時代における人間の役割再定義に先行的に取り組む。",
+     labor:"AIと人間の協働モデルを国家戦略として推進。リスキリングを全国民に義務化。",
+     consumption:"スマートシティでのデータ駆動型消費最適化。食料自給率30by30戦略。",
+     tech:"国家AIストラテジーで全産業にAI導入。デジタルツイン都市の先駆。",
+     nature:"都市国家の制約を垂直農法・グリーンビルディングで克服。ガーデンシティ構想。",
+     order:"AI活用のスマートガバナンス。効率的統治と市民監視のバランスが世界的課題の先行事例。",
+     enterprise:"GovTechとフィンテックの融合。政府主導のイノベーションエコシステム。",
+     happiness:"安全・清潔・効率の提供。しかし競争圧力とストレスの問題も顕在化。",
+     knowledge:"国家的なデータリテラシー教育。AI倫理を含む先進的な教育カリキュラム。",
+     time:"100年計画で国家戦略を策定。長期的視野での都市計画と短期的実験を両立。",
+     death:"多文化の葬送儀礼が共存。高齢化社会に備えたACP（事前ケア計画）の先進的普及。"
+   }},
+  {id:"tallinn",name:"タリン",nameEn:"Tallinn",lat:59.44,lng:24.75,era:"future",period:"2030年代〜",
+   description:"e-ガバナンスの世界的先駆者。電子国家がもたらす市民と政府の新しい関係。",
+   values:{
+     human:"デジタル市民としてのアイデンティティ。e-Residency（電子居住権）で国境を超えた帰属。",
+     labor:"デジタルノマドの受入を制度化。場所に縛られない労働の法的・社会的基盤を構築。",
+     consumption:"電子政府により行政手続きの「消費」を最小化。デジタル署名で紙の契約を廃止。",
+     tech:"X-Road（分散型データ基盤）で政府サービスを99%電子化。ブロックチェーン行政の実験。",
+     nature:"小国ゆえの環境意識。デジタル化による紙削減と効率的資源管理。",
+     order:"電子投票・電子署名・電子ID。透明性と市民参加を技術で実現する新しい民主主義。",
+     enterprise:"スタートアップビザ制度。Skype・Wise・Boltなどユニコーン企業を人口比で最多輩出。",
+     happiness:"デジタル効率化で生まれた時間を個人の充実に。官僚主義からの解放。",
+     knowledge:"プログラミング教育を小学校から必修化。デジタルリテラシーを国民的素養に。",
+     time:"デジタル化で行政の時間コストを劇的削減。市民の時間主権を技術で保障。",
+     death:"デジタル遺産管理の法制化に先行的に取り組む。電子IDと死の関係の制度設計。"
+   }},
+  {id:"masdar",name:"マスダール",nameEn:"Masdar City",lat:24.43,lng:54.62,era:"future",period:"2030年代〜",
+   description:"ゼロカーボン・ゼロウェイストを目指す計画都市。持続可能な未来の実験場。",
+   values:{
+     human:"持続可能性を体現する「未来市民」。テクノロジーと環境意識の融合した生活様式。",
+     labor:"クリーンテック研究開発が主要産業。再生可能エネルギー分野の人材育成拠点。",
+     consumption:"ゼロウェイストを目標とする循環型消費。資源使用の徹底的な最適化。",
+     tech:"太陽光発電・自律走行車・スマートグリッドの統合実験。未来技術の実証都市。",
+     nature:"砂漠環境での持続可能な都市の実現。自然の制約を技術と設計で克服。",
+     order:"トップダウンの計画都市。持続可能性を都市設計レベルで制度化する実験。",
+     enterprise:"マスダール・インスティテュート（現カリファ大学）を核とした研究開発クラスター。",
+     happiness:"環境負荷ゼロの生活が新しい幸福の形。物質的豊かさと持続可能性の両立を実証。",
+     knowledge:"IRENA（国際再生可能エネルギー機関）本部所在地。世界のクリーンエネルギー知識の集積。",
+     time:"50年後・100年後を見据えた超長期の都市計画。世代を超えた持続可能性の時間観。",
+     death:"まだ歴史の浅い計画都市。未来の死生観を都市設計に組み込む実験はこれから。"
+   }}
+];
+
 // ========== RENDERING ==========
 const cardView = document.getElementById('cardView');
 const tableView = document.getElementById('tableView');
+const mapView = document.getElementById('mapView');
 
 let activeEra = 'all';
 let activeField = 'all';
@@ -1437,6 +1840,184 @@ function highlightText(text){
   if(!searchTerm) return text;
   const re = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
   return text.replace(re, '<span class="highlight">$1</span>');
+}
+
+// ========== MAP VIEW ==========
+const WORLD_PATHS = [
+  "M167 82L166 83 163 83 161 85 158 85 157 87 153 87 150 89 147 89 143 92 140 92 137 94 134 95 132 95 130 97 127 98 125 100 124 103 122 105 120 107 117 109 115 112 113 114 110 116 108 119 107 122 106 125 105 128 104 131 104 134 105 137 106 140 108 143 109 145 110 147 112 149 114 151 116 152 118 153 119 153 121 155 124 156 126 157 128 157 131 158 134 158 136 157 138 156 140 155 142 154 144 153 146 153 148 152 150 152 152 152 155 153 157 153 159 152 161 151 163 149 165 148 166 146 167 144 168 142 169 139 170 137 170 134 171 131 171 128 172 125 172 122 171 119 170 116 170 113 169 110 168 107 167 105 166 103 166 100 166 97 166 94 167 91 167 88 167 85 167 82Z",
+  "M138 213L136 215 133 218 130 220 128 222 127 225 125 228 124 231 123 234 122 237 122 240 122 243 123 246 124 249 125 252 127 254 129 256 131 258 133 260 136 261 138 262 141 263 144 263 147 263 149 262 152 261 154 259 156 257 157 255 158 252 159 249 159 246 159 243 158 240 157 237 156 234 155 231 153 228 151 226 149 224 147 222 144 220 142 218 140 216 138 213Z",
+  "M445 62L443 63 441 65 439 67 437 69 435 72 434 74 433 77 432 80 432 83 432 86 432 89 433 92 434 94 436 96 437 98 439 100 441 102 443 103 445 105 447 106 449 107 452 108 454 108 456 108 459 108 461 107 463 106 465 105 467 103 469 102 470 100 471 98 472 96 473 94 474 91 474 89 474 86 474 83 474 80 473 78 472 75 471 73 470 71 469 69 467 67 465 66 463 64 461 63 459 62 456 62 454 62 452 62 449 62 447 62 445 62Z",
+  "M475 117L473 118 471 120 469 122 467 125 466 128 465 131 464 134 464 137 464 140 465 143 466 146 467 149 469 151 470 153 472 155 474 157 476 158 478 159 481 160 483 160 486 160 488 160 490 159 492 158 494 157 496 155 498 153 499 151 500 149 501 146 502 143 502 140 502 137 502 134 501 131 500 128 499 125 498 123 496 121 494 119 492 118 490 117 488 116 486 116 483 116 481 116 479 116 477 117 475 117Z",
+  "M520 70L517 71 515 73 513 75 511 78 510 81 509 84 508 87 507 90 507 93 507 96 508 99 509 102 510 105 512 107 514 109 516 111 518 112 521 113 523 114 526 114 529 114 531 114 534 113 536 112 538 111 540 109 542 107 543 105 545 102 545 100 546 97 546 94 546 91 546 88 545 85 544 82 543 80 541 77 539 75 537 73 535 72 532 71 530 70 527 70 525 70 522 70 520 70Z",
+  "M568 75L565 76 562 78 559 80 557 83 555 86 554 89 553 93 553 96 553 100 554 103 555 106 557 109 559 112 561 114 563 116 565 117 568 118 571 119 574 119 577 119 580 118 583 117 585 116 587 114 589 112 591 109 592 106 593 103 594 100 594 97 594 94 593 91 592 88 591 85 589 83 587 81 585 79 583 77 580 76 577 75 574 75 571 75 568 75Z",
+  "M575 145L573 146 571 148 569 150 568 153 567 156 567 159 567 162 567 165 568 168 569 170 571 172 573 174 575 175 578 176 580 176 583 176 585 175 587 174 589 172 590 170 591 168 592 165 592 162 592 159 592 156 591 154 590 151 589 149 587 147 585 146 583 145 580 145 578 145 575 145Z",
+  "M750 155L747 157 745 159 743 162 741 165 740 168 740 172 740 175 741 178 742 181 744 184 746 186 748 188 751 189 754 190 756 190 759 190 762 189 764 188 766 186 768 183 769 181 770 178 770 175 770 172 770 169 769 166 768 163 766 161 764 159 762 157 760 156 757 155 754 155 752 155 750 155Z"
+];
+
+function geoToSvg(lat, lng){
+  return { x: (lng + 180) / 360 * 1000, y: (90 - lat) / 180 * 500 };
+}
+
+let mapInitialized = false;
+
+function renderMap(){
+  if(!mapInitialized){
+    let html = '<div class="map-header"><div class="map-title">🌍 世界地図モード</div>';
+    html += '<div class="map-subtitle">特徴的な価値観を持つ歴史的都市・地域を探索</div></div>';
+    html += '<div class="map-container" id="mapContainer">';
+    html += '<svg id="worldMap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">';
+    html += '<defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/>';
+    html += '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
+    html += '<rect width="1000" height="500" fill="var(--bg)"/>';
+    // Simplified continent shapes using ellipses/rects for recognizability
+    // North America
+    html += '<path d="M80 60 L130 55 160 65 190 60 210 70 225 85 230 100 225 120 210 140 200 160 190 175 170 185 155 195 140 200 130 210 120 225 110 240 100 245 95 240 90 230 85 220 82 205 80 190 78 175 75 160 72 145 70 130 68 115 68 100 70 85 75 70Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Central America
+    html += '<path d="M130 210 L135 215 140 220 148 225 155 230 160 235 165 238 170 240 168 245 163 248 156 250 148 248 140 245 135 240 130 235 125 228 122 222 120 218 125 212Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // South America
+    html += '<path d="M170 240 L180 238 190 240 200 245 210 250 215 260 220 275 222 290 220 310 218 330 215 345 210 358 205 368 198 375 190 378 182 375 175 370 168 360 162 348 158 335 155 320 153 305 152 290 153 275 155 260 160 248Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Europe
+    html += '<path d="M440 55 L450 52 465 50 480 52 492 55 500 60 505 68 508 78 505 88 500 95 495 100 492 108 488 112 482 115 475 112 468 108 460 105 455 100 450 96 445 92 440 88 438 80 437 72 438 64Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Africa
+    html += '<path d="M440 135 L455 130 470 128 485 130 500 135 510 142 518 152 525 165 530 180 532 195 532 210 530 228 528 245 525 260 520 275 512 288 502 298 490 305 478 308 465 305 455 298 448 288 442 275 438 260 436 245 435 230 435 215 436 200 438 185 440 170 440 155Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Asia
+    html += '<path d="M508 48 L530 45 555 42 580 42 610 45 640 48 668 52 690 58 710 65 728 72 740 80 748 90 750 100 748 110 742 118 735 125 725 130 715 135 700 138 685 140 670 142 655 144 640 145 625 145 610 144 595 142 580 138 565 135 555 130 548 125 540 118 535 110 530 100 528 92 525 82 520 72 515 62Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // India/SE Asia
+    html += '<path d="M610 145 L620 148 630 155 638 165 642 178 640 190 635 200 628 205 618 208 610 205 605 198 600 188 598 178 600 168 605 158Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // SE Asia islands
+    html += '<path d="M660 170 L670 168 680 172 688 178 690 185 688 192 680 195 672 192 665 185 662 178Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    html += '<path d="M700 180 L710 178 720 182 725 190 722 198 715 200 708 196 705 188Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Australia
+    html += '<path d="M720 260 L740 255 760 258 778 265 790 278 795 292 792 308 785 320 772 328 758 332 742 330 728 325 718 315 712 302 710 288 712 275Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Japan
+    html += '<path d="M775 90 L780 85 783 80 785 85 783 92 780 97 776 95Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // UK
+    html += '<path d="M442 60 L446 57 450 58 450 64 448 68 444 66Z" fill="var(--surface2)" stroke="var(--border)" stroke-width="0.5"/>';
+    // Points layer
+    html += '<g id="mapPoints"></g>';
+    html += '</svg>';
+    html += '<div class="map-tooltip" id="mapTooltip"></div>';
+    html += '</div>';
+    // Legend
+    html += '<div class="map-legend">';
+    html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--preindustrial)"></div>前近代</div>';
+    html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--past)"></div>過去</div>';
+    html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--present)"></div>現在</div>';
+    html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--future)"></div>未来</div>';
+    html += '</div>';
+    html += '<div class="map-detail" id="mapDetail"></div>';
+    mapView.innerHTML = html;
+    mapInitialized = true;
+  }
+  renderMapPoints();
+}
+
+function renderMapPoints(){
+  const g = document.getElementById('mapPoints');
+  if(!g) return;
+  g.innerHTML = '';
+  MAP_LOCATIONS.forEach(loc => {
+    if(activeEra !== 'all' && activeEra !== loc.era) return;
+    if(searchTerm){
+      const t = JSON.stringify(loc).toLowerCase();
+      if(!t.includes(searchTerm.toLowerCase())) return;
+    }
+    const {x, y} = geoToSvg(loc.lat, loc.lng);
+    const ns = 'http://www.w3.org/2000/svg';
+    const grp = document.createElementNS(ns, 'g');
+    grp.classList.add('map-point');
+    grp.dataset.id = loc.id;
+    // Outer glow circle
+    const outer = document.createElementNS(ns, 'circle');
+    outer.setAttribute('cx', x); outer.setAttribute('cy', y); outer.setAttribute('r', '6');
+    outer.setAttribute('fill', 'var(--'+loc.era+')'); outer.setAttribute('opacity', '0.85');
+    outer.classList.add('point-dot');
+    // Inner white dot
+    const inner = document.createElementNS(ns, 'circle');
+    inner.setAttribute('cx', x); inner.setAttribute('cy', y); inner.setAttribute('r', '2.5');
+    inner.setAttribute('fill', '#fff'); inner.setAttribute('opacity', '0.6');
+    // Hit area
+    const hit = document.createElementNS(ns, 'circle');
+    hit.setAttribute('cx', x); hit.setAttribute('cy', y); hit.setAttribute('r', '14');
+    hit.setAttribute('fill', 'transparent');
+    // Label
+    const label = document.createElementNS(ns, 'text');
+    label.setAttribute('x', x); label.setAttribute('y', y - 12);
+    label.setAttribute('text-anchor', 'middle');
+    label.classList.add('point-label');
+    label.textContent = loc.name;
+    grp.appendChild(outer);
+    grp.appendChild(inner);
+    grp.appendChild(hit);
+    grp.appendChild(label);
+    grp.addEventListener('mouseenter', e => showMapTooltip(loc, e));
+    grp.addEventListener('mouseleave', hideMapTooltip);
+    grp.addEventListener('click', () => showMapDetail(loc));
+    g.appendChild(grp);
+  });
+}
+
+function showMapTooltip(loc, e){
+  const tip = document.getElementById('mapTooltip');
+  if(!tip) return;
+  const eraLabels = {preindustrial:'前近代',past:'過去',present:'現在',future:'未来'};
+  tip.innerHTML = '<div class="map-tooltip-name">'+loc.name+' <span style="color:var(--text-muted);font-weight:400;font-size:.75rem">'+loc.nameEn+'</span></div>'
+    +'<div class="map-tooltip-period">'+loc.period+'</div>'
+    +'<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);font-size:.65rem;padding:.1rem .4rem;margin-top:.3rem;display:inline-block">'+eraLabels[loc.era]+'</span>';
+  const container = document.getElementById('mapContainer');
+  const rect = container.getBoundingClientRect();
+  const svg = document.getElementById('worldMap');
+  const svgRect = svg.getBoundingClientRect();
+  const scaleX = svgRect.width / 1000;
+  const scaleY = svgRect.height / 500;
+  const {x, y} = geoToSvg(loc.lat, loc.lng);
+  let left = (x * scaleX) + (svgRect.left - rect.left) + 12;
+  let top = (y * scaleY) + (svgRect.top - rect.top) - 10;
+  if(left + 200 > rect.width) left = left - 220;
+  tip.style.left = left + 'px';
+  tip.style.top = top + 'px';
+  tip.classList.add('visible');
+}
+
+function hideMapTooltip(){
+  const tip = document.getElementById('mapTooltip');
+  if(tip) tip.classList.remove('visible');
+}
+
+function showMapDetail(loc){
+  const detail = document.getElementById('mapDetail');
+  if(!detail) return;
+  const eraLabels = {preindustrial:'前近代',past:'過去',present:'現在',future:'未来'};
+  // Highlight selected point
+  document.querySelectorAll('.map-point.selected').forEach(p => p.classList.remove('selected'));
+  const pt = document.querySelector('.map-point[data-id="'+loc.id+'"]');
+  if(pt) pt.classList.add('selected');
+
+  let html = '<div class="map-detail-header">';
+  html += '<div class="map-detail-title"><h3>'+loc.name+'</h3><span class="map-detail-en">'+loc.nameEn+'</span>';
+  html += '<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);margin-left:.5rem">'+eraLabels[loc.era]+' — '+loc.period+'</span></div>';
+  html += '<p class="map-detail-desc">'+loc.description+'</p>';
+  html += '<button class="map-detail-close" onclick="closeMapDetail()">&times;</button>';
+  html += '</div>';
+  html += '<div class="map-detail-grid">';
+  DATA.forEach(cat => {
+    const val = loc.values[cat.id] || '';
+    html += '<div class="map-value-card">';
+    html += '<div class="map-value-head"><div class="map-value-icon" style="background:'+cat.color+'22;color:'+cat.color+'">'+cat.icon+'</div>';
+    html += '<div class="map-value-title">'+cat.title+'</div></div>';
+    html += '<div class="map-value-text">'+val+'</div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  detail.innerHTML = html;
+  detail.classList.add('active');
+  detail.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function closeMapDetail(){
+  const detail = document.getElementById('mapDetail');
+  if(detail) detail.classList.remove('active');
+  document.querySelectorAll('.map-point.selected').forEach(p => p.classList.remove('selected'));
 }
 
 // Table view
@@ -1584,13 +2165,17 @@ document.querySelectorAll('.view-btn').forEach(btn => {
     document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentView = btn.dataset.view;
+    const isCard = currentView === 'card';
     const isTable = currentView === 'table';
-    cardView.classList.toggle('active', !isTable);
+    const isMap = currentView === 'map';
+    cardView.classList.toggle('active', isCard);
     tableView.classList.toggle('active', isTable);
-    // Hide hero & card area in table view
-    heroEl.style.display = isTable ? 'none' : '';
-    // Swap field filter (card) ↔ column toggles (table)
-    fieldFilterEl.style.display = isTable ? 'none' : '';
+    mapView.classList.toggle('active', isMap);
+    // Hero: show for card only
+    heroEl.style.display = isCard ? '' : 'none';
+    // Field filter: show for card only
+    fieldFilterEl.style.display = isCard ? '' : 'none';
+    // Column toggles: show for table only
     tableColTogglesEl.classList.toggle('active', isTable);
     render();
   });
@@ -1637,6 +2222,7 @@ function render(){
   syncStickyOffset();
   renderCards();
   renderTable();
+  if(currentView === 'map') renderMap();
   // Auto-open all categories when searching
   if(searchTerm){
     document.querySelectorAll('.category-row:not(.hidden)').forEach(r => r.classList.add('open'));
