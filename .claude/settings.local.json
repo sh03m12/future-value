@@ -19,7 +19,9 @@
       "Bash(node replace-map.js:*)",
       "Bash(node:*)",
       "Bash(dir:*)",
-      "Bash(npm:*)"
+      "Bash(npm:*)",
+      "Bash(npx serve:*)",
+      "Bash(powershell -Command \"$json = Get-Content research-db.json | ConvertFrom-Json; $json.athens.premises | ConvertTo-Json -Depth 10\")"
     ]
   }
 }
