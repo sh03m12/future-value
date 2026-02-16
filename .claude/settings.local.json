@@ -14,7 +14,9 @@
       "Bash(gh repo create:*)",
       "Bash(git remote add:*)",
       "Bash(git push:*)",
-      "Bash(node -e:*)"
+      "Bash(node -e:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(node replace-map.js:*)"
     ]
   }
 }
