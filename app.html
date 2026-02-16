@@ -282,7 +282,36 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-premise-tag.technical{color:#06b6d4;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2)}
 .map-premise-tag.economic{color:#f59e0b;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2)}
 .map-premise-tag.institutional{color:#8b5cf6;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2)}
-.map-premise-text{font-size:.78rem;color:var(--text-dim);line-height:1.6}
+.map-premise-text{font-size:.78rem;color:var(--text-dim);line-height:1.6;flex:1}
+
+/* ========== PREMISE → VALUE INFLUENCE ========== */
+.premise-influences{display:flex;gap:.25rem;flex-shrink:0;margin-left:auto;align-items:center;padding-left:.5rem}
+.premise-influence-badge{width:22px;height:22px;border-radius:4px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;background:rgba(255,255,255,.05);
+  cursor:default;transition:var(--transition);flex-shrink:0}
+.premise-influence-badge:hover{background:rgba(255,255,255,.12);transform:scale(1.15)}
+.value-premise-sources{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.4rem;
+  padding-top:.35rem;border-top:1px solid rgba(255,255,255,.04)}
+.value-premise-sources.compact{margin-top:.3rem;padding-top:.25rem}
+.value-source-tag{display:inline-block;font-size:.6rem;font-weight:600;
+  padding:.1rem .35rem;border-radius:3px;opacity:.85;transition:var(--transition)}
+.value-source-tag.natural{color:#22c55e;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15)}
+.value-source-tag.social{color:#3b82f6;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.15)}
+.value-source-tag.technical{color:#06b6d4;background:rgba(6,182,212,.08);border:1px solid rgba(6,182,212,.15)}
+.value-source-tag.economic{color:#f59e0b;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15)}
+.value-source-tag.institutional{color:#8b5cf6;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.15)}
+.map-premise-item{cursor:pointer;transition:var(--transition);border-radius:4px;
+  padding:.45rem .4rem;margin:0 -.4rem}
+.map-premise-item:hover{background:rgba(255,255,255,.03)}
+.map-premise-item.influence-highlighted{background:rgba(59,130,246,.1)}
+.map-premise-item.influence-dimmed{opacity:.3}
+.map-value-card{transition:var(--transition);cursor:pointer}
+.map-value-card.influence-highlighted{border-color:var(--accent);
+  box-shadow:0 0 12px rgba(59,130,246,.15)}
+.map-value-card.influence-dimmed{opacity:.25;filter:grayscale(.5)}
+.influence-connector{text-align:center;color:var(--text-muted);font-size:.72rem;
+  padding:.3rem 0;opacity:.6;letter-spacing:.05em}
 
 /* ========== MAP COMPARE MODE ========== */
 .map-compare-toggle{padding:.35rem .85rem;border-radius:20px;border:1px solid var(--border);
@@ -1488,7 +1517,8 @@ const MAP_LOCATIONS = [
      "技術：ラウリオン銀山の採掘技術と三段櫂船の造船技術が軍事・経済力の基盤を形成",
      "経済：エーゲ海交易ネットワークと貨幣経済の早期発達。穀物輸入依存が外交政策を規定",
      "制度：クレイステネスの民主改革による部族制再編。陶片追放・民衆裁判所による権力集中の防止機構"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","consumption","enterprise"],1:["human","labor","order","happiness"],2:["tech","enterprise"],3:["consumption","enterprise","order"],4:["order","knowledge","human"]}},
   {id:"sparta",name:"スパルタ",nameEn:"Sparta",lat:37.08,lng:22.43,era:"preindustrial",period:"紀元前5世紀",
    description:"軍事的規律と共同体の一体性を究極まで追求した都市国家。",
    values:{
@@ -1510,7 +1540,8 @@ const MAP_LOCATIONS = [
      "技術：重装歩兵ファランクス戦術に特化した軍事技術。武器・防具の標準化と集団戦闘訓練",
      "経済：土地の均等分配（クレーロス制）と鉄貨幣による意図的な商業抑制。共食制度で経済格差を排除",
      "制度：リュクルゴス体制による二王制・長老会・民会の三権構造。アゴーゲーと呼ばれる国家教育制度"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","consumption","enterprise"],1:["human","labor","order","death"],2:["tech","labor"],3:["consumption","enterprise","order"],4:["order","knowledge","happiness","human"]}},
   {id:"rome",name:"ローマ帝国",nameEn:"Rome",lat:41.90,lng:12.50,era:"preindustrial",period:"紀元前1世紀〜紀元5世紀",
    description:"法制度・工学・統治技術の金字塔。多民族帝国の統合と秩序維持の実験場。",
    values:{
@@ -1532,7 +1563,8 @@ const MAP_LOCATIONS = [
      "技術：コンクリート・アーチ・水道橋など土木建築技術の革新。道路網による広域統治インフラ",
      "経済：属州からの穀物・資源の搾取による帝国経済。貨幣経済と大土地所有制（ラティフンディウム）",
      "制度：共和政から帝政への段階的移行。ローマ法の体系化と市民権の段階的拡大による統治"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","order"],2:["tech","labor"],3:["consumption","enterprise","labor"],4:["order","knowledge","human"]}},
   {id:"kyoto",name:"平安京",nameEn:"Kyoto",lat:35.01,lng:135.77,era:"preindustrial",period:"8〜12世紀",
    description:"日本の宮廷文化の中心地。「もののあはれ」に象徴される繊細な美意識の開花。",
    values:{
@@ -1554,7 +1586,8 @@ const MAP_LOCATIONS = [
      "技術：絹織物・漆器・建築など高度な手工芸技術。仮名文字の発明による独自文学の花開き",
      "経済：荘園制に基づく農業経済。都と地方を結ぶ物流網と市場経済の萌芽",
      "制度：律令制の形骸化と摂関政治の確立。公地公民の理念と私的土地所有の現実の乖離"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","happiness","time"],1:["human","knowledge","labor"],2:["tech","consumption","knowledge"],3:["enterprise","consumption"],4:["order","human","death"]}},
   {id:"changan",name:"長安（唐）",nameEn:"Chang'an",lat:34.26,lng:108.94,era:"preindustrial",period:"7〜9世紀",
    description:"唐代の世界最大級の国際都市。シルクロードの東端として多文化が共存。",
    values:{
@@ -1576,7 +1609,8 @@ const MAP_LOCATIONS = [
      "技術：印刷術・火薬・羅針盤の発明期。大運河による南北物流の統合",
      "経済：シルクロード交易と大運河物流による東西南北の経済統合。均田制と租庸調制",
      "制度：三省六部制による精緻な官僚機構。律令法体系と科挙による統治の制度化"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","order","knowledge"],2:["tech","knowledge"],3:["consumption","enterprise"],4:["order","human","knowledge"]}},
   {id:"mecca",name:"メッカ",nameEn:"Mecca",lat:21.43,lng:39.83,era:"preindustrial",period:"7〜12世紀",
    description:"イスラーム文明の聖地にして知の中心。科学・哲学・医学が花開いたイスラーム黄金期。",
    values:{
@@ -1598,7 +1632,8 @@ const MAP_LOCATIONS = [
      "技術：隊商交易のための航海術・天文学。アラビア数字とアルゴリズムの発展",
      "経済：メッカ巡礼とインド洋交易の結節点。ワクフ（寄進）制度による公共財の維持",
      "制度：クルアーンとハディースに基づくシャリーア法。カリフ制とウラマー（学者）の権威"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","order","happiness"],2:["tech","knowledge"],3:["enterprise","consumption"],4:["order","knowledge","time","death"]}},
   {id:"tenochtitlan",name:"テノチティトラン",nameEn:"Tenochtitlan",lat:19.43,lng:-99.13,era:"preindustrial",period:"14〜16世紀",
    description:"湖上に築かれたアステカ帝国の首都。高度な都市計画と独自の宇宙観。",
    values:{
@@ -1620,7 +1655,8 @@ const MAP_LOCATIONS = [
      "技術：チナンパ農法・水路システム・石造建築。太陽暦と祭祀暦の精密な天文知識",
      "経済：トリビュート（貢納）制度による広域的資源集中。トラテロルコの大市場での交易",
      "制度：トラトアニ（王）を中心とする神権政治。人身御供を含む宗教的正統性の維持システム"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","labor","tech"],1:["human","order","death"],2:["tech","knowledge","time"],3:["consumption","enterprise"],4:["order","human","death","happiness"]}},
   {id:"varanasi",name:"バラナシ",nameEn:"Varanasi",lat:25.32,lng:83.01,era:"preindustrial",period:"紀元前6世紀〜",
    description:"ヒンドゥー教最大の聖地。ガンジス河畔で生と死が交差する永遠の都市。",
    values:{
@@ -1642,7 +1678,8 @@ const MAP_LOCATIONS = [
      "技術：サンスクリット語による高度な文法学・数学・天文学。ゼロの概念の発明",
      "経済：絹織物・金属加工の手工業。巡礼経済とガンジス川交易による持続的繁栄",
      "制度：ヴェーダの権威に基づくダルマ（法）体系。アシュラマ（人生四期）による生涯規範"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","death"],1:["human","labor","order"],2:["tech","knowledge"],3:["enterprise","consumption"],4:["order","happiness","death","time"]}},
   // --- Past (Industrial) ---
   {id:"london",name:"ロンドン",nameEn:"London",lat:51.51,lng:-0.13,era:"past",period:"18〜19世紀",
    description:"産業革命の震源地。蒸気機関が世界を変え、近代資本主義が誕生した。",
@@ -1665,7 +1702,8 @@ const MAP_LOCATIONS = [
      "技術：蒸気機関・紡績機・鉄道の産業革命技術。特許制度によるイノベーション促進",
      "経済：世界最大の植民地帝国による資源・市場の独占。シティの金融資本主義",
      "制度：議会主権と立憲君主制。コモンローの判例法体系と自由主義的経済政策"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","order","knowledge"],2:["tech","labor","enterprise"],3:["consumption","enterprise","labor"],4:["order","knowledge","human"]}},
   {id:"edo",name:"江戸/東京",nameEn:"Edo/Tokyo",lat:35.68,lng:139.69,era:"past",period:"17〜20世紀",
    description:"鎖国下で独自に成熟した都市文化。明治維新で急激な近代化を遂げた。",
    values:{
@@ -1687,7 +1725,8 @@ const MAP_LOCATIONS = [
      "技術：木造建築・土木灌漑技術。浮世絵の多色刷り木版画技術。和算の独自発展",
      "経済：米本位制と貨幣経済の二重構造。堂島米市場における先物取引の先駆",
      "制度：幕藩体制による中央集権と地方分権の併存。鎖国政策による独自文化の醸成"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","knowledge","consumption"],2:["tech","knowledge","consumption"],3:["enterprise","consumption","labor"],4:["order","time","human"]}},
   {id:"newyork",name:"ニューヨーク",nameEn:"New York",lat:40.71,lng:-74.01,era:"past",period:"19〜20世紀",
    description:"移民の街、資本主義の象徴。自由と機会の約束が世界中から人を引き寄せた。",
    values:{
@@ -1709,7 +1748,8 @@ const MAP_LOCATIONS = [
      "技術：高層建築（摩天楼）のエレベーター・鉄骨構造技術。電信・電話の商業化拠点",
      "経済：ウォール街の金融資本主義。大量生産・大量消費型経済モデルの発信地",
      "制度：連邦制と州権の均衡。移民法と市民権の段階的拡大。反トラスト法による市場規制"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","order","knowledge"],2:["tech","labor","consumption"],3:["enterprise","consumption","happiness"],4:["order","human","enterprise"]}},
   {id:"berlin",name:"ベルリン",nameEn:"Berlin",lat:52.52,lng:13.41,era:"past",period:"20世紀",
    description:"20世紀のイデオロギー対立の最前線。壁の建設と崩壊が時代を画した。",
    values:{
@@ -1731,7 +1771,8 @@ const MAP_LOCATIONS = [
      "技術：化学・電機・光学の先端工業技術。大学と産業の密接な連携（フンボルト理念）",
      "経済：重工業と軍需産業。戦間期のハイパーインフレと経済危機が全体主義の温床に",
      "制度：ビスマルクの社会保険制度。ワイマール憲法の民主主義とその脆弱性。東西分断と再統一"
-   ]},
+   ],
+   premiseInfluence:{0:["nature"],1:["human","knowledge","happiness"],2:["tech","labor","enterprise"],3:["consumption","order","human"],4:["order","human","death","time"]}},
   {id:"moscow",name:"モスクワ",nameEn:"Moscow",lat:55.76,lng:37.62,era:"past",period:"20世紀",
    description:"社会主義の実験場。平等の理想と全体主義の現実が交錯した。",
    values:{
@@ -1753,7 +1794,8 @@ const MAP_LOCATIONS = [
      "技術：宇宙開発・核技術の国家主導型イノベーション。重工業偏重と消費財の慢性的不足",
      "経済：中央計画経済による資源配分。ゴスプラン（国家計画委員会）による五か年計画体制",
      "制度：共産党一党独裁。ソビエト（評議会）制度とノーメンクラトゥーラ（特権官僚層）"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","labor","happiness"],2:["tech","order","knowledge"],3:["consumption","enterprise","labor"],4:["order","knowledge","time","death"]}},
   {id:"detroit",name:"デトロイト",nameEn:"Detroit",lat:42.33,lng:-83.05,era:"past",period:"20世紀前半〜後半",
    description:"自動車産業の聖地。大量生産方式が労働と消費を根底から変えた。",
    values:{
@@ -1775,7 +1817,8 @@ const MAP_LOCATIONS = [
      "技術：フォードの組立ライン方式。標準化・互換部品による大量生産技術の確立",
      "経済：自動車産業の集積（ビッグスリー）。高賃金・大量消費モデルの発祥地",
      "制度：UAW（全米自動車労組）による労使交渉制度。郊外化政策と高速道路建設による都市構造変容"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","order","labor"],2:["tech","labor","consumption"],3:["enterprise","consumption","happiness"],4:["order","labor","time"]}},
   // --- Present ---
   {id:"siliconvalley",name:"シリコンバレー",nameEn:"Silicon Valley",lat:37.39,lng:-122.08,era:"present",period:"2000年代〜",
    description:"テクノロジー産業のメッカ。「世界を変える」イノベーション文化の中心。",
@@ -1798,7 +1841,8 @@ const MAP_LOCATIONS = [
      "技術：半導体・インターネット・AI等の連続的技術革新。オープンソース文化と技術者コミュニティ",
      "経済：ベンチャーキャピタルによるリスクマネー供給。ストックオプションによる人材獲得モデル",
      "制度：知的財産権の保護と非競争条項の緩さ（カリフォルニア法）。移民ビザ制度（H-1B）の活用"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","happiness"],1:["human","enterprise","labor"],2:["tech","knowledge","enterprise"],3:["enterprise","labor","consumption"],4:["enterprise","order","knowledge"]}},
   {id:"shenzhen",name:"深圳",nameEn:"Shenzhen",lat:22.54,lng:114.06,era:"present",period:"2000年代〜",
    description:"40年で漁村から世界のイノベーション工場へ。中国式テクノロジー発展の象徴。",
    values:{
@@ -1820,7 +1864,8 @@ const MAP_LOCATIONS = [
      "技術：模倣から革新への急速な転換（山寨からイノベーションへ）。ハードウェアのオープンエコシステム",
      "経済：経済特区政策による外資導入と輸出加工。華強北電子市場に象徴されるサプライチェーン集積",
      "制度：「先行先試」（先に試す）政策による規制実験区。一国二制度の香港との制度的差異の活用"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","enterprise"],1:["human","labor","happiness"],2:["tech","knowledge","enterprise"],3:["enterprise","consumption","labor"],4:["order","enterprise","time"]}},
   {id:"copenhagen",name:"コペンハーゲン",nameEn:"Copenhagen",lat:55.68,lng:12.57,era:"present",period:"2000年代〜",
    description:"サステナビリティと幸福度の世界モデル。北欧型福祉国家の先進的実験場。",
    values:{
@@ -1842,7 +1887,8 @@ const MAP_LOCATIONS = [
      "技術：風力発電技術の世界的リーダー。自転車インフラとスマートシティ技術の統合",
      "経済：高税率・高福祉のフレキシキュリティ（柔軟安全性）モデル。デザイン産業の高付加価値化",
      "制度：社会民主主義的合意形成モデル。労使協調と三者協議。包括的な社会保障制度"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","happiness","order"],2:["tech","nature","consumption"],3:["labor","enterprise","consumption"],4:["order","happiness","time"]}},
   {id:"dubai",name:"ドバイ",nameEn:"Dubai",lat:25.20,lng:55.27,era:"present",period:"2000年代〜",
    description:"砂漠に出現した未来都市。石油後の経済を見据えた大胆な都市実験。",
    values:{
@@ -1864,7 +1910,8 @@ const MAP_LOCATIONS = [
      "技術：海水淡水化・人工島建設・超高層建築技術。スマートガバメント（電子政府）の先進実装",
      "経済：石油依存からの脱却を目指す経済多角化。観光・金融・物流のハブ化戦略",
      "制度：首長制による迅速な意思決定。フリーゾーン（経済特区）による外資誘致。シャリーア法と商法の併存"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","labor","order"],2:["tech","consumption","nature"],3:["enterprise","consumption","happiness"],4:["order","enterprise","time"]}},
   {id:"bhutan",name:"ブータン",nameEn:"Bhutan",lat:27.47,lng:89.64,era:"present",period:"2000年代〜",
    description:"GNH（国民総幸福量）を国策に掲げる唯一の国。物質的成長より精神的充足を追求。",
    values:{
@@ -1886,7 +1933,8 @@ const MAP_LOCATIONS = [
      "技術：水力発電の輸出。伝統建築技術の法的保護と近代技術の選択的導入",
      "経済：GNH（国民総幸福量）を経済成長より優先する政策。観光客数制限による持続可能な観光",
      "制度：2008年に絶対王政から立憲君主制へ移行。GNH委員会による政策のGNH適合性審査"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","happiness","death"],2:["tech","nature"],3:["consumption","enterprise","labor"],4:["order","happiness","knowledge","time"]}},
   // --- Future ---
   {id:"singapore",name:"シンガポール",nameEn:"Singapore",lat:1.35,lng:103.82,era:"future",period:"2030年代〜",
    description:"AIガバナンスとスマートネーション構想のグローバルリーダー。",
@@ -1909,7 +1957,8 @@ const MAP_LOCATIONS = [
      "技術：スマートネーション構想によるAI・IoT・デジタルツイン技術の国家実装",
      "経済：中継貿易から金融・テクノロジーハブへの転換。政府系投資ファンド（GIC・テマセク）による戦略投資",
      "制度：人民行動党の一党優位体制による長期的政策実行。厳格な法執行と効率的な行政機構"
-   ]},
+   ],
+   premiseInfluence:{0:["nature","consumption"],1:["human","labor","knowledge"],2:["tech","order","enterprise"],3:["enterprise","order"],4:["order","time","happiness"]}},
   {id:"tallinn",name:"タリン",nameEn:"Tallinn",lat:59.44,lng:24.75,era:"future",period:"2030年代〜",
    description:"e-ガバナンスの世界的先駆者。電子国家がもたらす市民と政府の新しい関係。",
    values:{
@@ -1931,7 +1980,8 @@ const MAP_LOCATIONS = [
      "技術：e-Residency（電子市民権）・X-Road（データ連携基盤）・ブロックチェーン投票",
      "経済：Skype発祥の地としてのスタートアップエコシステム。デジタルノマド誘致戦略",
      "制度：電子政府（e-Estonia）による行政の99%デジタル化。データ連携法とプライバシー保護の両立"
-   ]},
+   ],
+   premiseInfluence:{0:["nature"],1:["human","enterprise","order"],2:["tech","order","knowledge","labor"],3:["enterprise","labor"],4:["order","human","time","death"]}},
   {id:"masdar",name:"マスダール",nameEn:"Masdar City",lat:24.43,lng:54.62,era:"future",period:"2030年代〜",
    description:"ゼロカーボン・ゼロウェイストを目指す計画都市。持続可能な未来の実験場。",
    values:{
@@ -1953,7 +2003,8 @@ const MAP_LOCATIONS = [
      "技術：パッシブ冷却建築・PRT（個人用高速輸送）・太陽光発電の統合的実験都市",
      "経済：アブダビ政府の石油収入によるクリーンテック投資。IRENA（国際再生可能エネルギー機関）本部誘致",
      "制度：マスダール科学技術研究所（MITと提携）を核とした産学官連携。UAEのエネルギー転換戦略の実験場"
-   ]}
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","knowledge"],2:["tech","nature","consumption"],3:["enterprise","knowledge"],4:["order","time","enterprise"]}}
 ];
 
 // ========== RENDERING ==========
@@ -2528,16 +2579,27 @@ function showMapDetail(loc){
   const pt = document.querySelector('.map-point[data-id="'+loc.id+'"]');
   if(pt) pt.classList.add('selected');
 
+  const premiseTags = ['natural','social','technical','economic','institutional'];
+  const premiseLabels = ['自然環境','社会','技術','経済','制度'];
+  // Build reverse map: valueId -> [premiseIdx, ...]
+  const reverseMap = {};
+  if(loc.premiseInfluence){
+    Object.entries(loc.premiseInfluence).forEach(([idx, vids]) => {
+      vids.forEach(vid => {
+        if(!reverseMap[vid]) reverseMap[vid] = [];
+        reverseMap[vid].push(parseInt(idx));
+      });
+    });
+  }
+
   let html = '<div class="map-detail-header">';
   html += '<div class="map-detail-title"><h3>'+loc.name+'</h3><span class="map-detail-en">'+loc.nameEn+'</span>';
   html += '<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);margin-left:.5rem">'+eraLabels[loc.era]+' — '+loc.period+'</span></div>';
   html += '<p class="map-detail-desc">'+loc.description+'</p>';
   html += '<button class="map-detail-close" onclick="closeMapDetail()">&times;</button>';
   html += '</div>';
-  // Premises section
+  // Premises section with influence badges
   if(loc.premises && loc.premises.length > 0){
-    const premiseTags = ['natural','social','technical','economic','institutional'];
-    const premiseLabels = ['自然環境','社会','技術','経済','制度'];
     html += '<div class="map-premise-section">';
     html += '<div class="map-premise-header" onclick="this.parentElement.classList.toggle(\'open\')">';
     html += '<span class="map-premise-title">📋 成立条件</span>';
@@ -2547,26 +2609,84 @@ function showMapDetail(loc){
     loc.premises.forEach((p, i) => {
       const colonIdx = p.indexOf('：');
       const text = colonIdx > -1 ? p.substring(colonIdx + 1) : p;
-      html += '<div class="map-premise-item">';
+      const influenced = loc.premiseInfluence ? (loc.premiseInfluence[i] || []) : [];
+      html += '<div class="map-premise-item" data-premise-idx="'+i+'">';
       html += '<span class="map-premise-tag '+premiseTags[i]+'">'+premiseLabels[i]+'</span>';
       html += '<span class="map-premise-text">'+text+'</span>';
+      if(influenced.length > 0){
+        html += '<div class="premise-influences">';
+        influenced.forEach(vid => {
+          const cat = DATA.find(c => c.id === vid);
+          if(cat) html += '<span class="premise-influence-badge" data-target="'+vid+'" title="→ '+cat.title+'" style="color:'+cat.color+'">'+cat.icon+'</span>';
+        });
+        html += '</div>';
+      }
       html += '</div>';
     });
     html += '</div></div>';
   }
+  // Connector text
+  if(loc.premiseInfluence) html += '<div class="influence-connector">↓ 以下の価値観に影響</div>';
+  // Value cards with source tags
   html += '<div class="map-detail-grid">';
   DATA.forEach(cat => {
     const val = loc.values[cat.id] || '';
-    html += '<div class="map-value-card">';
+    const sources = reverseMap[cat.id] || [];
+    html += '<div class="map-value-card" data-value-id="'+cat.id+'">';
     html += '<div class="map-value-head"><div class="map-value-icon" style="background:'+cat.color+'22;color:'+cat.color+'">'+cat.icon+'</div>';
     html += '<div class="map-value-title">'+cat.title+'</div></div>';
     html += '<div class="map-value-text">'+val+'</div>';
+    if(sources.length > 0){
+      html += '<div class="value-premise-sources">';
+      sources.forEach(idx => {
+        html += '<span class="value-source-tag '+premiseTags[idx]+'" data-source-idx="'+idx+'">← '+premiseLabels[idx]+'</span>';
+      });
+      html += '</div>';
+    }
     html += '</div>';
   });
   html += '</div>';
   detail.innerHTML = html;
   detail.classList.add('active');
   detail.scrollIntoView({behavior:'smooth',block:'start'});
+  // Interactive highlight: premise hover → highlight value cards
+  if(loc.premiseInfluence){
+    detail.querySelectorAll('.map-premise-item').forEach(item => {
+      const idx = parseInt(item.dataset.premiseIdx);
+      const targets = loc.premiseInfluence[idx] || [];
+      item.addEventListener('mouseenter', () => {
+        detail.querySelectorAll('.map-value-card').forEach(card => {
+          card.classList.toggle('influence-highlighted', targets.includes(card.dataset.valueId));
+          card.classList.toggle('influence-dimmed', !targets.includes(card.dataset.valueId));
+        });
+      });
+      item.addEventListener('mouseleave', () => {
+        detail.querySelectorAll('.map-value-card').forEach(card => {
+          card.classList.remove('influence-highlighted','influence-dimmed');
+        });
+      });
+    });
+    // Interactive highlight: value card hover → highlight premise items
+    detail.querySelectorAll('.map-value-card').forEach(card => {
+      const vid = card.dataset.valueId;
+      const sourceIdxs = reverseMap[vid] || [];
+      card.addEventListener('mouseenter', () => {
+        // Auto-open premise section
+        const section = detail.querySelector('.map-premise-section');
+        if(section && !section.classList.contains('open')) section.classList.add('open');
+        detail.querySelectorAll('.map-premise-item').forEach(item => {
+          const match = sourceIdxs.includes(parseInt(item.dataset.premiseIdx));
+          item.classList.toggle('influence-highlighted', match);
+          item.classList.toggle('influence-dimmed', !match);
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        detail.querySelectorAll('.map-premise-item').forEach(item => {
+          item.classList.remove('influence-highlighted','influence-dimmed');
+        });
+      });
+    });
+  }
 }
 
 function closeMapDetail(){
@@ -2673,7 +2793,9 @@ function showMapComparison(){
     html += '</div></div>';
   }
 
-  // Category comparison
+  // Category comparison with source tags
+  const premiseTagsCmp = ['natural','social','technical','economic','institutional'];
+  const premiseLabelsCmp = ['自然環境','社会','技術','経済','制度'];
   DATA.forEach(cat => {
     html += '<div class="map-compare-category">';
     html += '<div class="map-compare-category-title">';
@@ -2683,7 +2805,22 @@ function showMapComparison(){
     html += '<div class="map-compare-row">';
     [cityA, cityB].forEach((city, ci) => {
       const val = city.values[cat.id] || '';
-      html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'">'+val+'</div>';
+      const sources = [];
+      if(city.premiseInfluence){
+        Object.entries(city.premiseInfluence).forEach(([idx, vids]) => {
+          if(vids.includes(cat.id)) sources.push(parseInt(idx));
+        });
+      }
+      html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'">';
+      html += val;
+      if(sources.length > 0){
+        html += '<div class="value-premise-sources compact">';
+        sources.forEach(idx => {
+          html += '<span class="value-source-tag '+premiseTagsCmp[idx]+'">← '+premiseLabelsCmp[idx]+'</span>';
+        });
+        html += '</div>';
+      }
+      html += '</div>';
     });
     html += '</div></div>';
   });
