@@ -273,7 +273,9 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 @keyframes pulse{0%,100%{opacity:.9}50%{opacity:.4}}
 
 /* ========== VALUE FILTER ========== */
-.value-filter{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;margin:.8rem 0;padding:0 .5rem}
+.value-filter{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;justify-content:center;
+  margin-top:.6rem;padding:.5rem .5rem .2rem;border-top:1px solid var(--border)}
+.value-filter-label{font-size:.7rem;color:var(--text-muted);margin-right:.2rem;white-space:nowrap}
 .value-filter-btn{display:inline-flex;align-items:center;gap:.3rem;
   padding:.3rem .7rem;border-radius:16px;border:1px solid var(--border);
   background:transparent;color:var(--text-dim);font-size:.72rem;cursor:pointer;
@@ -310,6 +312,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   .point-label{font-size:6px}
   .value-grid{grid-template-columns:1fr}
   .value-filter-btn{padding:.25rem .5rem;font-size:.68rem}
+  .value-filter-label{font-size:.62rem}
 }
 
 /* ========== MAP PREMISE SECTION ========== */
@@ -8830,6 +8833,14 @@ function renderMap(){
     html += '<g id="mapPoints"></g>';
     html += '</svg>';
     html += '<div class="map-tooltip" id="mapTooltip"></div>';
+    // Value filter buttons (inside map-container, at bottom)
+    html += '<div class="value-filter" id="valueFilter">';
+    html += '<span class="value-filter-label">価値観で比較：</span>';
+    DATA.forEach(cat => {
+      html += '<button class="value-filter-btn" data-value-id="'+cat.id+'" style="--vf-color:'+cat.color+'" onclick="toggleValueFilter(\''+cat.id+'\')">';
+      html += '<span class="vf-icon">'+cat.icon+'</span>'+cat.title+'</button>';
+    });
+    html += '</div>';
     html += '</div>';
     // Legend
     html += '<div class="map-legend">';
@@ -8838,22 +8849,29 @@ function renderMap(){
     html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--present)"></div>現在</div>';
     html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--future)"></div>未来</div>';
     html += '</div>';
-    // Value filter buttons
-    html += '<div class="value-filter" id="valueFilter">';
-    DATA.forEach(cat => {
-      html += '<button class="value-filter-btn" data-value-id="'+cat.id+'" style="--vf-color:'+cat.color+'" onclick="toggleValueFilter(\''+cat.id+'\')">';
-      html += '<span class="vf-icon">'+cat.icon+'</span>'+cat.title+'</button>';
-    });
-    html += '</div>';
     html += '<div class="value-grid-panel" id="valueGridPanel"></div>';
     html += '<div class="map-detail" id="mapDetail"></div>';
     mapView.innerHTML = html;
     mapInitialized = true;
-    // Keyboard navigation: left/right to switch cities
+    // Keyboard navigation: left/right to switch cities or values
     document.addEventListener('keydown', function(e){
       if(currentView !== 'map') return;
       if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      // Get currently visible cities
+      // Value filter mode: cycle through value categories
+      if(activeValueFilter){
+        e.preventDefault();
+        const valueIds = DATA.map(c => c.id);
+        const curIdx = valueIds.indexOf(activeValueFilter);
+        let nextIdx;
+        if(e.key === 'ArrowRight'){
+          nextIdx = (curIdx + 1) % valueIds.length;
+        } else {
+          nextIdx = (curIdx - 1 + valueIds.length) % valueIds.length;
+        }
+        toggleValueFilter(valueIds[nextIdx]);
+        return;
+      }
+      // City mode: cycle through visible cities
       const visibleCities = MAP_LOCATIONS.filter(loc => {
         if(activeEra !== 'all' && activeEra !== loc.era) return false;
         if(searchTerm && !JSON.stringify(loc).toLowerCase().includes(searchTerm.toLowerCase())) return false;
