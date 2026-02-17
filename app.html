@@ -271,7 +271,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-premise-section.open .map-premise-chevron{transform:rotate(180deg)}
 .map-premise-body{display:none;padding:0 .8rem .6rem}
 .map-premise-section.open .map-premise-body{display:block}
-.map-premise-item{display:flex;align-items:flex-start;gap:.6rem;
+.map-premise-item{display:flex;align-items:flex-start;gap:.6rem;flex-wrap:wrap;
   padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .map-premise-item:last-child{border-bottom:none}
 .map-premise-tag{display:inline-block;font-size:.65rem;font-weight:700;
@@ -303,6 +303,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .value-source-tag.institutional{color:#8b5cf6;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.15)}
 .map-premise-item{cursor:pointer;transition:var(--transition);border-radius:4px;
   padding:.45rem .4rem;margin:0 -.4rem}
+.map-premise-item>.research-meta{width:100%;flex-basis:100%;margin-top:.2rem;padding-top:.3rem}
 .map-premise-item:hover{background:rgba(255,255,255,.03)}
 .map-premise-item.influence-highlighted{background:rgba(59,130,246,.1)}
 .map-premise-item.influence-dimmed{opacity:.3}
