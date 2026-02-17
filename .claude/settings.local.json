@@ -21,7 +21,8 @@
       "Bash(dir:*)",
       "Bash(npm:*)",
       "Bash(npx serve:*)",
-      "Bash(powershell -Command \"$json = Get-Content research-db.json | ConvertFrom-Json; $json.athens.premises | ConvertTo-Json -Depth 10\")"
+      "Bash(powershell -Command \"$json = Get-Content research-db.json | ConvertFrom-Json; $json.athens.premises | ConvertTo-Json -Depth 10\")",
+      "Bash(timeout 5 tail:*)"
     ]
   }
 }
