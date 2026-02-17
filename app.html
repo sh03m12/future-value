@@ -2063,7 +2063,123 @@ const MAP_LOCATIONS = [
      "経済：アブダビ政府の石油収入によるクリーンテック投資。IRENA（国際再生可能エネルギー機関）本部誘致",
      "制度：マスダール科学技術研究所（MITと提携）を核とした産学官連携。UAEのエネルギー転換戦略の実験場"
    ],
-   premiseInfluence:{0:["nature","tech"],1:["human","knowledge"],2:["tech","nature","consumption"],3:["enterprise","knowledge"],4:["order","time","enterprise"]}}
+   premiseInfluence:{0:["nature","tech"],1:["human","knowledge"],2:["tech","nature","consumption"],3:["enterprise","knowledge"],4:["order","time","enterprise"]}},
+  // --- Anthropological Sites ---
+  {id:"trobriand",name:"トロブリアンド諸島",nameEn:"Trobriand Islands",lat:-8.53,lng:151.07,era:"preindustrial",period:"20世紀初頭（伝統社会）",
+   description:"クラ交換に象徴される贈与経済の社会。富は蓄積ではなく循環させるもの。",
+   values:{
+     human:"人格は親族ネットワークと氏族への帰属で定義される。母系制社会で、アイデンティティは関係性の中にある。",
+     labor:"ヤム芋栽培は義理の家族のために行う名誉ある労働。カヌー建造と航海は儀礼的技能。",
+     consumption:"反蓄積の倫理。富は循環させるか贈与しなければならない。溜め込みは恥。",
+     tech:"外洋航海カヌーの建造と星の航法は高度な技術だが、呪術と技能は不可分。",
+     nature:"海とサンゴ礁は神聖な地理。畑の呪術や漁の呪術は、自然との儀礼的交渉。",
+     order:"首長の権威は寛大さと再分配に基づく。強制力ではなく贈与の量が権力の源泉。",
+     enterprise:"クラ交換は利益なき交易。社会関係資本を築く交換で、モノではなく関係に価値がある。",
+     happiness:"威信、社会的地位、成功した儀礼的交換が充足をもたらす。公的な気前の良さが幸福への道。",
+     knowledge:"口承伝統と呪術的知識が血筋を通じて伝承される。畑の呪文は厳重に守られた知的財産。",
+     time:"ヤム芋の季節とクラ航海に結びついた循環的時間。直線的な進歩の観念はない。",
+     death:"精緻な喪の儀礼で女性のバナナ葉の富が分配される。死が大規模な経済的再分配を引き起こす。"
+   },
+   premises:[
+     "自然環境：パプアニューギニア沖の珊瑚礁島嶼群。豊かな海洋資源と熱帯農業の環境",
+     "社会：母系制の氏族社会。親族ネットワークが社会の基本単位で、首長の権威は再分配能力に依存",
+     "技術：外洋航海カヌーの建造技術と星の航法。呪術と技能が不可分の技術体系",
+     "経済：クラ交換（儀礼的贈与交易）による島嶼間ネットワーク。ヤム芋の余剰生産と義務的贈与",
+     "制度：首長制と氏族長老による合議。贈与と再分配の義務が社会秩序を維持する制度"
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","order","death"],2:["tech","knowledge"],3:["enterprise","consumption","labor"],4:["order","happiness"]}},
+  {id:"nuer",name:"ヌエル族の村落",nameEn:"Nuer Villages",lat:8.50,lng:31.60,era:"preindustrial",period:"20世紀前半（伝統社会）",
+   description:"首長も政府も裁判所もない「秩序ある無政府状態」。牛が全社会関係の媒介。",
+   values:{
+     human:"アイデンティティは牛との結びつきと出自集団で定義される。男性は愛牛の名前を名乗る。",
+     labor:"牛の放牧が最も名誉ある労働。ナイル川の氾濫に合わせた季節的移牧が全活動を構造化。",
+     consumption:"牛は富だが食用にはほぼ消費しない（乳と血のみ）。屠殺は犠牲の時のみ。第一の富の反消費。",
+     tech:"槍と牛関連の道具以外の技術は最小限。技術的蓄積への欲求がない。簡素さは貧困ではなく価値選択。",
+     nature:"河川環境との深い共生関係。ナイル川の氾濫と季節の生態系が生活リズムの全てを決定。",
+     order:"秩序ある無政府状態：首長なし、政府なし、裁判所なし。分節的出自体系と血の復讐、儀礼的調停で秩序を維持。",
+     enterprise:"牛が唯一の「通貨」で、主に婚資と賠償に交換される。利益追求の市場経済は存在しない。",
+     happiness:"牛の所有、大家族、出自集団内での尊敬。社会的調和が善き生。",
+     knowledge:"系譜の知識（出自の深さ）が最も重要な知的資産。自分が誰と血縁関係にあるかを知ることが最重要の知。",
+     time:"生態学的時間（牛時計：搾乳・放牧・水やり）と構造的時間（年齢組・出自の深さ）。時間は商品ではない。",
+     death:"死は牛の犠牲と複雑な葬礼儀式を引き起こす。死者は霊的な力で生者に影響を及ぼす。"
+   },
+   premises:[
+     "自然環境：上ナイル地域の氾濫原。雨季と乾季の劇的な環境変化が季節移牧を規定",
+     "社会：牛を中心とした牧畜民社会。分節的出自体系により数十万人が無政府的に組織化",
+     "技術：牧畜に特化した最小限の技術。槍・牛関連道具のみで高度な機械技術は不在",
+     "経済：牛本位制経済。婚資（花嫁代償）・血の賠償・犠牲が主要な経済的交換",
+     "制度：豹皮の首長（調停者で支配者ではない）による紛争調停。年齢組による世代的組織化"
+   ],
+   premiseInfluence:{0:["nature","labor","time"],1:["human","order"],2:["tech"],3:["enterprise","consumption"],4:["order","death","knowledge"]}},
+  {id:"minangkabau",name:"ミナンカバウの村落",nameEn:"Minangkabau Villages",lat:-0.95,lng:100.35,era:"preindustrial",period:"伝統社会〜現代",
+   description:"世界最大の母系社会。土地・家屋は女性が相続し、男性は「旅立ち」で地位を得る。",
+   values:{
+     human:"アイデンティティは母方の血筋を通じて流れる。女性は「家の柱」。男性は弁舌・宗教学識・移住先での成功で地位を得る。",
+     labor:"女性が祖先伝来の水田を管理。男性はムランタウ（移住）で商業・手工業に従事。性別役割は相互補完的。",
+     consumption:"儀礼的な共同饗宴。ルマー・ガダン（大きな家）は母系の富の象徴で、華麗で、共同所有で、個人には売れない。",
+     tech:"精巧な灌漑による水田農業。伝統的織物（ソンケット）が高い威信を持つ技術。",
+     nature:"水田と火山高地は「祖先の宝」。自然は母系の遺産であり、個人ではなく土地に属する。",
+     order:"合議制（ムシャワラー・ムファカット）に基づく統治。いかなる首長も一方的権力を持たない。母系長老と宗教指導者の合意が必要。",
+     enterprise:"ムランタウ（男性の出稼ぎ移住）による強い起業家精神。世界中のパダン料理店は現代的表現。",
+     happiness:"アダット（慣習）とイスラムの均衡。母系のアイデンティティと宗教的献身の調和。知識と富を得て帰還することが充足。",
+     knowledge:"二重の知識体系：アダット（諺で口承される慣習法）とイスラムの学問（スラウ教育）。諺に基づく推論が最重要。",
+     time:"稲作の季節と生涯儀礼が時間を構造化する循環的時間。ムランタウは直線的な「旅と帰還」の物語を導入。",
+     death:"精緻な葬礼儀式が母系の絆を再確認。相続は死によって発動し、財産は娘と姪に渡り、息子には渡らない。"
+   },
+   premises:[
+     "自然環境：スマトラ島西部の火山高地と肥沃な谷間。水田農業に適した温暖湿潤な気候",
+     "社会：世界最大の母系社会（約400万人）。女性が土地・家屋を相続し、男性はムランタウ（出稼ぎ移住）で成功を目指す",
+     "技術：精巧な棚田灌漑技術とソンケット（金糸織物）。ルマー・ガダン（大きな家）の高度な木造建築",
+     "経済：祖先伝来の水田（ハルタ・プサカ）を基盤とする母系経済と、ムランタウによる商業経済の二重構造",
+     "制度：アダット（母系慣習法）とイスラム法の独自の融合。合議制による意思決定と母系長老の権威"
+   ],
+   premiseInfluence:{0:["nature","labor"],1:["human","order","death"],2:["tech","consumption","knowledge"],3:["enterprise","consumption"],4:["order","knowledge","happiness"]}},
+  {id:"azande",name:"アザンデ族の村落",nameEn:"Azande Villages",lat:4.20,lng:28.50,era:"preindustrial",period:"20世紀前半（伝統社会）",
+   description:"全ての不幸に社会的原因を問う「二重因果論」の世界。毒占いが最高の知的装置。",
+   values:{
+     human:"全ての人間は呪術の被害者にも加害者にもなりうる。呪術物質（マング）は生物学的に遺伝する。人格は不可視の因果的次元を含む。",
+     labor:"農業労働は熟練を要するが、常に呪術のリスクを意識して行われる。不作は社会的に説明される。",
+     consumption:"誰から何を消費するかに細心の注意。敵から与えられた食物には呪術が宿りうる。社会関係が安全な消費を決定。",
+     tech:"毒占い（ベンゲ）が最も重要な「技術」。意思決定と真実発見の装置。呪術は特定の結果を得るための実践的技術。",
+     nature:"自然の不幸は決して偶然ではない。常に社会的に原因がある。自然と社会の境界が溶解している。",
+     order:"首長が占いの諮問を通じて紛争を裁定する。呪術の告発が社会統制として機能し、逸脱行動は告発を招く。",
+     enterprise:"経済的成功は嫉妬を招き、呪術の告発を受ける。目立つ豊かさより穏当な繁栄が安全。",
+     happiness:"呪術から自由であることが幸福。良好な社会関係（嫉妬されない、告発されない）が幸福に不可欠。",
+     knowledge:"二重因果論：物理的原因（『シロアリが柱を食った』）と社会的原因（『なぜ私の上に倒れたか』）が同時に真。占いの知が経験的観察に優越。",
+     time:"不幸が過去の社会関係と現在の出来事を結びつける。時間は社会的因果の網であり、中立的な進行ではない。",
+     death:"死は決して自然ではない。全ての死は呪術によるもので、調査されなければならない。解剖（内臓のマング物質検査）が行われ、復讐呪術か告発が続く。"
+   },
+   premises:[
+     "自然環境：コンゴ北東部〜南スーダン境界の熱帯サバンナ。豊かな植生と多様な動植物資源",
+     "社会：首長制社会だが呪術信仰が全社会関係を貫通。嫉妬・敵意が呪術として顕在化する社会的論理",
+     "技術：毒占い（ベンゲ）・摩擦占い・終端板占いなど複数の占術体系。呪術対抗の薬草知識",
+     "経済：農耕・狩猟の混合経済。経済的成功は呪術的リスクを伴い、富の顕示は社会的に危険",
+     "制度：首長が毒占いを通じて司法権を行使。呪術告発の手続きが事実上の法制度として機能"
+   ],
+   premiseInfluence:{0:["nature"],1:["human","happiness","enterprise"],2:["tech","knowledge"],3:["consumption","enterprise","labor"],4:["order","death","knowledge"]}},
+  {id:"bali",name:"バリの村落",nameEn:"Balinese Villages",lat:-8.41,lng:115.19,era:"preindustrial",period:"伝統社会〜現代",
+   description:"劇場国家と儀礼経済の社会。国家は統治ではなく儀礼劇を演じるために存在する。",
+   values:{
+     human:"個人は脱個性化される。人は社会的位置（出生順の称号、テクノニム）で呼ばれ、個人名はほぼ使わない。「人」は宇宙的・社会的構造の中の一点。",
+     labor:"スバック（灌漑協同体）による共同の稲作は儀礼的に調整され、生態学的に洗練されている。芸術労働（彫刻・絵画・音楽・舞踊）は宗教的義務。",
+     consumption:"寺院の儀式、火葬儀礼、供物に莫大な資源が消費される。日々の供物（チャナン・サリ）は宇宙維持のための恒常的な微小消費。",
+     tech:"スバック水管理システムは精巧な社会技術ネットワーク。寺院が中央計画なしに灌漑を調整する情報ノードとして機能。",
+     nature:"自然は神聖な景観。全ての水田、泉、山、海に霊的意味がある。アグン山が宇宙の軸。",
+     order:"劇場国家：統治は演劇的パフォーマンス。国家は行政ではなく儀礼劇を演じるために存在する。デサ（慣習村）・バンジャール（町内会）の重層的権威。",
+     enterprise:"儀礼経済が巨大な余剰を吸収。一家が一回の火葬儀礼に何年分もの収入を費やすことも。経済活動は儀礼的義務に奉仕する。",
+     happiness:"正しい儀礼の遂行を通じて宇宙的均衡（ルワ・ビネダ：善悪の二元性）を維持すること。トランス・音楽・舞踊が日常を超えた状態を達成する。",
+     knowledge:"知識は遂行的で身体化されている。舞踊・音楽・彫刻・儀礼の中にある。ロンタル（椰子葉写本）が聖典を保存。知識は宇宙維持に奉仕する。",
+     time:"置換的・循環的：複数の暦（210日周期のパウコン暦、太陰太陽暦のサカ暦）の交差が質的に固有な日を生み出す。時間は「流れ」ではなく「句読点を打つ」。",
+     death:"火葬（ンガベン）が最も重要で高価な儀礼。肉体は五大元素に還される。精緻で歓びに満ち、莫大な費用をかける。死は悼まれず、解放として祝われる。"
+   },
+   premises:[
+     "自然環境：火山島の棚田地帯。アグン山を宇宙軸とする神聖な地理と豊かな水資源",
+     "社会：カースト制と慣習村（デサ・アダット）の重層的社会構造。芸術と宗教が日常に融合した生活",
+     "技術：スバック（水の寺院ネットワーク）による分散型灌漑管理。中央計画なしに島全体の水利を調整",
+     "経済：儀礼経済が余剰の大部分を吸収。火葬・寺院祭礼・供物への投資が経済活動の主目的",
+     "制度：劇場国家の伝統。王権は行政ではなく儀礼的壮麗さで表現。デサ・バンジャールの自治的重層統治"
+   ],
+   premiseInfluence:{0:["nature","tech"],1:["human","labor","consumption"],2:["tech","order"],3:["enterprise","consumption","happiness"],4:["order","time","death"]}}
 ];
 
 // ========== RENDERING ==========
@@ -7278,6 +7394,1151 @@ let researchDB = {
         ]
       }
     }
+  },
+  "trobriand": {
+    "description": {
+      "sources": [
+        "Bronisław Malinowski, Argonauts of the Western Pacific (1922)",
+        "Annette Weiner, Women of Value, Men of Renown (1976)"
+      ],
+      "reasoning": "マリノフスキーの参与観察が贈与経済の社会構造を初めて体系的に記録した。クラ交換が経済的利益ではなく社会関係の構築・維持を目的とする交易であることが、贈与経済の理解に決定的であった。",
+      "confidence": "high",
+      "alternatives": [
+        "ワイナーは女性の経済的役割がマリノフスキーによって過小評価されたと批判している"
+      ]
+    },
+    "values": {
+      "human": {
+        "sources": [
+          "Bronisław Malinowski, The Sexual Life of Savages (1929)",
+          "Annette Weiner, The Trobrianders of Papua New Guinea (1988)"
+        ],
+        "reasoning": "母系制の氏族構造（社会条件）が個人のアイデンティティを親族ネットワーク内の位置で定義させる → 人格は関係性の網目の中に埋め込まれ、独立した自己という概念が希薄になる。",
+        "confidence": "high",
+        "alternatives": [
+          "個人の呪術的能力が関係性とは独立した人格の次元を形成するとの見方もある"
+        ]
+      },
+      "labor": {
+        "sources": [
+          "Bronisław Malinowski, Coral Gardens and Their Magic (1935)",
+          "Annette Weiner, Women of Value, Men of Renown (1976)"
+        ],
+        "reasoning": "義務的贈与の経済体系（経済条件）がヤム芋栽培を義父への名誉ある贈り物として構造化 → 労働は自家消費ではなく社会的義務の遂行。外洋航海カヌーの建造は呪術的知識と技術が不可分な儀礼的技能。",
+        "confidence": "high",
+        "alternatives": [
+          "女性の労働（バナナ葉の富の生産）の重要性を強調する修正的見方がある"
+        ]
+      },
+      "consumption": {
+        "sources": [
+          "Marcel Mauss, Essai sur le don (1925)",
+          "Annette Weiner, Inalienable Possessions (1992)"
+        ],
+        "reasoning": "贈与義務の社会規範（制度条件）が富の蓄積を恥と定義 → 余剰は循環させるか贈与しなければならない → 反蓄積の消費倫理が形成される。首長の権威は蓄積ではなく分配の量に依存。",
+        "confidence": "high",
+        "alternatives": [
+          "一部の貝殻装飾品（ヴァイグア）は循環から除外される「譲渡不可能な財」との指摘がある"
+        ]
+      },
+      "tech": {
+        "sources": [
+          "Bronisław Malinowski, Argonauts of the Western Pacific (1922)",
+          "Frederick Damon, Trees, Knots, and Outriggers (2017)"
+        ],
+        "reasoning": "島嶼間航海の必要性（自然環境条件）が外洋カヌー建造と星の航法を発達させた → しかし呪術的知識と技術的知識が不可分（技術条件） → 技術は純粋に機能的ではなく儀礼的実践でもある。",
+        "confidence": "high",
+        "alternatives": [
+          "航海技術の実用的側面をより重視すべきとの見方がある"
+        ]
+      },
+      "nature": {
+        "sources": [
+          "Bronisław Malinowski, Coral Gardens and Their Magic (1935)",
+          "Frederick Damon, Environment, Organization, and Kinship in Kula Ring (1990)"
+        ],
+        "reasoning": "珊瑚礁島嶼の海洋環境（自然環境条件）が海とサンゴ礁を生存の基盤に → 畑と漁の呪術は自然との儀礼的交渉であり、自然は制御対象ではなく交渉相手として認識される。",
+        "confidence": "medium",
+        "alternatives": [
+          "実用的な生態学的知識の蓄積をより評価すべきとの見方がある"
+        ]
+      },
+      "order": {
+        "sources": [
+          "Bronisław Malinowski, Argonauts of the Western Pacific (1922)",
+          "Jerry Leach & Edmund Leach (eds.), The Kula (1983)"
+        ],
+        "reasoning": "贈与と再分配の義務（制度条件）が首長の権威を寛大さに基づかせる → 強制力ではなく贈与量が権力の源泉 → 再分配に失敗した首長は権威を失う。",
+        "confidence": "high",
+        "alternatives": [
+          "首長の呪術的能力が権力の別の基盤を形成するとの見方がある"
+        ]
+      },
+      "enterprise": {
+        "sources": [
+          "Bronisław Malinowski, Argonauts of the Western Pacific (1922)",
+          "Nancy Munn, The Fame of Gawa (1986)"
+        ],
+        "reasoning": "クラ交換（経済条件）は利益なき交易であり、交換されるヴァイグア（腕輪・首飾り）は経済的価値ではなく社会関係資本を構築する → モノではなく関係に価値がある交易体系。",
+        "confidence": "high",
+        "alternatives": [
+          "クラ交換に付随するギムワリ（実利的交易）の経済的重要性を強調する見方がある"
+        ]
+      },
+      "happiness": {
+        "sources": [
+          "Nancy Munn, The Fame of Gawa (1986)",
+          "Bronisław Malinowski, Argonauts of the Western Pacific (1922)"
+        ],
+        "reasoning": "贈与による威信と社会的地位の追求（社会条件）が幸福の源泉を定義 → 成功したクラ交換・儀礼的交換における気前の良さが充足をもたらす → 個人的蓄積ではなく公的な寛大さが幸福への道。",
+        "confidence": "medium",
+        "alternatives": [
+          "日常的な家族関係や共同体の安定をより重視すべきとの見方がある"
+        ]
+      },
+      "knowledge": {
+        "sources": [
+          "Bronisław Malinowski, Coral Gardens and Their Magic (1935)",
+          "Stanley Tambiah, Magic, Science, Religion, and the Scope of Rationality (1990)"
+        ],
+        "reasoning": "呪術的知識の血統的伝承（社会条件）が知識を氏族内の厳重に守られた知的財産に → 畑の呪文は特定の血統にのみ伝えられる秘密知識 → 知識は公共財ではなく親族的遺産。",
+        "confidence": "high",
+        "alternatives": [
+          "経験的な農業知識や航海知識の公開的共有をより評価すべきとの見方がある"
+        ]
+      },
+      "time": {
+        "sources": [
+          "Bronisław Malinowski, Coral Gardens and Their Magic (1935)",
+          "Alfred Gell, The Anthropology of Time (1992)"
+        ],
+        "reasoning": "ヤム芋の栽培周期とクラ航海の季節（自然環境条件・経済条件）が循環的時間を形成 → 直線的な進歩の観念は不在 → 時間は反復する自然と社会のリズムの中にある。",
+        "confidence": "high",
+        "alternatives": [
+          "クラ交換における名声の累積が部分的に直線的な時間観を含むとの見方がある"
+        ]
+      },
+      "death": {
+        "sources": [
+          "Annette Weiner, Women of Value, Men of Renown (1976)",
+          "Bronisław Malinowski, Magic, Science and Religion (1948)"
+        ],
+        "reasoning": "母系社会における死の儀礼（社会条件・制度条件）が女性のバナナ葉の富（doba）の大規模な分配を引き起こす → 死は社会的債務の清算と再分配の契機 → 経済的再分配が死の社会的意味の核心。",
+        "confidence": "high",
+        "alternatives": [
+          "死と再生の呪術的信仰（バロマ信仰）をより重視する見方がある"
+        ]
+      }
+    },
+    "premises": {
+      "0": {
+        "sources": [
+          "Frederick Damon, Environment, Organization, and Kinship in Kula Ring (1990)",
+          "Bronisław Malinowski, Argonauts of the Western Pacific (1922)"
+        ],
+        "reasoning": "珊瑚礁島嶼の海洋環境が外洋航海の必要性を生み → カヌー技術と星の航法の高度化 → 自然の恵み（海洋資源）と脅威（嵐・珊瑚礁）への儀礼的交渉としての呪術体系の発達。",
+        "confidence": "high",
+        "alternatives": [
+          "島嶼間の資源の不均等分布がより決定的な要因との見方がある"
+        ]
+      },
+      "1": {
+        "sources": [
+          "Annette Weiner, The Trobrianders of Papua New Guinea (1988)",
+          "Bronisław Malinowski, The Sexual Life of Savages (1929)"
+        ],
+        "reasoning": "母系氏族が個人のアイデンティティ・権利・義務を規定し → 首長の権威を再分配能力に基づかせ → 死の儀礼を母系の富の再分配の契機とする。親族ネットワークが人格・権力・死の全領域を構造化。",
+        "confidence": "high",
+        "alternatives": [
+          "父方親族の補完的役割を過小評価しているとの批判がある"
+        ]
+      },
+      "2": {
+        "sources": [
+          "Frederick Damon, Trees, Knots, and Outriggers (2017)",
+          "Bronisław Malinowski, Coral Gardens and Their Magic (1935)"
+        ],
+        "reasoning": "呪術と技能が不可分の技術体系 → カヌー建造も農業も呪術的手続きなしに行われない → 知識は秘密の呪文として伝承され、技術的知識と呪術的知識が分離不可能。",
+        "confidence": "high",
+        "alternatives": [
+          "技術の実用的・経験的側面をより独立に評価すべきとの見方がある"
+        ]
+      },
+      "3": {
+        "sources": [
+          "Bronisław Malinowski, Argonauts of the Western Pacific (1922)",
+          "Nancy Munn, The Fame of Gawa (1986)"
+        ],
+        "reasoning": "クラ交換が島嶼間の社会関係ネットワークを構築 → ヤム芋の余剰生産は義父への贈与義務に駆動される → 交易は利益ではなく関係構築が目的、消費は反蓄積の倫理に支配される。",
+        "confidence": "high",
+        "alternatives": [
+          "ギムワリ（実利的交易）の経済的合理性を過小評価しているとの批判がある"
+        ]
+      },
+      "4": {
+        "sources": [
+          "Jerry Leach & Edmund Leach (eds.), The Kula (1983)",
+          "Bronisław Malinowski, Crime and Custom in Savage Society (1926)"
+        ],
+        "reasoning": "首長制と氏族長老の合議が贈与義務に基づく秩序を維持 → 贈与の量が権力を決定する制度が再分配を促進 → 成功した再分配が社会的幸福（威信と承認）をもたらす。",
+        "confidence": "high",
+        "alternatives": [
+          "首長間の競争的側面がより重要との見方がある"
+        ]
+      }
+    },
+    "premiseInfluence": {
+      "0": {
+        "reasoning": "珊瑚礁島嶼の海洋環境 → 海洋資源への依存と航海の必要性 → 自然との儀礼的交渉（自然観）と航海カヌー技術・呪術的技術体系（技術観）の形成。",
+        "confidence": "high",
+        "alternatives": [
+          "火山島と珊瑚礁の地質的差異が技術発達に与えた影響を考慮すべきとの指摘がある"
+        ]
+      },
+      "1": {
+        "reasoning": "母系氏族社会 → 関係性に埋め込まれた人格（人間観）、再分配能力に基づく首長権威（秩序観）、死の儀礼による母系の富の再分配（死生観）。",
+        "confidence": "high",
+        "alternatives": [
+          "年齢や性別による分化がより決定的との見方がある"
+        ]
+      },
+      "2": {
+        "reasoning": "呪術と技能の不可分な技術体系 → 技術観（カヌー建造の呪術的手続き）と知識観（秘密の呪文として伝承される知的財産）を直接規定。",
+        "confidence": "high",
+        "alternatives": [
+          "技術的知識の世代間学習の実証的側面をより評価すべきとの見方がある"
+        ]
+      },
+      "3": {
+        "reasoning": "クラ交換と義務的贈与の経済 → 利益なき交易（起業観）、反蓄積の消費倫理（消費観）、義父への贈与としての労働（労働観）を形成。",
+        "confidence": "high",
+        "alternatives": [
+          "ギムワリ（実利的交易）を含めた複合的な経済構造をより評価すべきとの指摘がある"
+        ]
+      },
+      "4": {
+        "reasoning": "贈与と再分配の制度 → 再分配能力に基づく権威（秩序観）と公的な寛大さに基づく幸福（幸福観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "首長間の競争的ダイナミクスの影響をより考慮すべきとの指摘がある"
+        ]
+      }
+    }
+  },
+  "nuer": {
+    "description": {
+      "sources": [
+        "E.E. Evans-Pritchard, The Nuer (1940)",
+        "E.E. Evans-Pritchard, Nuer Religion (1956)"
+      ],
+      "reasoning": "エヴァンズ=プリチャードの民族誌が「首長なき社会」の秩序メカニズムを初めて体系的に解明した。分節的出自体系による無政府的秩序の発見は、政治人類学の根本的転換をもたらした。",
+      "confidence": "high",
+      "alternatives": [
+        "植民地期の行政的圧力が「無政府状態」の記述に影響した可能性を指摘する見方がある"
+      ]
+    },
+    "values": {
+      "human": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Sharon Hutchinson, Nuer Dilemmas (1996)"
+        ],
+        "reasoning": "牛を中心とした牧畜経済（経済条件）と分節的出自体系（社会条件）がアイデンティティを牛との結びつきと出自集団で定義 → 男性は愛牛の名前を自称し、人格は牛との関係に深く埋め込まれる。",
+        "confidence": "high",
+        "alternatives": [
+          "ハッチンソンは貨幣経済の浸透がアイデンティティを変容させていると指摘している"
+        ]
+      },
+      "labor": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Raymond Kelly, The Nuer Conquest (1985)"
+        ],
+        "reasoning": "ナイル川氾濫原の季節変動（自然環境条件）が雨季と乾季で異なる牧地への移動を強制 → 牛の放牧が全活動を構造化する最も名誉ある労働となる → 季節移牧が生活リズムの全てを決定。",
+        "confidence": "high",
+        "alternatives": [
+          "農耕（穀物栽培）の重要性を過小評価しているとの見方がある"
+        ]
+      },
+      "consumption": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "E.E. Evans-Pritchard, Nuer Religion (1956)"
+        ],
+        "reasoning": "牛が最高の富であるにもかかわらず食用にはほぼ消費しない（乳と血のみ）という「反消費」（経済条件） → 屠殺は犠牲の時のみ許される → 最も価値ある富の消費を儀礼的に制限することで牛群の維持・拡大を可能にする。",
+        "confidence": "high",
+        "alternatives": [
+          "実際には病死した牛の肉は消費されており、理念と実践の乖離があるとの指摘がある"
+        ]
+      },
+      "tech": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Marshall Sahlins, Stone Age Economics (1972)"
+        ],
+        "reasoning": "牧畜に特化した最小限の道具体系（技術条件）と技術的蓄積への欲求の不在 → サーリンズが論じた「始原の豊かな社会」の一例 → 簡素さは貧困ではなく意図的な価値選択。",
+        "confidence": "medium",
+        "alternatives": [
+          "技術的簡素さは選択ではなく環境的制約の結果とする見方もある"
+        ]
+      },
+      "nature": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "E.E. Evans-Pritchard, Nuer Religion (1956)"
+        ],
+        "reasoning": "上ナイル地域の氾濫原（自然環境条件）の劇的な季節変動が全生活リズムを決定 → 河川環境との深い共生関係 → 人間が自然を制御するのではなく、自然のリズムに全面的に適応する生活様式。",
+        "confidence": "high",
+        "alternatives": [
+          "ヌエルの領土拡張（ディンカ族の征服）は自然への積極的働きかけとの見方がある"
+        ]
+      },
+      "order": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Meyer Fortes & E.E. Evans-Pritchard (eds.), African Political Systems (1940)"
+        ],
+        "reasoning": "分節的出自体系（社会条件）が数十万人の無政府的組織化を可能に → 首長なし・政府なし・裁判所なしでも、血の復讐と儀礼的調停（豹皮の首長）で秩序が維持される → 中央集権なき秩序の典型例。",
+        "confidence": "high",
+        "alternatives": [
+          "「秩序ある無政府状態」は植民地支配で中央集権的権威が破壊された結果との批判がある"
+        ]
+      },
+      "enterprise": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Sharon Hutchinson, Nuer Dilemmas (1996)"
+        ],
+        "reasoning": "牛本位制経済（経済条件）の下で牛は主に婚資と賠償に交換される → 利益追求の市場経済は存在しない → 牛が唯一の通貨として社会的義務（婚姻・紛争解決）を媒介。",
+        "confidence": "high",
+        "alternatives": [
+          "ハッチンソンは近代化に伴う「牛と金の交換」の複雑な意味変容を論じている"
+        ]
+      },
+      "happiness": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "E.E. Evans-Pritchard, Nuer Religion (1956)"
+        ],
+        "reasoning": "牛の所有と大家族（経済条件・社会条件）が善き生を定義 → 出自集団内での尊敬と社会的調和が幸福の核心 → 個人的快楽ではなく集団内での適切な位置が充足をもたらす。",
+        "confidence": "medium",
+        "alternatives": [
+          "クォス（霊的力）との関係がより深い幸福の次元を構成するとの見方がある"
+        ]
+      },
+      "knowledge": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "E.E. Evans-Pritchard, Kinship and Marriage among the Nuer (1951)"
+        ],
+        "reasoning": "分節的出自体系（社会条件）が系譜の知識を最も重要な知的資産に → 自分が誰と血縁関係にあるかを知ることが政治的行動・同盟・敵対の基盤 → 系譜的知識は実用的な政治的知識。",
+        "confidence": "high",
+        "alternatives": [
+          "牛の品種・病気に関する実用的知識の重要性を過小評価しているとの見方がある"
+        ]
+      },
+      "time": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Alfred Gell, The Anthropology of Time (1992)"
+        ],
+        "reasoning": "牛の世話の日課（搾乳・放牧・水やり）が「牛時計」として生態学的時間を構成し → 年齢組と出自の深さが構造的時間を形成 → 時間は商品化されず、生態学的活動と社会構造に埋め込まれる。",
+        "confidence": "high",
+        "alternatives": [
+          "構造的時間と生態学的時間の区別が過度に図式的との批判がある"
+        ]
+      },
+      "death": {
+        "sources": [
+          "E.E. Evans-Pritchard, Nuer Religion (1956)",
+          "Sharon Hutchinson, Nuer Dilemmas (1996)"
+        ],
+        "reasoning": "死の儀礼（制度条件）が牛の犠牲を伴う複雑な葬礼を構成 → 死者は霊（クォス）として生者に影響を及ぼし続ける → 死は断絶ではなく生者と死者の持続的な関係の変容。",
+        "confidence": "high",
+        "alternatives": [
+          "キリスト教の浸透が伝統的死生観を大きく変容させているとの指摘がある"
+        ]
+      }
+    },
+    "premises": {
+      "0": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Raymond Kelly, The Nuer Conquest (1985)"
+        ],
+        "reasoning": "上ナイル地域の氾濫原の劇的な季節変動 → 雨季と乾季で全く異なる生活パターンの強制 → 自然環境への全面的適応（自然観）、季節移牧による労働の構造化（労働観）、生態学的時間の形成（時間観）。",
+        "confidence": "high",
+        "alternatives": [
+          "気候変動の長期的影響をより考慮すべきとの見方がある"
+        ]
+      },
+      "1": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Meyer Fortes & E.E. Evans-Pritchard (eds.), African Political Systems (1940)"
+        ],
+        "reasoning": "牛を中心とした分節的出自体系 → 牛との結びつきによるアイデンティティ定義（人間観）、分節的対立と融合による無政府的秩序（秩序観）の形成。",
+        "confidence": "high",
+        "alternatives": [
+          "地域的紐帯が出自原理と同等に重要との見方がある"
+        ]
+      },
+      "2": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Marshall Sahlins, Stone Age Economics (1972)"
+        ],
+        "reasoning": "牧畜特化の最小限技術 → 技術的簡素さの価値選択的解釈（技術観）。槍と牛関連道具のみで十分な生活が可能。",
+        "confidence": "medium",
+        "alternatives": [
+          "技術的簡素さを積極的選択とする解釈は理想化に過ぎるとの批判がある"
+        ]
+      },
+      "3": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "Sharon Hutchinson, Nuer Dilemmas (1996)"
+        ],
+        "reasoning": "牛本位制経済 → 婚資と賠償としての牛の交換（起業観）、最高の富の反消費（消費観）。牛は経済的財ではなく社会関係の媒介。",
+        "confidence": "high",
+        "alternatives": [
+          "近代的貨幣経済の浸透が牛の意味を根本的に変えつつあるとの指摘がある"
+        ]
+      },
+      "4": {
+        "sources": [
+          "E.E. Evans-Pritchard, The Nuer (1940)",
+          "E.E. Evans-Pritchard, Nuer Religion (1956)"
+        ],
+        "reasoning": "豹皮の首長による調停と年齢組の制度 → 紛争調停の仕組みとしての秩序（秩序観）、牛の犠牲を伴う死の儀礼（死生観）、系譜的知識の実用性（知識観）。",
+        "confidence": "high",
+        "alternatives": [
+          "年齢組制度の実際の機能をより詳細に検討すべきとの見方がある"
+        ]
+      }
+    },
+    "premiseInfluence": {
+      "0": {
+        "reasoning": "上ナイル氾濫原の季節変動 → 自然環境への全面的適応（自然観）、季節移牧が全活動を構造化（労働観）、生態学的時間（牛時計）の形成（時間観）。",
+        "confidence": "high",
+        "alternatives": [
+          "乾季の資源争奪がディンカ族との紛争を生むダイナミクスをより考慮すべきとの指摘がある"
+        ]
+      },
+      "1": {
+        "reasoning": "分節的出自体系と牛中心社会 → 牛との結びつきによる人格定義（人間観）、分節的対立と融合による中央集権なき秩序（秩序観）。",
+        "confidence": "high",
+        "alternatives": [
+          "地域的紐帯と出自原理の相互作用をより複雑に捉えるべきとの見方がある"
+        ]
+      },
+      "2": {
+        "reasoning": "牧畜特化の最小限技術 → 技術的簡素さが価値選択として解釈される技術観を直接規定。",
+        "confidence": "medium",
+        "alternatives": [
+          "鍛冶や陶器製作など周縁的技術の存在を考慮すべきとの指摘がある"
+        ]
+      },
+      "3": {
+        "reasoning": "牛本位制経済 → 利益追求なき交換としての起業観、最高の富（牛）の反消費としての消費観を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "南スーダン内戦後の経済変容を考慮すべきとの指摘がある"
+        ]
+      },
+      "4": {
+        "reasoning": "豹皮の首長と年齢組の制度 → 調停による秩序維持（秩序観）、牛の犠牲を伴う葬礼（死生観）、系譜の知識の政治的重要性（知識観）。",
+        "confidence": "high",
+        "alternatives": [
+          "キリスト教宣教と植民地行政の影響をより評価すべきとの見方がある"
+        ]
+      }
+    }
+  },
+  "minangkabau": {
+    "description": {
+      "sources": [
+        "Peggy Reeves Sanday, Women at the Center: Life in a Modern Matriarchy (2002)",
+        "Tsuyoshi Kato, Matriliny and Migration (1982)"
+      ],
+      "reasoning": "世界最大の母系社会がイスラムと共存している事実は、母系制とイスラムの構造的矛盾に対する独創的解決を示している。アダット（慣習法）とイスラム法の融合は比較法学的にも重要。",
+      "confidence": "high",
+      "alternatives": [
+        "イスラムの浸透に伴う母系制の漸進的弱体化を強調する見方がある"
+      ]
+    },
+    "values": {
+      "human": {
+        "sources": [
+          "Peggy Reeves Sanday, Women at the Center (2002)",
+          "Tsuyoshi Kato, Matriliny and Migration (1982)"
+        ],
+        "reasoning": "母系相続制度（社会条件）が女性を「家の柱」として位置づけ → 男性は弁舌・宗教学識・移住先での成功で地位を獲得 → アイデンティティは母方血筋を通じて流れる二重のジェンダー的構造。",
+        "confidence": "high",
+        "alternatives": [
+          "イスラム的父系原理との緊張が人格の分裂を生むとの見方がある"
+        ]
+      },
+      "labor": {
+        "sources": [
+          "Tsuyoshi Kato, Matriliny and Migration (1982)",
+          "Franz von Benda-Beckmann & Keebet von Benda-Beckmann, Property in Social Continuity (1979)"
+        ],
+        "reasoning": "母系経済と男性のムランタウの二重構造（経済条件）→ 女性が祖先伝来の水田を管理し、男性は商業・手工業に従事 → 性別役割が空間的に分離しつつ相互補完的に機能。",
+        "confidence": "high",
+        "alternatives": [
+          "現代化に伴い女性の都市就労が増加し、伝統的分業が変容しているとの指摘がある"
+        ]
+      },
+      "consumption": {
+        "sources": [
+          "Peggy Reeves Sanday, Women at the Center (2002)",
+          "Jeffrey Hadler, Muslims and Matriarchs (2008)"
+        ],
+        "reasoning": "ルマー・ガダン（大きな家）が母系の富の象徴として華麗に建造される（社会条件）→ 共同所有で個人には売却不可 → 儀礼的共同饗宴が消費の主要形態 → 個人的消費よりも母系集団の威信表示としての消費。",
+        "confidence": "high",
+        "alternatives": [
+          "都市部での個人主義的消費パターンの拡大を指摘する見方がある"
+        ]
+      },
+      "tech": {
+        "sources": [
+          "Tsuyoshi Kato, Matriliny and Migration (1982)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "火山高地の水田農業（自然環境条件）が精巧な灌漑技術を発達させ → ソンケット（金糸織物）が高い威信技術として母系の富を表現 → 技術は生存と威信の両面で機能。",
+        "confidence": "medium",
+        "alternatives": [
+          "ルマー・ガダンの建築技術をより重視すべきとの見方がある"
+        ]
+      },
+      "nature": {
+        "sources": [
+          "Franz von Benda-Beckmann & Keebet von Benda-Beckmann, Property in Social Continuity (1979)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "火山高地の肥沃な土地（自然環境条件）が「祖先の宝」として神聖視される → 土地は個人ではなく母系に属し、自然は母系の遺産 → 自然観と親族観が不可分に結合。",
+        "confidence": "high",
+        "alternatives": [
+          "商業的農業の拡大が土地の脱神聖化を進めているとの指摘がある"
+        ]
+      },
+      "order": {
+        "sources": [
+          "Jeffrey Hadler, Muslims and Matriarchs (2008)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "合議制（ムシャワラー・ムファカット）の制度（制度条件）→ いかなる首長も一方的権力を持たない → 母系長老と宗教指導者の合意が意思決定の必要条件 → 権威の分散と合意形成の制度化。",
+        "confidence": "high",
+        "alternatives": [
+          "実際にはペングル（男性リーダー）の権力がより強いとの見方がある"
+        ]
+      },
+      "enterprise": {
+        "sources": [
+          "Tsuyoshi Kato, Matriliny and Migration (1982)",
+          "Mochtar Naim, Merantau: Minangkabau Voluntary Migration (1979)"
+        ],
+        "reasoning": "ムランタウ（出稼ぎ移住）の伝統（社会条件・経済条件）→ 男性が母系村落の外で商業的成功を追求 → 世界中のパダン料理店はこの起業家精神の現代的表現 → 母系制が男性の起業を構造的に促進。",
+        "confidence": "high",
+        "alternatives": [
+          "ムランタウの動機は起業家精神ではなく母系社会での男性の居場所のなさとする見方がある"
+        ]
+      },
+      "happiness": {
+        "sources": [
+          "Peggy Reeves Sanday, Women at the Center (2002)",
+          "Jeffrey Hadler, Muslims and Matriarchs (2008)"
+        ],
+        "reasoning": "アダット（慣習）とイスラムの均衡（制度条件）→ 母系のアイデンティティと宗教的献身の調和が幸福の核心 → 知識と富を得て帰還（ムランタウからの帰郷）することが充足 → 二重の忠誠の調和。",
+        "confidence": "medium",
+        "alternatives": [
+          "アダットとイスラムの緊張がストレスの源泉でもあるとの見方がある"
+        ]
+      },
+      "knowledge": {
+        "sources": [
+          "Jeffrey Hadler, Muslims and Matriarchs (2008)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "二重の知識体系（制度条件）→ アダット（諺で口承される慣習法）とイスラムの学問（スラウ教育）が並存 → 諺に基づく推論が日常の意思決定の最重要手段 → 口承知識と書物知識の共存。",
+        "confidence": "high",
+        "alternatives": [
+          "近代的教育の浸透がこの二重体系を解体しつつあるとの見方がある"
+        ]
+      },
+      "time": {
+        "sources": [
+          "Tsuyoshi Kato, Matriliny and Migration (1982)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "稲作の季節と生涯儀礼が循環的時間を構成（自然環境条件）→ ムランタウが直線的な「旅と帰還」の物語を導入 → 循環的時間と直線的時間が共存する複合的時間観。",
+        "confidence": "medium",
+        "alternatives": [
+          "イスラム暦の影響をより考慮すべきとの見方がある"
+        ]
+      },
+      "death": {
+        "sources": [
+          "Peggy Reeves Sanday, Women at the Center (2002)",
+          "Franz von Benda-Beckmann & Keebet von Benda-Beckmann, Property in Social Continuity (1979)"
+        ],
+        "reasoning": "母系相続制度（社会条件）→ 死が相続を発動し財産は娘と姪に渡る → 息子には渡らない → 精緻な葬礼儀式が母系の絆を再確認し、財産移転の正統性を儀礼的に保証。",
+        "confidence": "high",
+        "alternatives": [
+          "イスラム相続法との矛盾が深刻化しているとの指摘がある"
+        ]
+      }
+    },
+    "premises": {
+      "0": {
+        "sources": [
+          "Peggy Reeves Sanday, Women at the Center (2002)",
+          "Tsuyoshi Kato, Matriliny and Migration (1982)"
+        ],
+        "reasoning": "スマトラ島西部の火山高地と肥沃な谷間 → 水田農業に適した環境が母系の土地保有を経済的に裏付け → 灌漑技術の発達と農業労働の性別分業を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "交易路としての地理的位置がより重要との見方がある"
+        ]
+      },
+      "1": {
+        "sources": [
+          "Peggy Reeves Sanday, Women at the Center (2002)",
+          "Tsuyoshi Kato, Matriliny and Migration (1982)"
+        ],
+        "reasoning": "世界最大の母系社会 → 女性による土地・家屋の相続が人格・権力・死の全領域を構造化 → 男性のムランタウは母系社会の構造的帰結として理解される。",
+        "confidence": "high",
+        "alternatives": [
+          "母系制は歴史的に構築されたものであり、自然な状態ではないとの見方がある"
+        ]
+      },
+      "2": {
+        "sources": [
+          "Tsuyoshi Kato, Matriliny and Migration (1982)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "灌漑技術・ソンケット織物・ルマー・ガダン建築 → 技術が母系の富の生産と表示に奉仕 → 消費観（儀礼的饗宴・ルマー・ガダン）と知識観（織物技術の伝承）を規定。",
+        "confidence": "medium",
+        "alternatives": [
+          "現代の情報技術がこれらの伝統技術の意味を変えているとの指摘がある"
+        ]
+      },
+      "3": {
+        "sources": [
+          "Tsuyoshi Kato, Matriliny and Migration (1982)",
+          "Franz von Benda-Beckmann & Keebet von Benda-Beckmann, Property in Social Continuity (1979)"
+        ],
+        "reasoning": "祖先伝来の水田と男性のムランタウによる商業経済の二重構造 → 起業観（ムランタウの起業家精神）と消費観（母系の共同所有財産の威信消費）を直接規定。",
+        "confidence": "high",
+        "alternatives": [
+          "都市化の進展で二重経済構造が解体されつつあるとの見方がある"
+        ]
+      },
+      "4": {
+        "sources": [
+          "Jeffrey Hadler, Muslims and Matriarchs (2008)",
+          "Peggy Reeves Sanday, Women at the Center (2002)"
+        ],
+        "reasoning": "アダットとイスラム法の独自の融合 → 合議制による秩序維持（秩序観）、二重の知識体系（知識観）、アダットとイスラムの均衡としての幸福（幸福観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "イスラム復興運動がアダットとの均衡を崩しつつあるとの指摘がある"
+        ]
+      }
+    },
+    "premiseInfluence": {
+      "0": {
+        "reasoning": "火山高地の水田環境 → 自然を母系の遺産とする自然観と、精巧な灌漑に基づく性別分業的労働観を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "海上交易路の影響をより考慮すべきとの指摘がある"
+        ]
+      },
+      "1": {
+        "reasoning": "母系社会の構造 → 母方血筋を通じた人格定義（人間観）、合議制と分散的権威（秩序観）、母系の財産移転を発動する死（死生観）。",
+        "confidence": "high",
+        "alternatives": [
+          "父方親族（バコ）の儀礼的役割を過小評価しているとの見方がある"
+        ]
+      },
+      "2": {
+        "reasoning": "灌漑・織物・建築技術 → 母系の富の生産・表示としての技術観、儀礼的饗宴の消費観、織物技術の伝承としての知識観を規定。",
+        "confidence": "medium",
+        "alternatives": [
+          "技術と母系制の関連は相関であって因果ではないとの批判がある"
+        ]
+      },
+      "3": {
+        "reasoning": "母系経済とムランタウの二重経済 → 男性の出稼ぎ起業（起業観）と母系集団の威信消費（消費観）を直接規定。",
+        "confidence": "high",
+        "alternatives": [
+          "グローバル経済との接続が伝統的二重構造を変質させているとの指摘がある"
+        ]
+      },
+      "4": {
+        "reasoning": "アダットとイスラムの融合制度 → 合議制の秩序観、口承と書物の二重知識観、二重の忠誠の均衡としての幸福観を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "世俗的近代法の浸透がこの二重体系を相対化しているとの見方がある"
+        ]
+      }
+    }
+  },
+  "azande": {
+    "description": {
+      "sources": [
+        "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+        "Jeanne Favret-Saada, Les mots, la mort, les sorts (1977)"
+      ],
+      "reasoning": "エヴァンズ=プリチャードのアザンデ研究は、呪術信仰が非合理的迷信ではなく、内部的に整合的な因果推論の体系であることを実証した。「二重因果論」の発見は科学哲学・認識論に深い影響を与えた。",
+      "confidence": "high",
+      "alternatives": [
+        "呪術信仰を知的体系として過度に合理化しているとの批判がある"
+      ]
+    },
+    "values": {
+      "human": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "Mary Douglas (ed.), Witchcraft Confessions and Accusations (1970)"
+        ],
+        "reasoning": "呪術信仰が全社会関係を貫通する社会（社会条件）→ 全ての人間は呪術の被害者にも加害者にもなりうる → 呪術物質（マング）の生物学的遺伝は人格に不可視の因果的次元を付加 → 人格は社会的・呪術的関係の中で定義される。",
+        "confidence": "high",
+        "alternatives": [
+          "呪術者と被害者の権力非対称性をより強調すべきとの見方がある"
+        ]
+      },
+      "labor": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "E.E. Evans-Pritchard, Man and Woman among the Azande (1974)"
+        ],
+        "reasoning": "呪術のリスクが全労働活動に浸透（社会条件・経済条件）→ 農業労働は熟練を要するが、不作は常に呪術的に説明される → 労働の成果は個人の技能だけでなく社会関係の状態に依存。",
+        "confidence": "high",
+        "alternatives": [
+          "労働の実用的・技術的側面をより独立に評価すべきとの見方がある"
+        ]
+      },
+      "consumption": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)"
+        ],
+        "reasoning": "呪術的リスクが消費行動を構造化（社会条件）→ 誰から何を消費するかに細心の注意が必要 → 敵から与えられた食物には呪術が宿りうる → 安全な消費は良好な社会関係の関数。",
+        "confidence": "medium",
+        "alternatives": [
+          "日常的な消費の大部分は呪術的考慮なしに行われるとの見方がある"
+        ]
+      },
+      "tech": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "Robin Horton, Patterns of Thought in Africa and the West (1993)"
+        ],
+        "reasoning": "毒占い（ベンゲ）が最も重要な意思決定技術（技術条件）→ 鶏への毒物投与と質問により真実を発見 → 呪術は特定の結果を得るための実践的技術 → 技術と呪術の境界が存在しない。",
+        "confidence": "high",
+        "alternatives": [
+          "ホートンは呪術を「閉じた理論体系」として科学と対比することに批判的である"
+        ]
+      },
+      "nature": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)"
+        ],
+        "reasoning": "二重因果論（知識体系）→ 自然の不幸は決して偶然ではなく、常に社会的原因がある → 自然界と社会界の境界が溶解 → 自然現象は社会関係の鏡として解釈される。",
+        "confidence": "high",
+        "alternatives": [
+          "自然の独立性を認める実用的知識の領域も存在するとの見方がある"
+        ]
+      },
+      "order": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "E.E. Evans-Pritchard, The Azande (1971)"
+        ],
+        "reasoning": "首長が毒占いを通じて司法権を行使（制度条件）→ 呪術の告発が社会統制として機能 → 逸脱行動は呪術告発を招く → 呪術信仰が事実上の法制度として秩序を維持。",
+        "confidence": "high",
+        "alternatives": [
+          "首長の行政的・軍事的権力をより重視すべきとの見方がある"
+        ]
+      },
+      "enterprise": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "Mary Douglas (ed.), Witchcraft Confessions and Accusations (1970)"
+        ],
+        "reasoning": "呪術による嫉妬のリスク（社会条件）→ 経済的成功は嫉妬を招き呪術告発の対象に → 目立つ豊かさは社会的に危険 → 穏当な繁栄が安全な経済行動。",
+        "confidence": "high",
+        "alternatives": [
+          "首長層は顕示的な豊かさを保持しており、規範が均一ではないとの指摘がある"
+        ]
+      },
+      "happiness": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)"
+        ],
+        "reasoning": "呪術のリスクが幸福を定義（社会条件）→ 呪術から自由であることが幸福 → 良好な社会関係（嫉妬されない・告発されない状態）が幸福の必要条件 → 幸福は社会的安全の関数。",
+        "confidence": "medium",
+        "alternatives": [
+          "積極的な幸福（成功・繁栄）の側面をより評価すべきとの見方がある"
+        ]
+      },
+      "knowledge": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "Peter Winch, Understanding a Primitive Society (1964)"
+        ],
+        "reasoning": "二重因果論が知識の中核（技術条件・社会条件）→ 物理的原因（シロアリが柱を食った）と社会的原因（なぜ私の上に倒れたか）が同時に真 → 占いの知が経験的観察に優越 → 因果推論の複数性が知識の本質。",
+        "confidence": "high",
+        "alternatives": [
+          "ウィンチのアザンデ合理性擁護は文化相対主義の限界を示すとの批判がある"
+        ]
+      },
+      "time": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)"
+        ],
+        "reasoning": "呪術的因果関係が時間を構造化 → 不幸が過去の社会関係と現在の出来事を呪術的に結びつける → 時間は社会的因果の網であり、中立的な進行ではない → 過去の怨恨が現在の不幸の原因として活性化。",
+        "confidence": "medium",
+        "alternatives": [
+          "季節的・農業的な循環時間の側面をより評価すべきとの見方がある"
+        ]
+      },
+      "death": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "E.E. Evans-Pritchard, The Azande (1971)"
+        ],
+        "reasoning": "呪術信仰の論理的帰結（社会条件・制度条件）→ 全ての死は呪術によるもの → 死は決して自然ではなく、調査されなければならない → 解剖（内臓のマング物質検査）が行われ、復讐呪術か告発が続く → 死は社会的事件。",
+        "confidence": "high",
+        "alternatives": [
+          "老衰による死はある程度自然として受容されるとの反論がある"
+        ]
+      }
+    },
+    "premises": {
+      "0": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "E.E. Evans-Pritchard, The Azande (1971)"
+        ],
+        "reasoning": "コンゴ北東部の熱帯サバンナ → 豊かな植生と多様な動植物資源が農耕・狩猟の混合経済を可能に → 自然環境自体は脅威的ではないが、不幸の社会的説明が自然観を構造化。",
+        "confidence": "medium",
+        "alternatives": [
+          "植民地期の強制移住が伝統的な自然環境との関係を歪めたとの見方がある"
+        ]
+      },
+      "1": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "Mary Douglas (ed.), Witchcraft Confessions and Accusations (1970)"
+        ],
+        "reasoning": "呪術信仰が全社会関係を貫通 → 嫉妬・敵意が呪術として顕在化 → 人格の呪術的次元（人間観）、呪術的リスクとしての幸福（幸福観）、経済的成功への社会的制裁（起業観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "呪術信仰の強調は植民地期の観察者バイアスとの批判がある"
+        ]
+      },
+      "2": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)"
+        ],
+        "reasoning": "毒占い・摩擦占い・終端板占いの占術体系 → 技術観（占いが最重要な「技術」）と知識観（二重因果論）を直接規定。",
+        "confidence": "high",
+        "alternatives": [
+          "薬草知識の実用的側面をより独立に評価すべきとの見方がある"
+        ]
+      },
+      "3": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "E.E. Evans-Pritchard, The Azande (1971)"
+        ],
+        "reasoning": "農耕・狩猟の混合経済で経済的成功が呪術的リスクを伴う → 消費の社会的慎重さ（消費観）、穏当な繁栄の追求（起業観）、呪術リスクを意識した労働（労働観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "首長の経済的特権が一般規範の例外となっていることをより考慮すべきとの指摘がある"
+        ]
+      },
+      "4": {
+        "sources": [
+          "E.E. Evans-Pritchard, Witchcraft, Oracles and Magic among the Azande (1937)",
+          "E.E. Evans-Pritchard, The Azande (1971)"
+        ],
+        "reasoning": "首長による毒占い司法と呪術告発手続き → 占いを通じた秩序維持（秩序観）、全ての死の呪術的調査（死生観）、二重因果論の制度的裏付け（知識観）。",
+        "confidence": "high",
+        "alternatives": [
+          "植民地行政による首長権力の変容をより考慮すべきとの見方がある"
+        ]
+      }
+    },
+    "premiseInfluence": {
+      "0": {
+        "reasoning": "熱帯サバンナの自然環境 → 自然の不幸の社会的説明（自然観）を可能にする環境的条件。不幸が稀でないことが二重因果論を実践的に支える。",
+        "confidence": "medium",
+        "alternatives": [
+          "自然環境よりも社会構造が呪術信仰のより直接的な原因との見方がある"
+        ]
+      },
+      "1": {
+        "reasoning": "呪術が貫通する社会 → 呪術的人格観（人間観）、呪術からの自由としての幸福（幸福観）、経済的成功の社会的制裁（起業観）を直接規定。",
+        "confidence": "high",
+        "alternatives": [
+          "呪術信仰の衰退に伴う社会変容をより考慮すべきとの指摘がある"
+        ]
+      },
+      "2": {
+        "reasoning": "占術体系 → 意思決定の最高技術としての占い（技術観）と二重因果論（知識観）を直接規定。",
+        "confidence": "high",
+        "alternatives": [
+          "実用的知識と占術的知識の相互作用をより精密に分析すべきとの見方がある"
+        ]
+      },
+      "3": {
+        "reasoning": "混合経済と呪術的リスク → 社会的慎重さの消費観、穏当な繁栄の起業観、呪術を意識した労働観を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "首長層の例外的な経済行動を一般化すべきではないとの指摘がある"
+        ]
+      },
+      "4": {
+        "reasoning": "毒占い司法と呪術告発制度 → 占いによる秩序維持（秩序観）、死の呪術的調査（死生観）、二重因果論の制度的裏付け（知識観）。",
+        "confidence": "high",
+        "alternatives": [
+          "近代的司法制度の導入がこの体系を変質させているとの見方がある"
+        ]
+      }
+    }
+  },
+  "bali": {
+    "description": {
+      "sources": [
+        "Clifford Geertz, Negara: The Theatre State in Nineteenth-Century Bali (1980)",
+        "Clifford Geertz, The Interpretation of Cultures (1973)"
+      ],
+      "reasoning": "ギアツの「劇場国家」概念は、国家の本質が行政的統治ではなく儀礼的パフォーマンスにあるという根本的に異なる政治観を提示した。スバック水管理システムの分散的調整は複雑系理論の先駆的事例。",
+      "confidence": "high",
+      "alternatives": [
+        "ギアツの劇場国家論は実際の権力関係を過小評価しているとの批判がある"
+      ]
+    },
+    "values": {
+      "human": {
+        "sources": [
+          "Clifford Geertz, Person, Time, and Conduct in Bali (1966)",
+          "Clifford Geertz, The Interpretation of Cultures (1973)"
+        ],
+        "reasoning": "社会的構造の中の脱個性化（社会条件）→ 人は出生順の称号とテクノニム（子の親としての名）で呼ばれ個人名はほぼ使わない → 「人」は宇宙的・社会的構造の中の一点であり、独自の内面を持つ個人ではない。",
+        "confidence": "high",
+        "alternatives": [
+          "日常的な対人関係では個人的な特徴が認識されているとの見方がある"
+        ]
+      },
+      "labor": {
+        "sources": [
+          "J. Stephen Lansing, Priests and Programmers (1991)",
+          "Clifford Geertz, The Interpretation of Cultures (1973)"
+        ],
+        "reasoning": "スバック灌漑協同体（技術条件・制度条件）→ 共同稲作が儀礼的に調整され生態学的に洗練 → 芸術労働（彫刻・絵画・音楽・舞踊）は宗教的義務 → 労働は経済的行為であると同時に儀礼的・芸術的行為。",
+        "confidence": "high",
+        "alternatives": [
+          "観光経済の浸透が伝統的労働観を変容させているとの指摘がある"
+        ]
+      },
+      "consumption": {
+        "sources": [
+          "Clifford Geertz, Negara (1980)",
+          "J. Stephen Lansing, Perfect Order (2006)"
+        ],
+        "reasoning": "儀礼経済（経済条件）→ 寺院儀式・火葬儀礼・日々の供物（チャナン・サリ）に莫大な資源が消費される → 消費は宇宙維持のための恒常的行為 → 経済的余剰は儀礼的消費に吸収される。",
+        "confidence": "high",
+        "alternatives": [
+          "観光収入が儀礼消費を拡大させ伝統的均衡を変えているとの見方がある"
+        ]
+      },
+      "tech": {
+        "sources": [
+          "J. Stephen Lansing, Priests and Programmers (1991)",
+          "J. Stephen Lansing, Perfect Order (2006)"
+        ],
+        "reasoning": "スバック水管理システム（技術条件）→ 寺院が中央計画なしに灌漑を調整する情報ノードとして機能 → 分散型の精巧な社会技術ネットワーク → コンピュータ・シミュレーションで最適解に近いことが実証された。",
+        "confidence": "high",
+        "alternatives": [
+          "グリーン・レボリューションがスバック・システムを一時的に破壊したことをより重視すべきとの見方がある"
+        ]
+      },
+      "nature": {
+        "sources": [
+          "J. Stephen Lansing, Priests and Programmers (1991)",
+          "Clifford Geertz, The Interpretation of Cultures (1973)"
+        ],
+        "reasoning": "火山島の神聖な地理（自然環境条件）→ 全ての水田・泉・山・海に霊的意味がある → アグン山が宇宙の軸 → 自然は資源ではなく神聖な景観であり、人間と自然の関係は儀礼的に調停される。",
+        "confidence": "high",
+        "alternatives": [
+          "観光開発が神聖な景観を世俗化しているとの指摘がある"
+        ]
+      },
+      "order": {
+        "sources": [
+          "Clifford Geertz, Negara (1980)",
+          "Henk Schulte Nordholt, The Spell of Power (1996)"
+        ],
+        "reasoning": "劇場国家の伝統（制度条件）→ 統治は演劇的パフォーマンス → 国家は行政ではなく儀礼劇を演じるために存在 → デサ（慣習村）・バンジャール（町内会）の重層的権威が実質的な自治を行う。",
+        "confidence": "high",
+        "alternatives": [
+          "シュルテ・ノルトホルトは実質的な暴力と権力闘争がギアツの記述から欠落していると批判している"
+        ]
+      },
+      "enterprise": {
+        "sources": [
+          "Clifford Geertz, Negara (1980)",
+          "J. Stephen Lansing, Perfect Order (2006)"
+        ],
+        "reasoning": "儀礼経済が巨大な余剰を吸収（経済条件）→ 一家が一回の火葬儀礼に何年分もの収入を費やすことも → 経済活動は儀礼的義務に奉仕する → 利益追求ではなく儀礼的義務が経済を駆動。",
+        "confidence": "high",
+        "alternatives": [
+          "観光産業の発展が利益追求型の経済活動を拡大しているとの指摘がある"
+        ]
+      },
+      "happiness": {
+        "sources": [
+          "Clifford Geertz, The Interpretation of Cultures (1973)",
+          "Miguel Covarrubias, Island of Bali (1937)"
+        ],
+        "reasoning": "宇宙的均衡の維持（制度条件・社会条件）→ 正しい儀礼の遂行を通じてルワ・ビネダ（善悪の二元性）を維持することが幸福 → トランス・音楽・舞踊が日常を超えた状態を達成 → 幸福は個人的満足ではなく宇宙的調和。",
+        "confidence": "medium",
+        "alternatives": [
+          "カースト間の不平等が幸福の実現を制約しているとの見方がある"
+        ]
+      },
+      "knowledge": {
+        "sources": [
+          "Clifford Geertz, The Interpretation of Cultures (1973)",
+          "Mark Hobart, After Culture (2000)"
+        ],
+        "reasoning": "遂行的・身体化された知識（社会条件）→ 知識は舞踊・音楽・彫刻・儀礼の中にある → ロンタル（椰子葉写本）が聖典を保存 → 知識は宇宙維持に奉仕する実践的・儀礼的なもの。",
+        "confidence": "high",
+        "alternatives": [
+          "近代教育の浸透が知識観を書物中心に変えつつあるとの指摘がある"
+        ]
+      },
+      "time": {
+        "sources": [
+          "Clifford Geertz, Person, Time, and Conduct in Bali (1966)",
+          "Alfred Gell, The Anthropology of Time (1992)"
+        ],
+        "reasoning": "複数の暦の交差（制度条件）→ 210日周期のパウコン暦と太陰太陽暦のサカ暦が質的に固有な日を生み出す → 時間は「流れ」ではなく「句読点を打つ」もの → 置換的・循環的時間観。",
+        "confidence": "high",
+        "alternatives": [
+          "ギアツの「脱歴史的」時間観の記述は過度に図式的との批判がある"
+        ]
+      },
+      "death": {
+        "sources": [
+          "Clifford Geertz, The Interpretation of Cultures (1973)",
+          "David Stuart-Fox, Pura Besakih: Temple, Religion and Society in Bali (2002)"
+        ],
+        "reasoning": "火葬（ンガベン）が最も重要で高価な儀礼（経済条件・制度条件）→ 肉体は五大元素に還される → 精緻で歓びに満ち莫大な費用をかける → 死は悼まれず解放として祝われる → 死は宇宙的循環の一部。",
+        "confidence": "high",
+        "alternatives": [
+          "カースト間の火葬儀礼の格差が社会的不平等を反映しているとの見方がある"
+        ]
+      }
+    },
+    "premises": {
+      "0": {
+        "sources": [
+          "J. Stephen Lansing, Priests and Programmers (1991)",
+          "Clifford Geertz, The Interpretation of Cultures (1973)"
+        ],
+        "reasoning": "火山島の棚田地帯 → アグン山を宇宙軸とする神聖な地理と豊かな水資源 → 自然の神聖な景観（自然観）とスバック灌漑技術（技術観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "海洋交易路としての地理的位置がより重要との見方がある"
+        ]
+      },
+      "1": {
+        "sources": [
+          "Clifford Geertz, Person, Time, and Conduct in Bali (1966)",
+          "Clifford Geertz, The Interpretation of Cultures (1973)"
+        ],
+        "reasoning": "カースト制と慣習村の重層的社会構造 → 脱個性化された人格（人間観）、儀礼的に調整された労働（労働観）、莫大な儀礼消費（消費観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "カースト間の流動性をより評価すべきとの見方がある"
+        ]
+      },
+      "2": {
+        "sources": [
+          "J. Stephen Lansing, Priests and Programmers (1991)",
+          "J. Stephen Lansing, Perfect Order (2006)"
+        ],
+        "reasoning": "スバック水の寺院ネットワーク → 分散型灌漑管理の社会技術としての技術観と、寺院ネットワークによる重層的秩序（秩序観）を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "近代的灌漑技術の導入がスバックの機能を変えているとの指摘がある"
+        ]
+      },
+      "3": {
+        "sources": [
+          "Clifford Geertz, Negara (1980)",
+          "J. Stephen Lansing, Perfect Order (2006)"
+        ],
+        "reasoning": "儀礼経済が余剰を吸収 → 儀礼的義務に奉仕する起業観、莫大な儀礼消費としての消費観、宇宙的調和としての幸福観を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "観光経済がこの構造を根本的に変えつつあるとの見方がある"
+        ]
+      },
+      "4": {
+        "sources": [
+          "Clifford Geertz, Negara (1980)",
+          "Henk Schulte Nordholt, The Spell of Power (1996)"
+        ],
+        "reasoning": "劇場国家とデサ・バンジャールの重層統治 → 儀礼的パフォーマンスとしての秩序観、複数暦の交差による時間観、火葬儀礼を中心とする死生観を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "インドネシア国家との関係がバリの自治を制約しているとの指摘がある"
+        ]
+      }
+    },
+    "premiseInfluence": {
+      "0": {
+        "reasoning": "火山島の神聖な地理と水資源 → 自然の神聖な景観（自然観）とスバック灌漑（技術観）を直接規定。アグン山が宇宙軸として全世界観の基点。",
+        "confidence": "high",
+        "alternatives": [
+          "海洋環境の影響をより考慮すべきとの指摘がある"
+        ]
+      },
+      "1": {
+        "reasoning": "カースト制と慣習村の構造 → 脱個性的人格（人間観）、儀礼的労働（労働観）、儀礼的消費（消費観）。社会構造が個人と経済の全領域を規定。",
+        "confidence": "high",
+        "alternatives": [
+          "カースト内の個人差をより評価すべきとの見方がある"
+        ]
+      },
+      "2": {
+        "reasoning": "スバック水管理 → 分散型社会技術（技術観）と寺院ネットワークによる秩序（秩序観）。中央計画なき調整の卓越した事例。",
+        "confidence": "high",
+        "alternatives": [
+          "スバックの実際の効率性に関するより批判的な評価が必要との指摘がある"
+        ]
+      },
+      "3": {
+        "reasoning": "儀礼経済 → 儀礼奉仕型起業観、莫大な儀礼消費、宇宙的調和としての幸福観を規定。経済が宗教に従属する構造。",
+        "confidence": "high",
+        "alternatives": [
+          "観光産業との接続が儀礼経済の論理を変質させているとの見方がある"
+        ]
+      },
+      "4": {
+        "reasoning": "劇場国家と重層統治 → 儀礼的パフォーマンスの秩序観、複数暦の質的時間観、壮大な火葬儀礼の死生観。制度が宇宙観を体現。",
+        "confidence": "high",
+        "alternatives": [
+          "インドネシアの中央集権的行政が伝統的重層統治を形骸化させているとの指摘がある"
+        ]
+      }
+    }
   }
 };
 let researchDBLoading = false;
@@ -7877,7 +9138,12 @@ const CITY_IMAGES = {
   bhutan:'https://images.unsplash.com/photo-1553856622-d1b352e24a21?w=480&h=200&fit=crop',
   singapore:'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=480&h=200&fit=crop',
   tallinn:'https://images.unsplash.com/photo-1560098211-d105af6fb01e?w=480&h=200&fit=crop',
-  masdar:'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=480&h=200&fit=crop'
+  masdar:'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=480&h=200&fit=crop',
+  trobriand:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Wmalinowski_trobriand_isles_1918.jpg/480px-Wmalinowski_trobriand_isles_1918.jpg',
+  nuer:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Nuer_People%2C_1906.png/480px-Nuer_People%2C_1906.png',
+  minangkabau:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Komplek_Rumah_Gadang_Balimbiang_Di_Minangkabau.jpg/480px-Komplek_Rumah_Gadang_Balimbiang_Di_Minangkabau.jpg',
+  azande:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Niam-Niam_Warriors.jpg/480px-Niam-Niam_Warriors.jpg',
+  bali:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Tegallalang_Rice_Terraces.jpg/480px-Tegallalang_Rice_Terraces.jpg'
 };
 
 function showMapTooltip(loc, e){
