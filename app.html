@@ -224,7 +224,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   padding:.1rem .2rem;cursor:pointer}
 .map-zoom-level:hover{color:var(--accent)}
 .map-point{cursor:pointer}
-.map-point:hover .point-dot{filter:url(#glow);r:8}
+.map-point:hover .point-dot{filter:url(#glow)}
 .point-label{font-size:8px;fill:var(--text);font-weight:600;
   opacity:0;transition:opacity .15s ease;pointer-events:none}
 .map-point:hover .point-label{opacity:1}
@@ -2615,6 +2615,25 @@ function applyViewBox(){
   svg.setAttribute('viewBox', mapViewBox.x+' '+mapViewBox.y+' '+mapViewBox.w+' '+mapViewBox.h);
   const label = document.getElementById('mapZoomLevel');
   if(label) label.textContent = Math.round(mapZoomScale * 100) + '%';
+  // Keep point sizes constant regardless of zoom
+  const s = 1 / mapZoomScale;
+  const blur = svg.querySelector('#glow feGaussianBlur');
+  if(blur) blur.setAttribute('stdDeviation', 3 * s);
+  svg.querySelectorAll('.map-point').forEach(grp => {
+    const circles = grp.querySelectorAll('circle');
+    const text = grp.querySelector('text');
+    if(circles[0]){
+      circles[0].setAttribute('r', 6 * s);  // outer dot
+      circles[0].style.strokeWidth = (2 * s) + 'px'; // for compare-selected stroke
+    }
+    if(circles[1]) circles[1].setAttribute('r', 2.5 * s); // inner dot
+    if(circles[2]) circles[2].setAttribute('r', 14 * s);  // hit area
+    if(text){
+      const cy = parseFloat(circles[0].getAttribute('cy'));
+      text.setAttribute('font-size', (8 * s) + 'px');
+      text.setAttribute('y', cy - 12 * s);
+    }
+  });
 }
 
 function initMapPanZoom(){
