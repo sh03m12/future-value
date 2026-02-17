@@ -209,8 +209,20 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-subtitle{font-size:.82rem;color:var(--text-muted);margin-top:.2rem}
 .map-container{position:relative;max-width:1200px;margin:0 auto;
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-  overflow:hidden;padding:.8rem}
+  overflow:hidden;padding:.8rem;cursor:grab}
+.map-container.dragging{cursor:grabbing}
 #worldMap{width:100%;height:auto;display:block}
+.map-zoom-controls{position:absolute;top:.6rem;right:.6rem;display:flex;flex-direction:column;
+  gap:.25rem;z-index:20}
+.map-zoom-btn{width:30px;height:30px;border-radius:6px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);font-size:1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:var(--transition);
+  font-family:inherit;line-height:1}
+.map-zoom-btn:hover{background:var(--surface2);border-color:var(--accent)}
+.map-zoom-level{text-align:center;font-size:.6rem;color:var(--text-muted);
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  padding:.1rem .2rem;cursor:pointer}
+.map-zoom-level:hover{color:var(--accent)}
 .map-point{cursor:pointer}
 .map-point:hover .point-dot{filter:url(#glow);r:8}
 .point-label{font-size:8px;fill:var(--text);font-weight:600;
@@ -354,9 +366,10 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 /* ========== MAP COMPARE MODE ========== */
 .map-compare-toggle{padding:.35rem .85rem;border-radius:20px;border:1px solid var(--border);
   background:transparent;color:var(--text-dim);font-size:.78rem;cursor:pointer;
-  transition:var(--transition);font-family:inherit;margin-left:.8rem}
-.map-compare-toggle:hover{border-color:var(--accent);color:var(--accent)}
-.map-compare-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff}
+  transition:var(--transition);font-family:inherit;margin-left:.8rem;
+  -webkit-text-fill-color:initial;background-clip:initial;-webkit-background-clip:initial}
+.map-compare-toggle:hover{border-color:var(--accent);color:var(--accent);-webkit-text-fill-color:var(--accent)}
+.map-compare-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff;-webkit-text-fill-color:#fff}
 .map-compare-bar{display:none;align-items:center;gap:.5rem;flex-wrap:wrap;
   padding:.6rem 1rem;background:var(--surface2);border:1px solid var(--accent);
   border-radius:var(--radius-sm);margin:.8rem 0}
@@ -2202,6 +2215,11 @@ function renderMap(){
     html += '<button class="map-compare-toggle" id="mapCompareToggle" onclick="toggleCompareMode()">⚖️ 比較</button></div>';
     html += '<div class="map-subtitle">特徴的な価値観を持つ歴史的都市・地域を探索</div></div>';
     html += '<div class="map-container" id="mapContainer">';
+    html += '<div class="map-zoom-controls">';
+    html += '<button class="map-zoom-btn" onclick="mapZoom(1)" title="拡大">＋</button>';
+    html += '<span class="map-zoom-level" id="mapZoomLevel" onclick="mapZoomReset()" title="リセット">100%</span>';
+    html += '<button class="map-zoom-btn" onclick="mapZoom(-1)" title="縮小">－</button>';
+    html += '</div>';
     html += '<svg id="worldMap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">';
     html += '<defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/>';
     html += '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
@@ -2524,8 +2542,144 @@ function renderMap(){
     html += '<div class="map-compare-detail" id="mapCompareDetail"></div>';
     mapView.innerHTML = html;
     mapInitialized = true;
+    // Keyboard navigation: left/right to switch cities
+    document.addEventListener('keydown', function(e){
+      if(currentView !== 'map' || compareMode) return;
+      if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      // Get currently visible cities
+      const visibleCities = MAP_LOCATIONS.filter(loc => {
+        if(activeEra !== 'all' && activeEra !== loc.era) return false;
+        if(searchTerm && !JSON.stringify(loc).toLowerCase().includes(searchTerm.toLowerCase())) return false;
+        return true;
+      });
+      if(visibleCities.length === 0) return;
+      const selectedPt = document.querySelector('.map-point.selected');
+      const currentId = selectedPt ? selectedPt.dataset.id : null;
+      const currentIdx = currentId ? visibleCities.findIndex(c => c.id === currentId) : -1;
+      let nextIdx;
+      if(e.key === 'ArrowRight'){
+        nextIdx = currentIdx < 0 ? 0 : (currentIdx + 1) % visibleCities.length;
+      } else {
+        nextIdx = currentIdx < 0 ? visibleCities.length - 1 : (currentIdx - 1 + visibleCities.length) % visibleCities.length;
+      }
+      e.preventDefault();
+      showMapDetail(visibleCities[nextIdx]);
+    });
+    initMapPanZoom();
   }
   renderMapPoints();
+}
+
+// ========== MAP ZOOM & PAN ==========
+let mapViewBox = {x:0, y:0, w:1000, h:500};
+let mapZoomScale = 1;
+let mapDrag = {active:false, startX:0, startY:0, startVBx:0, startVBy:0};
+
+function mapZoom(dir){
+  const svg = document.getElementById('worldMap');
+  if(!svg) return;
+  const step = 0.25;
+  const newScale = dir > 0 ? mapZoomScale + step : mapZoomScale - step;
+  mapZoomScale = Math.max(0.5, Math.min(5, newScale));
+  const newW = 1000 / mapZoomScale;
+  const newH = 500 / mapZoomScale;
+  // Keep center
+  const cx = mapViewBox.x + mapViewBox.w / 2;
+  const cy = mapViewBox.y + mapViewBox.h / 2;
+  mapViewBox.w = newW;
+  mapViewBox.h = newH;
+  mapViewBox.x = cx - newW / 2;
+  mapViewBox.y = cy - newH / 2;
+  clampViewBox();
+  applyViewBox();
+}
+
+function mapZoomReset(){
+  mapZoomScale = 1;
+  mapViewBox = {x:0, y:0, w:1000, h:500};
+  applyViewBox();
+}
+
+function clampViewBox(){
+  if(mapViewBox.x < 0) mapViewBox.x = 0;
+  if(mapViewBox.y < 0) mapViewBox.y = 0;
+  if(mapViewBox.x + mapViewBox.w > 1000) mapViewBox.x = 1000 - mapViewBox.w;
+  if(mapViewBox.y + mapViewBox.h > 500) mapViewBox.y = 500 - mapViewBox.h;
+  if(mapViewBox.w > 1000){ mapViewBox.w = 1000; mapViewBox.x = 0; }
+  if(mapViewBox.h > 500){ mapViewBox.h = 500; mapViewBox.y = 0; }
+}
+
+function applyViewBox(){
+  const svg = document.getElementById('worldMap');
+  if(!svg) return;
+  svg.setAttribute('viewBox', mapViewBox.x+' '+mapViewBox.y+' '+mapViewBox.w+' '+mapViewBox.h);
+  const label = document.getElementById('mapZoomLevel');
+  if(label) label.textContent = Math.round(mapZoomScale * 100) + '%';
+}
+
+function initMapPanZoom(){
+  const container = document.getElementById('mapContainer');
+  const svg = document.getElementById('worldMap');
+  if(!container || !svg) return;
+  // Mouse wheel zoom
+  container.addEventListener('wheel', function(e){
+    e.preventDefault();
+    mapZoom(e.deltaY < 0 ? 1 : -1);
+  }, {passive:false});
+  // Drag to pan
+  svg.addEventListener('mousedown', function(e){
+    if(e.target.closest('.map-point')) return; // don't interfere with point clicks
+    mapDrag.active = true;
+    mapDrag.startX = e.clientX;
+    mapDrag.startY = e.clientY;
+    mapDrag.startVBx = mapViewBox.x;
+    mapDrag.startVBy = mapViewBox.y;
+    container.classList.add('dragging');
+    e.preventDefault();
+  });
+  document.addEventListener('mousemove', function(e){
+    if(!mapDrag.active) return;
+    const svgRect = svg.getBoundingClientRect();
+    const scaleX = mapViewBox.w / svgRect.width;
+    const scaleY = mapViewBox.h / svgRect.height;
+    const dx = (e.clientX - mapDrag.startX) * scaleX;
+    const dy = (e.clientY - mapDrag.startY) * scaleY;
+    mapViewBox.x = mapDrag.startVBx - dx;
+    mapViewBox.y = mapDrag.startVBy - dy;
+    clampViewBox();
+    applyViewBox();
+  });
+  document.addEventListener('mouseup', function(){
+    if(mapDrag.active){
+      mapDrag.active = false;
+      const container = document.getElementById('mapContainer');
+      if(container) container.classList.remove('dragging');
+    }
+  });
+  // Touch support for mobile
+  svg.addEventListener('touchstart', function(e){
+    if(e.touches.length === 1 && !e.target.closest('.map-point')){
+      mapDrag.active = true;
+      mapDrag.startX = e.touches[0].clientX;
+      mapDrag.startY = e.touches[0].clientY;
+      mapDrag.startVBx = mapViewBox.x;
+      mapDrag.startVBy = mapViewBox.y;
+    }
+  }, {passive:true});
+  svg.addEventListener('touchmove', function(e){
+    if(!mapDrag.active || e.touches.length !== 1) return;
+    const svgRect = svg.getBoundingClientRect();
+    const scaleX = mapViewBox.w / svgRect.width;
+    const scaleY = mapViewBox.h / svgRect.height;
+    const dx = (e.touches[0].clientX - mapDrag.startX) * scaleX;
+    const dy = (e.touches[0].clientY - mapDrag.startY) * scaleY;
+    mapViewBox.x = mapDrag.startVBx - dx;
+    mapViewBox.y = mapDrag.startVBy - dy;
+    clampViewBox();
+    applyViewBox();
+    e.preventDefault();
+  }, {passive:false});
+  svg.addEventListener('touchend', function(){ mapDrag.active = false; });
 }
 
 function renderMapPoints(){
