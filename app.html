@@ -9336,7 +9336,7 @@ function renderValueGrid(valueId){
   html += '<button class="value-grid-close" onclick="toggleValueFilter(\''+valueId+'\')">&times;</button>';
   html += '</div>';
   // Research toggles
-  html += '<div class="research-toggles">';
+  html += '<div class="research-toggles" style="margin:.6rem 0 .8rem">';
   html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 因果メカニズム</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
