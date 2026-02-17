@@ -446,14 +446,14 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
       <input type="text" id="searchInput" placeholder="キーワード検索…">
     </div>
     <div class="view-toggle">
+      <button class="view-btn active" data-view="map" title="世界地図表示">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </button>
       <button class="view-btn" data-view="card" title="カード表示">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       </button>
       <button class="view-btn" data-view="table" title="テーブル表示">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M9 3v18"/></svg>
-      </button>
-      <button class="view-btn active" data-view="map" title="世界地図表示">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </button>
     </div>
   </div>
@@ -9469,7 +9469,7 @@ document.querySelectorAll('.view-btn').forEach(btn => {
     tableView.classList.toggle('active', isTable);
     mapView.classList.toggle('active', isMap);
     // Hero: show for card and map views
-    heroEl.style.display = isTable ? 'none' : '';
+    heroEl.style.display = '';
     // Field filter: show for card only
     fieldFilterEl.style.display = isCard ? '' : 'none';
     // Column toggles: show for table only
