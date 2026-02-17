@@ -9325,16 +9325,31 @@ function renderValueGrid(valueId){
   html += '<span class="vg-count">'+cities.length+'都市</span>';
   html += '<button class="value-grid-close" onclick="toggleValueFilter(\''+valueId+'\')">&times;</button>';
   html += '</div>';
+  // Research toggles
+  html += '<div class="research-toggles" style="margin-bottom:.6rem">';
+  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 因果メカニズム</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
+  html += '<button class="research-toggle-btn'+(researchToggles.alternatives?' active':'')+'" data-key="alternatives" onclick="toggleResearchMeta(\'alternatives\')">⚖ 異論</button>';
+  html += '</div>';
   html += '<div class="value-grid">';
+  const anyToggleOn = Object.values(researchToggles).some(v => v);
   cities.forEach(loc => {
     const val = loc.values[valueId] || '';
-    html += '<div class="value-grid-card" style="border-left-color:var(--'+loc.era+')" onclick="showMapDetail(MAP_LOCATIONS.find(l=>l.id===\''+loc.id+'\'));toggleValueFilter(\''+valueId+'\')">';
-    html += '<div class="value-grid-card-header">';
+    html += '<div class="value-grid-card" style="border-left-color:var(--'+loc.era+')">';
+    html += '<div class="value-grid-card-header" style="cursor:pointer" onclick="showMapDetail(MAP_LOCATIONS.find(l=>l.id===\''+loc.id+'\'));toggleValueFilter(\''+valueId+'\')">';
     html += '<span class="value-grid-card-name">'+loc.name+'</span>';
     html += '<span class="value-grid-card-en">'+loc.nameEn+'</span>';
     html += '<span class="value-grid-card-era" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg)">'+eraLabels[loc.era]+'</span>';
     html += '</div>';
     html += '<div class="value-grid-card-text">'+val+'</div>';
+    // Inject research meta inline
+    if(anyToggleOn && researchDB){
+      const cityMeta = researchDB[loc.id];
+      if(cityMeta && cityMeta.values && cityMeta.values[valueId]){
+        html += renderResearchMeta(cityMeta.values[valueId]);
+      }
+    }
     html += '</div>';
   });
   html += '</div>';
@@ -9400,6 +9415,8 @@ function refreshResearchDisplay(){
   if(!researchDB) return;
   const detail = document.getElementById('mapDetail');
   if(detail && detail.classList.contains('active')) injectResearchIntoDetail(detail);
+  // Refresh value grid if active
+  if(activeValueFilter) renderValueGrid(activeValueFilter);
 }
 
 function injectResearchIntoDetail(detail){
