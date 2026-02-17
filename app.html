@@ -8521,16 +8521,16 @@ function renderMap(){
     html += '<span class="map-zoom-level" id="mapZoomLevel" onclick="mapZoomReset()" title="リセット">100%</span>';
     html += '<button class="map-zoom-btn" onclick="mapZoom(-1)" title="縮小">－</button>';
     html += '</div>';
-    html += '<svg id="worldMap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">';
+    html += '<svg id="worldMap" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet">';
     html += '<defs>';
     html += '<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
     html += '<radialGradient id="oceanGrad" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#1a2744"/><stop offset="100%" stop-color="#0d1520"/></radialGradient>';
     html += '<filter id="landShadow"><feDropShadow dx="0.5" dy="0.5" stdDeviation="0.8" flood-color="#000" flood-opacity="0.3"/></filter>';
     html += '</defs>';
-    html += '<rect width="1000" height="500" fill="url(#oceanGrad)"/>';
+    html += '<rect width="1000" height="420" fill="url(#oceanGrad)"/>';
     // Subtle ocean texture lines
     html += '<g opacity="0.04" stroke="#4488cc" stroke-width="0.3">';
-    for(let wy=20;wy<500;wy+=35) html += '<path d="M0 '+wy+' Q250 '+(wy-8)+' 500 '+wy+' Q750 '+(wy+8)+' 1000 '+wy+'" fill="none"/>';
+    for(let wy=20;wy<420;wy+=35) html += '<path d="M0 '+wy+' Q250 '+(wy-8)+' 500 '+wy+' Q750 '+(wy+8)+' 1000 '+wy+'" fill="none"/>';
     html += '</g>';
     // World map paths generated from Natural Earth GeoJSON (286 countries)
     const landFill = '#1e293b', landStroke = '#334155';
@@ -8816,8 +8816,8 @@ function renderMap(){
     html += '</g>'; // close land group
     // --- Graticule lines (subtle grid) ---
     html += '<g stroke="var(--border)" stroke-width="0.15" opacity="0.3">';
-    for(let gLat=0; gLat<=500; gLat+=500/6) html += '<line x1="0" y1="'+gLat+'" x2="1000" y2="'+gLat+'"/>';
-    for(let gLng=0; gLng<=1000; gLng+=1000/12) html += '<line x1="'+gLng+'" y1="0" x2="'+gLng+'" y2="500"/>';
+    for(let gLat=0; gLat<=420; gLat+=420/5) html += '<line x1="0" y1="'+gLat+'" x2="1000" y2="'+gLat+'"/>';
+    for(let gLng=0; gLng<=1000; gLng+=1000/12) html += '<line x1="'+gLng+'" y1="0" x2="'+gLng+'" y2="420"/>';
     html += '</g>';
     // --- Equator line ---
     html += '<line x1="0" y1="250" x2="1000" y2="250" stroke="var(--text-muted)" stroke-width="0.3" stroke-dasharray="4 4" opacity="0.3"/>';
@@ -8891,7 +8891,7 @@ function renderMap(){
 }
 
 // ========== MAP ZOOM & PAN ==========
-let mapViewBox = {x:0, y:0, w:1000, h:500};
+let mapViewBox = {x:0, y:0, w:1000, h:420};
 let mapZoomScale = 1;
 let mapDrag = {active:false, startX:0, startY:0, startVBx:0, startVBy:0};
 
@@ -8902,7 +8902,7 @@ function mapZoom(dir){
   const newScale = dir > 0 ? mapZoomScale + step : mapZoomScale - step;
   mapZoomScale = Math.max(1, Math.min(5, newScale));
   const newW = 1000 / mapZoomScale;
-  const newH = 500 / mapZoomScale;
+  const newH = 420 / mapZoomScale;
   // Keep center
   const cx = mapViewBox.x + mapViewBox.w / 2;
   const cy = mapViewBox.y + mapViewBox.h / 2;
@@ -8916,7 +8916,7 @@ function mapZoom(dir){
 
 function mapZoomReset(){
   mapZoomScale = 1;
-  mapViewBox = {x:0, y:0, w:1000, h:500};
+  mapViewBox = {x:0, y:0, w:1000, h:420};
   applyViewBox();
 }
 
@@ -8924,9 +8924,9 @@ function clampViewBox(){
   if(mapViewBox.x < 0) mapViewBox.x = 0;
   if(mapViewBox.y < 0) mapViewBox.y = 0;
   if(mapViewBox.x + mapViewBox.w > 1000) mapViewBox.x = 1000 - mapViewBox.w;
-  if(mapViewBox.y + mapViewBox.h > 500) mapViewBox.y = 500 - mapViewBox.h;
+  if(mapViewBox.y + mapViewBox.h > 420) mapViewBox.y = 420 - mapViewBox.h;
   if(mapViewBox.w > 1000){ mapViewBox.w = 1000; mapViewBox.x = 0; }
-  if(mapViewBox.h > 500){ mapViewBox.h = 500; mapViewBox.y = 0; }
+  if(mapViewBox.h > 420){ mapViewBox.h = 420; mapViewBox.y = 0; }
 }
 
 function applyViewBox(){
