@@ -205,11 +205,6 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 /* ========== MAP VIEW ========== */
 .map-view{display:none}
 .map-view.active{display:block}
-.map-header{text-align:center;padding:1.2rem 0 .8rem}
-.map-title{font-size:1.3rem;font-weight:800;
-  background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.map-subtitle{font-size:.82rem;color:var(--text-muted);margin-top:.2rem}
 .map-container{position:relative;max-width:1200px;margin:0 auto;
   background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
   overflow:hidden;padding:.8rem;cursor:grab}
@@ -371,70 +366,6 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .research-load-error{text-align:center;padding:.5rem;
   color:var(--text-muted);font-size:.75rem;background:var(--surface2);
   border-radius:var(--radius-sm);margin:.5rem 0}
-.map-compare-cell .research-meta{font-size:.68rem;padding:.4rem .5rem}
-
-/* ========== MAP COMPARE MODE ========== */
-.map-compare-toggle{padding:.35rem .85rem;border-radius:20px;border:1px solid var(--border);
-  background:transparent;color:var(--text-dim);font-size:.78rem;cursor:pointer;
-  transition:var(--transition);font-family:inherit;margin-left:.8rem;
-  -webkit-text-fill-color:initial;background-clip:initial;-webkit-background-clip:initial}
-.map-compare-toggle:hover{border-color:var(--accent);color:var(--accent);-webkit-text-fill-color:var(--accent)}
-.map-compare-toggle.active{background:var(--accent);border-color:var(--accent);color:#fff;-webkit-text-fill-color:#fff}
-.map-compare-bar{display:none;align-items:center;gap:.5rem;flex-wrap:wrap;
-  padding:.6rem 1rem;background:var(--surface2);border:1px solid var(--accent);
-  border-radius:var(--radius-sm);margin:.8rem 0}
-.map-compare-bar.active{display:flex}
-.map-compare-instruction{font-size:.8rem;color:var(--text-muted);margin-right:.5rem}
-.map-compare-city-badge{display:inline-flex;align-items:center;gap:.3rem;
-  padding:.25rem .65rem;border-radius:14px;font-size:.75rem;font-weight:600}
-.map-compare-city-badge .badge-remove{cursor:pointer;opacity:.6;margin-left:.2rem;
-  font-size:.7rem;line-height:1}
-.map-compare-city-badge .badge-remove:hover{opacity:1}
-.map-compare-action{padding:.35rem .85rem;border-radius:20px;border:none;
-  background:var(--accent);color:#fff;font-size:.78rem;cursor:pointer;
-  font-family:inherit;transition:var(--transition)}
-.map-compare-action:disabled{opacity:.4;cursor:not-allowed}
-.map-compare-action:not(:disabled):hover{filter:brightness(1.15)}
-.map-compare-reset{padding:.35rem .85rem;border-radius:20px;border:1px solid var(--border);
-  background:transparent;color:var(--text-dim);font-size:.78rem;cursor:pointer;font-family:inherit}
-.map-compare-reset:hover{border-color:var(--text-muted);color:var(--text)}
-
-/* ========== MAP COMPARE DETAIL ========== */
-.map-compare-detail{display:none;margin-top:1.2rem;background:var(--surface);
-  border:1px solid var(--border);border-radius:var(--radius);
-  padding:1.5rem;position:relative;animation:fadeIn .3s ease}
-.map-compare-detail.active{display:block}
-.map-compare-header{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem;
-  padding-bottom:.8rem;border-bottom:1px solid var(--border)}
-.map-compare-city-header{padding:.8rem;border-radius:var(--radius-sm)}
-.map-compare-city-header h3{font-size:1rem;font-weight:800;margin:0 0 .2rem}
-.map-compare-city-header .cmp-en{font-size:.78rem;color:var(--text-muted)}
-.map-compare-city-header .cmp-desc{font-size:.76rem;color:var(--text-dim);margin-top:.3rem;line-height:1.5}
-.map-compare-close{position:absolute;top:1rem;right:1rem;width:30px;height:30px;
-  border-radius:50%;border:1px solid var(--border);background:var(--surface2);
-  color:var(--text);cursor:pointer;display:flex;align-items:center;
-  justify-content:center;font-size:1rem;transition:var(--transition)}
-.map-compare-close:hover{background:var(--accent);border-color:var(--accent)}
-.map-compare-category{margin-bottom:.6rem}
-.map-compare-category-title{display:flex;align-items:center;gap:.5rem;
-  padding:.4rem 0;border-bottom:1px solid var(--border);margin-bottom:.4rem}
-.map-compare-category-icon{width:22px;height:22px;border-radius:5px;display:flex;
-  align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0}
-.map-compare-category-name{font-size:.82rem;font-weight:700}
-.map-compare-row{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-.map-compare-cell{padding:.5rem .7rem;background:var(--surface2);
-  border-radius:var(--radius-sm);font-size:.76rem;color:var(--text-dim);line-height:1.6;
-  border-top:2px solid transparent}
-.map-compare-cell.city-a{border-top-color:var(--accent)}
-.map-compare-cell.city-b{border-top-color:var(--accent2)}
-.map-point.compare-selected .point-dot{stroke:#fff;stroke-width:2;animation:pulse 1.5s ease infinite}
-@media(max-width:768px){
-  .map-compare-header{grid-template-columns:1fr}
-  .map-compare-row{grid-template-columns:1fr}
-  .map-compare-cell{border-top:none}
-  .map-compare-cell.city-a{border-left:3px solid var(--accent)}
-  .map-compare-cell.city-b{border-left:3px solid var(--accent2)}
-}
 
 /* ========== FOOTER ========== */
 .page-footer{max-width:1400px;margin:0 auto;padding:2rem;
@@ -2327,8 +2258,6 @@ function geoToSvg(lat, lng){
 }
 
 let mapInitialized = false;
-let compareMode = false;
-let compareSelection = [];
 let researchDB = {
   "_meta": {
     "version": "1.0",
@@ -8548,10 +8477,7 @@ let researchToggles = {sources:false, reasoning:false, confidence:false, alterna
 
 function renderMap(){
   if(!mapInitialized){
-    let html = '<div class="map-header"><div class="map-title" style="display:flex;align-items:center;flex-wrap:wrap">🌍 世界地図モード';
-    html += '<button class="map-compare-toggle" id="mapCompareToggle" onclick="toggleCompareMode()">⚖️ 比較</button></div>';
-    html += '<div class="map-subtitle">特徴的な価値観を持つ歴史的都市・地域を探索</div></div>';
-    html += '<div class="map-container" id="mapContainer">';
+    let html = '<div class="map-container" id="mapContainer">';
     html += '<div class="map-zoom-controls">';
     html += '<button class="map-zoom-btn" onclick="mapZoom(1)" title="拡大">＋</button>';
     html += '<span class="map-zoom-level" id="mapZoomLevel" onclick="mapZoomReset()" title="リセット">100%</span>';
@@ -8877,20 +8803,12 @@ function renderMap(){
     html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--present)"></div>現在</div>';
     html += '<div class="map-legend-item"><div class="map-legend-dot" style="background:var(--future)"></div>未来</div>';
     html += '</div>';
-    // Compare bar
-    html += '<div class="map-compare-bar" id="mapCompareBar">';
-    html += '<span class="map-compare-instruction">2つの都市を選択してください</span>';
-    html += '<span id="mapCompareSelections"></span>';
-    html += '<button class="map-compare-action" id="mapCompareAction" onclick="showMapComparison()" disabled>比較する</button>';
-    html += '<button class="map-compare-reset" onclick="resetCompareSelection()">リセット</button>';
-    html += '</div>';
     html += '<div class="map-detail" id="mapDetail"></div>';
-    html += '<div class="map-compare-detail" id="mapCompareDetail"></div>';
     mapView.innerHTML = html;
     mapInitialized = true;
     // Keyboard navigation: left/right to switch cities
     document.addEventListener('keydown', function(e){
-      if(currentView !== 'map' || compareMode) return;
+      if(currentView !== 'map') return;
       if(e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
       // Get currently visible cities
       const visibleCities = MAP_LOCATIONS.filter(loc => {
@@ -9103,18 +9021,9 @@ function renderMapPoints(){
     grp.appendChild(label);
     grp.addEventListener('mouseenter', e => showMapTooltip(loc, e));
     grp.addEventListener('mouseleave', hideMapTooltip);
-    grp.addEventListener('click', () => { if(compareMode) toggleCompareCity(loc); else showMapDetail(loc); });
+    grp.addEventListener('click', () => { showMapDetail(loc); });
     g.appendChild(grp);
   });
-  // Edge case: re-apply compare state after re-render
-  if(compareMode){
-    const visibleIds = new Set();
-    g.querySelectorAll('.map-point').forEach(p => visibleIds.add(p.dataset.id));
-    const before = compareSelection.length;
-    compareSelection = compareSelection.filter(c => visibleIds.has(c.id));
-    if(compareSelection.length !== before) closeMapComparison();
-    updateCompareUI();
-  }
 }
 
 const CITY_IMAGES = {
@@ -9322,158 +9231,6 @@ function closeMapDetail(){
   document.querySelectorAll('.map-point.selected').forEach(p => p.classList.remove('selected'));
 }
 
-// Compare mode functions
-function toggleCompareMode(){
-  compareMode = !compareMode;
-  const btn = document.getElementById('mapCompareToggle');
-  const bar = document.getElementById('mapCompareBar');
-  if(btn) btn.classList.toggle('active', compareMode);
-  if(bar) bar.classList.toggle('active', compareMode);
-  if(!compareMode) resetCompareSelection();
-  closeMapDetail();
-  closeMapComparison();
-}
-
-function toggleCompareCity(loc){
-  const idx = compareSelection.findIndex(c => c.id === loc.id);
-  if(idx > -1){
-    compareSelection.splice(idx, 1);
-  } else if(compareSelection.length < 2){
-    compareSelection.push(loc);
-  } else {
-    compareSelection[1] = loc;
-  }
-  updateCompareUI();
-}
-
-function updateCompareUI(){
-  document.querySelectorAll('.map-point.compare-selected').forEach(p => p.classList.remove('compare-selected'));
-  compareSelection.forEach(loc => {
-    const pt = document.querySelector('.map-point[data-id="'+loc.id+'"]');
-    if(pt) pt.classList.add('compare-selected');
-  });
-  const sel = document.getElementById('mapCompareSelections');
-  if(sel){
-    sel.innerHTML = compareSelection.map(loc =>
-      '<span class="map-compare-city-badge" style="background:var(--'+loc.era+'-bg);color:var(--'+loc.era+');border:1px solid var(--'+loc.era+'-border)">'
-      + loc.name
-      + '<span class="badge-remove" onclick="event.stopPropagation();removeCompareCity(\''+loc.id+'\')">&times;</span>'
-      + '</span>'
-    ).join(' ');
-  }
-  const btn = document.getElementById('mapCompareAction');
-  if(btn) btn.disabled = compareSelection.length < 2;
-}
-
-function removeCompareCity(id){
-  compareSelection = compareSelection.filter(c => c.id !== id);
-  updateCompareUI();
-}
-
-function resetCompareSelection(){
-  compareSelection = [];
-  updateCompareUI();
-}
-
-function showMapComparison(){
-  if(compareSelection.length < 2) return;
-  const [cityA, cityB] = compareSelection;
-  const eraLabels = {preindustrial:'前近代',past:'過去',present:'現在',future:'未来'};
-  closeMapDetail();
-  const detail = document.getElementById('mapCompareDetail');
-  if(!detail) return;
-
-  let html = '<button class="map-compare-close" onclick="closeMapComparison()">&times;</button>';
-  // Research toggles
-  html += '<div class="research-toggles" style="margin-bottom:.6rem">';
-  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 因果メカニズム</button>';
-  html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
-  html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
-  html += '<button class="research-toggle-btn'+(researchToggles.alternatives?' active':'')+'" data-key="alternatives" onclick="toggleResearchMeta(\'alternatives\')">⚖ 異論</button>';
-  html += '</div>';
-  // Header
-  html += '<div class="map-compare-header">';
-  [cityA, cityB].forEach(city => {
-    html += '<div class="map-compare-city-header" style="background:var(--'+city.era+'-bg);border:1px solid var(--'+city.era+'-border)">';
-    html += '<h3>'+city.name+' <span class="cmp-en">'+city.nameEn+'</span></h3>';
-    html += '<span class="era-label" style="color:var(--'+city.era+');background:var(--'+city.era+'-bg);font-size:.65rem;padding:.1rem .4rem;margin-top:.3rem;display:inline-block">'+eraLabels[city.era]+' — '+city.period+'</span>';
-    html += '<p class="cmp-desc">'+city.description+'</p>';
-    html += '</div>';
-  });
-  html += '</div>';
-
-  // Premise comparison
-  if(cityA.premises || cityB.premises){
-    const premiseTags = ['natural','social','technical','economic','institutional'];
-    const premiseLabels = ['自然環境','社会','技術','経済','制度'];
-    html += '<div class="map-premise-section">';
-    html += '<div class="map-premise-header" onclick="this.parentElement.classList.toggle(\'open\')">';
-    html += '<span class="map-premise-title">📋 成立条件の比較</span>';
-    html += '<svg class="map-premise-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>';
-    html += '</div>';
-    html += '<div class="map-premise-body">';
-    for(let i = 0; i < 5; i++){
-      html += '<div style="margin-bottom:.6rem">';
-      html += '<div style="margin-bottom:.3rem"><span class="map-premise-tag '+premiseTags[i]+'">'+premiseLabels[i]+'</span></div>';
-      html += '<div class="map-compare-row">';
-      [cityA, cityB].forEach((city, ci) => {
-        const premise = city.premises ? (city.premises[i] || '') : '';
-        const colonIdx = premise.indexOf('：');
-        const text = colonIdx > -1 ? premise.substring(colonIdx + 1) : premise;
-        html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'" data-city-id="'+city.id+'" data-premise-idx="'+i+'">'+text+'</div>';
-      });
-      html += '</div></div>';
-    }
-    html += '</div></div>';
-  }
-
-  // Category comparison with source tags
-  const premiseTagsCmp = ['natural','social','technical','economic','institutional'];
-  const premiseLabelsCmp = ['自然環境','社会','技術','経済','制度'];
-  DATA.forEach(cat => {
-    html += '<div class="map-compare-category">';
-    html += '<div class="map-compare-category-title">';
-    html += '<div class="map-compare-category-icon" style="background:'+cat.color+'22;color:'+cat.color+'">'+cat.icon+'</div>';
-    html += '<span class="map-compare-category-name">'+cat.title+'</span>';
-    html += '</div>';
-    html += '<div class="map-compare-row">';
-    [cityA, cityB].forEach((city, ci) => {
-      const val = city.values[cat.id] || '';
-      const sources = [];
-      if(city.premiseInfluence){
-        Object.entries(city.premiseInfluence).forEach(([idx, vids]) => {
-          if(vids.includes(cat.id)) sources.push(parseInt(idx));
-        });
-      }
-      html += '<div class="map-compare-cell '+(ci===0?'city-a':'city-b')+'" data-city-id="'+city.id+'" data-value-id="'+cat.id+'">';
-      html += val;
-      if(sources.length > 0){
-        html += '<div class="value-premise-sources compact">';
-        sources.forEach(idx => {
-          html += '<span class="value-source-tag '+premiseTagsCmp[idx]+'">← '+premiseLabelsCmp[idx]+'</span>';
-        });
-        html += '</div>';
-      }
-      html += '</div>';
-    });
-    html += '</div></div>';
-  });
-
-  detail.innerHTML = html;
-  detail.classList.add('active');
-  detail.scrollIntoView({behavior:'smooth',block:'start'});
-  // Inject research metadata if toggles are on
-  if(Object.values(researchToggles).some(v => v)){
-    if(researchDB) injectResearchIntoCompare(detail);
-    else loadResearchDB().then(() => { if(researchDB) injectResearchIntoCompare(detail); });
-  }
-}
-
-function closeMapComparison(){
-  const detail = document.getElementById('mapCompareDetail');
-  if(detail) detail.classList.remove('active');
-}
-
 // ========== RESEARCH METADATA ==========
 async function loadResearchDB(){ return researchDB; }
 
@@ -9531,8 +9288,6 @@ function refreshResearchDisplay(){
   if(!researchDB) return;
   const detail = document.getElementById('mapDetail');
   if(detail && detail.classList.contains('active')) injectResearchIntoDetail(detail);
-  const cmpDetail = document.getElementById('mapCompareDetail');
-  if(cmpDetail && cmpDetail.classList.contains('active')) injectResearchIntoCompare(cmpDetail);
 }
 
 function injectResearchIntoDetail(detail){
@@ -9559,21 +9314,6 @@ function injectResearchIntoDetail(detail){
     const idx = item.dataset.premiseIdx;
     const meta = cityMeta.premises?.[idx];
     if(meta) item.insertAdjacentHTML('beforeend', renderResearchMeta(meta));
-  });
-}
-
-function injectResearchIntoCompare(detail){
-  // Inject into compare cells
-  detail.querySelectorAll('.map-compare-cell[data-city-id]').forEach(cell => {
-    const cityId = cell.dataset.cityId;
-    const cityMeta = researchDB?.[cityId];
-    if(!cityMeta) return;
-    const vid = cell.dataset.valueId;
-    const pidx = cell.dataset.premiseIdx;
-    let meta = null;
-    if(vid) meta = cityMeta.values?.[vid];
-    else if(pidx !== undefined && pidx !== null) meta = cityMeta.premises?.[pidx];
-    if(meta) cell.insertAdjacentHTML('beforeend', renderResearchMeta(meta));
   });
 }
 
@@ -9728,10 +9468,8 @@ document.querySelectorAll('.view-btn').forEach(btn => {
     cardView.classList.toggle('active', isCard);
     tableView.classList.toggle('active', isTable);
     mapView.classList.toggle('active', isMap);
-    // Reset compare mode when leaving map view
-    if(!isMap && compareMode){ compareMode = false; resetCompareSelection(); }
-    // Hero: show for card only
-    heroEl.style.display = isCard ? '' : 'none';
+    // Hero: show for card and map views
+    heroEl.style.display = isTable ? 'none' : '';
     // Field filter: show for card only
     fieldFilterEl.style.display = isCard ? '' : 'none';
     // Column toggles: show for table only
@@ -9800,8 +9538,7 @@ window.addEventListener('resize', syncStickyOffset);
 
 // Initial render
 syncStickyOffset();
-// Map is default view: hide hero and field filter
-heroEl.style.display = 'none';
+// Map is default view: hide field filter (hero stays visible)
 fieldFilterEl.style.display = 'none';
 render();
 // Open first category by default
