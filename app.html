@@ -225,17 +225,25 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-zoom-level:hover{color:var(--accent)}
 .map-point{cursor:pointer}
 .map-point:hover .point-dot{filter:url(#glow)}
+.map-point .point-ring{opacity:0;transition:opacity .2s ease}
+.map-point:hover .point-ring{opacity:1}
+.map-point.selected .point-ring{opacity:1}
 .point-label{font-size:8px;fill:var(--text);font-weight:600;
-  opacity:0;transition:opacity .15s ease;pointer-events:none}
+  opacity:0;transition:opacity .2s ease;pointer-events:none;
+  text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 6px rgba(0,0,0,.5)}
 .map-point:hover .point-label{opacity:1}
+.map-point.selected .point-label{opacity:1}
 .map-tooltip{position:absolute;z-index:50;
   background:var(--surface2);border:1px solid var(--border);
-  border-radius:var(--radius-sm);padding:.5rem .7rem;
-  pointer-events:none;opacity:0;transition:opacity .15s ease;
-  box-shadow:var(--shadow);max-width:240px;white-space:nowrap}
+  border-radius:8px;padding:0;overflow:hidden;
+  pointer-events:none;opacity:0;transition:opacity .2s ease;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.3);width:240px;white-space:normal}
 .map-tooltip.visible{opacity:1}
+.map-tooltip-img{width:100%;height:100px;object-fit:cover;display:block}
+.map-tooltip-body{padding:.5rem .7rem}
 .map-tooltip-name{font-weight:700;font-size:.82rem;color:var(--text)}
-.map-tooltip-period{font-size:.7rem;color:var(--text-muted);margin-top:.1rem}
+.map-tooltip-period{font-size:.7rem;color:var(--text-muted);margin-top:.15rem}
+.map-tooltip-desc{font-size:.68rem;color:var(--text-dim);margin-top:.25rem;line-height:1.5}
 .map-legend{display:flex;gap:1rem;justify-content:center;margin-top:.6rem;flex-wrap:wrap}
 .map-legend-item{display:flex;align-items:center;gap:.3rem;font-size:.72rem;color:var(--text-muted)}
 .map-legend-dot{width:8px;height:8px;border-radius:50%}
@@ -7288,11 +7296,19 @@ function renderMap(){
     html += '<button class="map-zoom-btn" onclick="mapZoom(-1)" title="縮小">－</button>';
     html += '</div>';
     html += '<svg id="worldMap" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">';
-    html += '<defs><filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/>';
-    html += '<feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>';
-    html += '<rect width="1000" height="500" fill="var(--bg)"/>';
+    html += '<defs>';
+    html += '<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
+    html += '<radialGradient id="oceanGrad" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#1a2744"/><stop offset="100%" stop-color="#0d1520"/></radialGradient>';
+    html += '<filter id="landShadow"><feDropShadow dx="0.5" dy="0.5" stdDeviation="0.8" flood-color="#000" flood-opacity="0.3"/></filter>';
+    html += '</defs>';
+    html += '<rect width="1000" height="500" fill="url(#oceanGrad)"/>';
+    // Subtle ocean texture lines
+    html += '<g opacity="0.04" stroke="#4488cc" stroke-width="0.3">';
+    for(let wy=20;wy<500;wy+=35) html += '<path d="M0 '+wy+' Q250 '+(wy-8)+' 500 '+wy+' Q750 '+(wy+8)+' 1000 '+wy+'" fill="none"/>';
+    html += '</g>';
     // World map paths generated from Natural Earth GeoJSON (286 countries)
-    const landFill = 'var(--surface2)', landStroke = 'var(--border)';
+    const landFill = '#1e293b', landStroke = '#334155';
+    html += '<g filter="url(#landShadow)">';
     html += '<path d="M670 151 L675 151.7 L682.6 145.4 L692.2 146.8 L696.7 143.1 L699.6 147.9 L703.5 145.8 L708.8 146.9 L699.6 148.6 L692.5 161.4 L685.9 163 L684.3 167 L678.2 168.5 L669.1 167.1 L671.6 164.6 L668.2 158.4 L670 151Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Afghanistan
     html += '<path d="M545.4 266.3 L548.5 272.4 L555.8 269.3 L560.4 270.3 L561.5 280.8 L566.4 280.4 L566.7 285.9 L560.9 285.8 L560.8 294.7 L564.5 298.7 L532.6 298.1 L538.2 281.4 L534.2 266.9 L545.4 266.3Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Angola
     html += '<path d="M534.5 265.8 L533.1 264 L535.1 262.3 L534.5 265.8Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Angola
@@ -7579,6 +7595,7 @@ function renderMap(){
     html += '<path d="M580.5 330.4 L575 333 L578.1 334.8 L580.5 330.4Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // South Africa
     html += '<path d="M591 275.6 L593 279.2 L590.8 288.1 L592.3 288.8 L583.8 291.1 L584.1 293.1 L575.1 299.8 L564.5 298.7 L560.8 294.7 L560.9 285.8 L566.7 285.9 L566.4 280.4 L575.5 282.2 L582.5 286.8 L582.3 283.8 L578.8 282.8 L579.8 273.7 L584.3 272.9 L591 275.6Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Zambia
     html += '<path d="M586.6 311.8 L577.8 309.7 L570.2 299.3 L575.1 299.8 L584.1 293.1 L591.2 296.4 L590.7 306.4 L586.6 311.8Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Zimbabwe
+    html += '</g>'; // close land group
     // --- Graticule lines (subtle grid) ---
     html += '<g stroke="var(--border)" stroke-width="0.15" opacity="0.3">';
     for(let gLat=0; gLat<=500; gLat+=500/6) html += '<line x1="0" y1="'+gLat+'" x2="1000" y2="'+gLat+'"/>';
@@ -7633,6 +7650,9 @@ function renderMap(){
       showMapDetail(visibleCities[nextIdx]);
     });
     initMapPanZoom();
+    // Default: show Edo/Tokyo on first load
+    const defaultCity = MAP_LOCATIONS.find(l => l.id === 'edo');
+    if(defaultCity) setTimeout(() => showMapDetail(defaultCity, {noScroll:true}), 100);
   }
   renderMapPoints();
 }
@@ -7647,7 +7667,7 @@ function mapZoom(dir){
   if(!svg) return;
   const step = 0.25;
   const newScale = dir > 0 ? mapZoomScale + step : mapZoomScale - step;
-  mapZoomScale = Math.max(0.5, Math.min(5, newScale));
+  mapZoomScale = Math.max(1, Math.min(5, newScale));
   const newW = 1000 / mapZoomScale;
   const newH = 500 / mapZoomScale;
   // Keep center
@@ -7689,14 +7709,20 @@ function applyViewBox(){
   svg.querySelectorAll('.map-point').forEach(grp => {
     const circles = grp.querySelectorAll('circle');
     const text = grp.querySelector('text');
+    // circles: [0]=ring, [1]=outer dot, [2]=inner dot, [3]=hit area
     if(circles[0]){
-      circles[0].setAttribute('r', 6 * s);  // outer dot
-      circles[0].style.strokeWidth = (2 * s) + 'px'; // for compare-selected stroke
+      circles[0].setAttribute('r', 10 * s); // ring
+      circles[0].setAttribute('stroke-width', 1.5 * s);
+      circles[0].setAttribute('stroke-dasharray', (3*s)+' '+(2*s));
     }
-    if(circles[1]) circles[1].setAttribute('r', 2.5 * s); // inner dot
-    if(circles[2]) circles[2].setAttribute('r', 14 * s);  // hit area
+    if(circles[1]){
+      circles[1].setAttribute('r', 6 * s);  // outer dot
+      circles[1].style.strokeWidth = (2 * s) + 'px';
+    }
+    if(circles[2]) circles[2].setAttribute('r', 2.5 * s); // inner dot
+    if(circles[3]) circles[3].setAttribute('r', 14 * s);  // hit area
     if(text){
-      const cy = parseFloat(circles[0].getAttribute('cy'));
+      const cy = parseFloat(circles[1].getAttribute('cy'));
       text.setAttribute('font-size', (8 * s) + 'px');
       text.setAttribute('y', cy - 12 * s);
     }
@@ -7783,15 +7809,21 @@ function renderMapPoints(){
     const grp = document.createElementNS(ns, 'g');
     grp.classList.add('map-point');
     grp.dataset.id = loc.id;
+    // Hover/select ring
+    const ring = document.createElementNS(ns, 'circle');
+    ring.setAttribute('cx', x); ring.setAttribute('cy', y); ring.setAttribute('r', '10');
+    ring.setAttribute('fill', 'none'); ring.setAttribute('stroke', 'var(--'+loc.era+')');
+    ring.setAttribute('stroke-width', '1.5'); ring.setAttribute('stroke-dasharray', '3 2');
+    ring.classList.add('point-ring');
     // Outer glow circle
     const outer = document.createElementNS(ns, 'circle');
     outer.setAttribute('cx', x); outer.setAttribute('cy', y); outer.setAttribute('r', '6');
-    outer.setAttribute('fill', 'var(--'+loc.era+')'); outer.setAttribute('opacity', '0.85');
+    outer.setAttribute('fill', 'var(--'+loc.era+')'); outer.setAttribute('opacity', '0.9');
     outer.classList.add('point-dot');
     // Inner white dot
     const inner = document.createElementNS(ns, 'circle');
     inner.setAttribute('cx', x); inner.setAttribute('cy', y); inner.setAttribute('r', '2.5');
-    inner.setAttribute('fill', '#fff'); inner.setAttribute('opacity', '0.6');
+    inner.setAttribute('fill', '#fff'); inner.setAttribute('opacity', '0.7');
     // Hit area
     const hit = document.createElementNS(ns, 'circle');
     hit.setAttribute('cx', x); hit.setAttribute('cy', y); hit.setAttribute('r', '14');
@@ -7802,6 +7834,7 @@ function renderMapPoints(){
     label.setAttribute('text-anchor', 'middle');
     label.classList.add('point-label');
     label.textContent = loc.name;
+    grp.appendChild(ring);
     grp.appendChild(outer);
     grp.appendChild(inner);
     grp.appendChild(hit);
@@ -7822,23 +7855,57 @@ function renderMapPoints(){
   }
 }
 
+const CITY_IMAGES = {
+  athens:'https://images.unsplash.com/photo-1555993539-1732b0258235?w=480&h=200&fit=crop',
+  sparta:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Helmed_Hoplite_Sparta.JPG/480px-Helmed_Hoplite_Sparta.JPG',
+  rome:'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=480&h=200&fit=crop',
+  kyoto:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Kinkaku-ji_the_Golden_Temple_in_Kyoto_overlooking_the_lake_-_high_rez.JPG/480px-Kinkaku-ji_the_Golden_Temple_in_Kyoto_overlooking_the_lake_-_high_rez.JPG',
+  changan:'https://images.unsplash.com/photo-1599571234909-29ed5d1321d6?w=480&h=200&fit=crop',
+  mecca:'https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=480&h=200&fit=crop',
+  tenochtitlan:'https://images.unsplash.com/photo-1518638150340-f706e86654de?w=480&h=200&fit=crop',
+  varanasi:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Varanasi%2C_India%2C_Ghats_on_Ganges_River.jpg/480px-Varanasi%2C_India%2C_Ghats_on_Ganges_River.jpg',
+  london:'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=480&h=200&fit=crop',
+  edo:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/100_views_edo_008.jpg/480px-100_views_edo_008.jpg',
+  newyork:'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=480&h=200&fit=crop',
+  berlin:'https://images.unsplash.com/photo-1560969184-10fe8719e047?w=480&h=200&fit=crop',
+  moscow:'https://images.unsplash.com/photo-1513326738677-b964603b136d?w=480&h=200&fit=crop',
+  detroit:'https://images.unsplash.com/photo-1568515387631-8b650bbcdb90?w=480&h=200&fit=crop',
+  siliconvalley:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=480&h=200&fit=crop',
+  shenzhen:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Skyline_in_Shenzhen_%2820250327%29.jpg/480px-Skyline_in_Shenzhen_%2820250327%29.jpg',
+  copenhagen:'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=480&h=200&fit=crop',
+  dubai:'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=480&h=200&fit=crop',
+  bhutan:'https://images.unsplash.com/photo-1553856622-d1b352e24a21?w=480&h=200&fit=crop',
+  singapore:'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=480&h=200&fit=crop',
+  tallinn:'https://images.unsplash.com/photo-1560098211-d105af6fb01e?w=480&h=200&fit=crop',
+  masdar:'https://images.unsplash.com/photo-1509023464722-18d996393ca8?w=480&h=200&fit=crop'
+};
+
 function showMapTooltip(loc, e){
   const tip = document.getElementById('mapTooltip');
   if(!tip) return;
   const eraLabels = {preindustrial:'前近代',past:'過去',present:'現在',future:'未来'};
-  tip.innerHTML = '<div class="map-tooltip-name">'+loc.name+' <span style="color:var(--text-muted);font-weight:400;font-size:.75rem">'+loc.nameEn+'</span></div>'
-    +'<div class="map-tooltip-period">'+loc.period+'</div>'
-    +'<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);font-size:.65rem;padding:.1rem .4rem;margin-top:.3rem;display:inline-block">'+eraLabels[loc.era]+'</span>';
+  const imgUrl = CITY_IMAGES[loc.id] || '';
+  let html = '';
+  if(imgUrl) html += '<img class="map-tooltip-img" src="'+imgUrl+'" alt="'+loc.name+'" onerror="this.style.display=\'none\'">';
+  html += '<div class="map-tooltip-body">';
+  html += '<div class="map-tooltip-name">'+loc.name+' <span style="color:var(--text-muted);font-weight:400;font-size:.72rem">'+loc.nameEn+'</span></div>';
+  html += '<div class="map-tooltip-period">'+loc.period+'</div>';
+  html += '<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);font-size:.63rem;padding:.1rem .4rem;margin-top:.25rem;display:inline-block">'+eraLabels[loc.era]+'</span>';
+  html += '<div class="map-tooltip-desc">'+loc.description+'</div>';
+  html += '</div>';
+  tip.innerHTML = html;
   const container = document.getElementById('mapContainer');
   const rect = container.getBoundingClientRect();
   const svg = document.getElementById('worldMap');
   const svgRect = svg.getBoundingClientRect();
-  const scaleX = svgRect.width / 1000;
-  const scaleY = svgRect.height / 500;
+  const scaleX = svgRect.width / mapViewBox.w;
+  const scaleY = svgRect.height / mapViewBox.h;
   const {x, y} = geoToSvg(loc.lat, loc.lng);
-  let left = (x * scaleX) + (svgRect.left - rect.left) + 12;
-  let top = (y * scaleY) + (svgRect.top - rect.top) - 10;
-  if(left + 200 > rect.width) left = left - 220;
+  let left = ((x - mapViewBox.x) * scaleX) + (svgRect.left - rect.left) + 16;
+  let top = ((y - mapViewBox.y) * scaleY) + (svgRect.top - rect.top) - 40;
+  if(left + 250 > rect.width) left = left - 270;
+  if(top < 0) top = 10;
+  if(top + 240 > rect.height) top = rect.height - 250;
   tip.style.left = left + 'px';
   tip.style.top = top + 'px';
   tip.classList.add('visible');
@@ -7849,7 +7916,7 @@ function hideMapTooltip(){
   if(tip) tip.classList.remove('visible');
 }
 
-function showMapDetail(loc){
+function showMapDetail(loc, opts){
   const detail = document.getElementById('mapDetail');
   if(!detail) return;
   const eraLabels = {preindustrial:'前近代',past:'過去',present:'現在',future:'未来'};
@@ -7879,8 +7946,8 @@ function showMapDetail(loc){
   html += '<span class="era-label" style="color:var(--'+loc.era+');background:var(--'+loc.era+'-bg);margin-left:.5rem">'+eraLabels[loc.era]+' — '+loc.period+'</span></div>';
   html += '<p class="map-detail-desc">'+loc.description+'</p>';
   html += '<div class="research-toggles">';
+  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 因果メカニズム</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
-  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 推論</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.alternatives?' active':'')+'" data-key="alternatives" onclick="toggleResearchMeta(\'alternatives\')">⚖ 異論</button>';
   html += '</div>';
@@ -7936,7 +8003,7 @@ function showMapDetail(loc){
   html += '</div>';
   detail.innerHTML = html;
   detail.classList.add('active');
-  detail.scrollIntoView({behavior:'smooth',block:'start'});
+  if(!opts || !opts.noScroll) detail.scrollIntoView({behavior:'smooth',block:'start'});
   // Interactive highlight: premise hover → highlight value cards
   if(loc.premiseInfluence){
     detail.querySelectorAll('.map-premise-item').forEach(item => {
@@ -8052,8 +8119,8 @@ function showMapComparison(){
   let html = '<button class="map-compare-close" onclick="closeMapComparison()">&times;</button>';
   // Research toggles
   html += '<div class="research-toggles" style="margin-bottom:.6rem">';
+  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 因果メカニズム</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.sources?' active':'')+'" data-key="sources" onclick="toggleResearchMeta(\'sources\')">📚 出典</button>';
-  html += '<button class="research-toggle-btn'+(researchToggles.reasoning?' active':'')+'" data-key="reasoning" onclick="toggleResearchMeta(\'reasoning\')">💭 推論</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.confidence?' active':'')+'" data-key="confidence" onclick="toggleResearchMeta(\'confidence\')">🎯 確信度</button>';
   html += '<button class="research-toggle-btn'+(researchToggles.alternatives?' active':'')+'" data-key="alternatives" onclick="toggleResearchMeta(\'alternatives\')">⚖ 異論</button>';
   html += '</div>';
@@ -8164,7 +8231,7 @@ function renderResearchMeta(meta){
     parts.push('<div class="research-meta-section"><span class="research-meta-label">確信度</span> <span class="confidence-badge '+meta.confidence+'"><span class="confidence-dot"></span>'+label+'</span></div>');
   }
   if(researchToggles.reasoning && meta.reasoning){
-    parts.push('<div class="research-meta-section"><div class="research-meta-label">💭 推論</div><div class="research-reasoning">'+meta.reasoning+'</div></div>');
+    parts.push('<div class="research-meta-section"><div class="research-meta-label">💭 因果メカニズム</div><div class="research-reasoning">'+meta.reasoning+'</div></div>');
   }
   if(researchToggles.sources && meta.sources && meta.sources.length > 0){
     parts.push('<div class="research-meta-section"><div class="research-meta-label">📚 出典</div><div class="research-sources">'+meta.sources.map(s => '・'+s).join('<br>')+'</div></div>');

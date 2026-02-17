@@ -24,7 +24,10 @@
       "Bash(powershell -Command \"$json = Get-Content research-db.json | ConvertFrom-Json; $json.athens.premises | ConvertTo-Json -Depth 10\")",
       "Bash(timeout 5 tail:*)",
       "Bash(claude:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "WebFetch(domain:unsplash.com)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "Bash(python:*)"
     ]
   }
 }
