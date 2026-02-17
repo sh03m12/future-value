@@ -32,8 +32,6 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.12),transparent 60%),
              radial-gradient(ellipse at 70% 80%,rgba(139,92,246,.1),transparent 50%)}
 .hero-inner{position:relative;max-width:1400px;margin:0 auto}
-.hero-brand{display:flex;align-items:center;gap:1rem}
-.hero-logo{flex-shrink:0}
 .hero h1{font-size:2.2rem;font-weight:800;letter-spacing:-.02em;
   background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -464,7 +462,6 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   html{font-size:14px}
   .hero{padding:2rem 1rem 1.5rem}
   .hero h1{font-size:1.6rem}
-  .hero-logo svg{width:44px;height:44px}
   .controls{padding:.6rem 1rem}
   .main{padding:1rem}
   .search-box input{width:160px}
@@ -476,57 +473,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 <!-- ===== HERO ===== -->
 <header class="hero">
   <div class="hero-inner">
-    <div class="hero-brand">
-      <div class="hero-logo">
-        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- outer ring -->
-          <circle cx="28" cy="28" r="26" stroke="url(#logoGrad1)" stroke-width="1.5" opacity=".4"/>
-          <!-- globe body -->
-          <circle cx="28" cy="28" r="20" fill="url(#logoGrad2)" opacity=".12"/>
-          <circle cx="28" cy="28" r="20" stroke="url(#logoGrad1)" stroke-width="1.2"/>
-          <!-- longitude lines -->
-          <ellipse cx="28" cy="28" rx="10" ry="20" stroke="url(#logoGrad3)" stroke-width=".7" opacity=".5"/>
-          <ellipse cx="28" cy="28" rx="4" ry="20" stroke="url(#logoGrad3)" stroke-width=".5" opacity=".35"/>
-          <!-- latitude lines -->
-          <ellipse cx="28" cy="20" rx="18" ry="5" stroke="url(#logoGrad3)" stroke-width=".6" opacity=".4"/>
-          <ellipse cx="28" cy="28" rx="20" ry="6" stroke="url(#logoGrad3)" stroke-width=".7" opacity=".5"/>
-          <ellipse cx="28" cy="36" rx="18" ry="5" stroke="url(#logoGrad3)" stroke-width=".6" opacity=".4"/>
-          <!-- value nodes -->
-          <circle cx="18" cy="18" r="2.5" fill="#60a5fa"/>
-          <circle cx="38" cy="16" r="2.5" fill="#a78bfa"/>
-          <circle cx="14" cy="30" r="2.5" fill="#34d399"/>
-          <circle cx="40" cy="32" r="2.5" fill="#f472b6"/>
-          <circle cx="28" cy="42" r="2.5" fill="#fbbf24"/>
-          <circle cx="22" cy="24" r="2" fill="#38bdf8"/>
-          <circle cx="35" cy="25" r="2" fill="#c084fc"/>
-          <!-- connection lines -->
-          <line x1="18" y1="18" x2="22" y2="24" stroke="#60a5fa" stroke-width=".6" opacity=".5"/>
-          <line x1="22" y1="24" x2="35" y2="25" stroke="#38bdf8" stroke-width=".6" opacity=".4"/>
-          <line x1="35" y1="25" x2="38" y2="16" stroke="#a78bfa" stroke-width=".6" opacity=".5"/>
-          <line x1="14" y1="30" x2="22" y2="24" stroke="#34d399" stroke-width=".6" opacity=".4"/>
-          <line x1="35" y1="25" x2="40" y2="32" stroke="#c084fc" stroke-width=".6" opacity=".4"/>
-          <line x1="28" y1="42" x2="14" y2="30" stroke="#fbbf24" stroke-width=".5" opacity=".35"/>
-          <line x1="28" y1="42" x2="40" y2="32" stroke="#fbbf24" stroke-width=".5" opacity=".35"/>
-          <!-- glow -->
-          <circle cx="28" cy="28" r="20" fill="url(#logoGlow)" opacity=".15"/>
-          <defs>
-            <linearGradient id="logoGrad1" x1="0" y1="0" x2="56" y2="56">
-              <stop offset="0%" stop-color="#60a5fa"/><stop offset="50%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#34d399"/>
-            </linearGradient>
-            <linearGradient id="logoGrad2" x1="8" y1="8" x2="48" y2="48">
-              <stop offset="0%" stop-color="#60a5fa"/><stop offset="100%" stop-color="#a78bfa"/>
-            </linearGradient>
-            <linearGradient id="logoGrad3" x1="8" y1="28" x2="48" y2="28">
-              <stop offset="0%" stop-color="#60a5fa"/><stop offset="50%" stop-color="#a78bfa"/><stop offset="100%" stop-color="#34d399"/>
-            </linearGradient>
-            <radialGradient id="logoGlow" cx="28" cy="28" r="20">
-              <stop offset="0%" stop-color="#a78bfa"/><stop offset="100%" stop-color="transparent"/>
-            </radialGradient>
-          </defs>
-        </svg>
-      </div>
-      <h1>Values Atlas<small>文明の価値構造を旅する</small></h1>
-    </div>
+    <h1>Values Atlas<small>文明の価値構造を旅する</small></h1>
     <div class="hero-meta">
       <span class="m-preindustrial">古代〜前近代：産業革命以前</span>
       <span class="m-past">過去：産業革命〜20世紀後半</span>
@@ -568,13 +515,13 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
       <input type="text" id="searchInput" placeholder="キーワード検索…">
     </div>
     <div class="view-toggle">
-      <button class="view-btn active" data-view="card" title="カード表示">
+      <button class="view-btn" data-view="card" title="カード表示">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
       </button>
       <button class="view-btn" data-view="table" title="テーブル表示">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/><path d="M9 3v18"/></svg>
       </button>
-      <button class="view-btn" data-view="map" title="世界地図表示">
+      <button class="view-btn active" data-view="map" title="世界地図表示">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       </button>
     </div>
@@ -583,9 +530,9 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 
 <!-- ===== MAIN ===== -->
 <main class="main">
-  <div class="timeline-grid active" id="cardView"></div>
+  <div class="timeline-grid" id="cardView"></div>
   <div class="table-view" id="tableView"></div>
-  <div class="map-view" id="mapView"></div>
+  <div class="map-view active" id="mapView"></div>
 </main>
 
 <!-- ===== DETAIL PANEL ===== -->
@@ -2244,7 +2191,7 @@ const mapView = document.getElementById('mapView');
 let activeEra = 'all';
 let activeField = 'all';
 let searchTerm = '';
-let currentView = 'card';
+let currentView = 'map';
 let tableCols = {value:true, premise:false, driver:false, signal:false, strategy:true, needs:false};
 
 function renderCards(){
@@ -9853,6 +9800,9 @@ window.addEventListener('resize', syncStickyOffset);
 
 // Initial render
 syncStickyOffset();
+// Map is default view: hide hero and field filter
+heroEl.style.display = 'none';
+fieldFilterEl.style.display = 'none';
 render();
 // Open first category by default
 document.querySelector('.category-row')?.classList.add('open');
