@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>Values Atlas — 文明の価値構造を旅する</title>
 <style>
 /* ========== RESET & BASE ========== */
@@ -9150,6 +9151,13 @@ function hideMapTooltip(){
 function showMapDetail(loc, opts){
   const detail = document.getElementById('mapDetail');
   if(!detail) return;
+  // Reset value filter if active
+  if(activeValueFilter){
+    activeValueFilter = null;
+    const panel = document.getElementById('valueGridPanel');
+    if(panel) panel.classList.remove('active');
+    document.querySelectorAll('.value-filter-btn').forEach(b => { b.classList.remove('active'); b.style.background = ''; });
+  }
   const eraLabels = {preindustrial:'前近代',past:'過去',present:'現在',future:'未来'};
   // Close compare detail if open
   const cmpDetail = document.getElementById('mapCompareDetail');
