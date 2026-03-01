@@ -102,10 +102,10 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .era-card{border-radius:var(--radius-sm);padding:1.1rem;position:relative;overflow:hidden;
   transition:var(--transition)}
 .era-card:hover{transform:translateY(-1px)}
-.era-card.preindustrial{background:var(--preindustrial-bg);border:1px solid var(--preindustrial-border)}
-.era-card.past{background:var(--past-bg);border:1px solid var(--past-border)}
-.era-card.present{background:var(--present-bg);border:1px solid var(--present-border)}
-.era-card.future{background:var(--future-bg);border:1px solid var(--future-border)}
+.era-card.preindustrial{background:#ffffff;border:1px solid var(--preindustrial-border)}
+.era-card.past{background:#ffffff;border:1px solid var(--past-border)}
+.era-card.present{background:#ffffff;border:1px solid var(--present-border)}
+.era-card.future{background:#ffffff;border:1px solid var(--future-border)}
 
 .era-label{display:inline-flex;align-items:center;gap:.35rem;font-size:.7rem;font-weight:700;
   text-transform:uppercase;letter-spacing:.06em;margin-bottom:.8rem;padding:.2rem .6rem;
@@ -233,7 +233,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-point:hover .point-label{opacity:1}
 .map-point.selected .point-label{opacity:1}
 .map-tooltip{position:absolute;z-index:50;
-  background:var(--surface2);border:1px solid var(--border);
+  background:#ffffff;border:1px solid var(--border);
   border-radius:8px;padding:0;overflow:hidden;
   pointer-events:none;opacity:0;transition:opacity .2s ease;
   box-shadow:0 8px 32px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.06);width:240px;white-space:normal}
@@ -262,7 +262,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   justify-content:center;font-size:1rem;transition:var(--transition)}
 .map-detail-close:hover{background:var(--accent);border-color:var(--accent)}
 .map-detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.7rem}
-.map-value-card{background:var(--surface2);border:1px solid var(--border);
+.map-value-card{background:#ffffff;border:1px solid var(--border);
   border-radius:var(--radius-sm);padding:.7rem;transition:var(--transition)}
 .map-value-card:hover{border-color:var(--border-light)}
 .map-value-head{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem}
@@ -297,10 +297,10 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   align-items:center;justify-content:center;font-size:.9rem;transition:var(--transition);flex-shrink:0}
 .value-grid-close:hover{background:var(--accent);border-color:var(--accent)}
 .value-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:.5rem}
-.value-grid-card{background:var(--surface2);border:1px solid var(--border);
+.value-grid-card{background:#ffffff;border:1px solid var(--border);
   border-radius:var(--radius-sm);padding:.6rem .8rem;transition:var(--transition);
   cursor:pointer;border-left:3px solid transparent}
-.value-grid-card:hover{border-color:var(--border-light);background:var(--surface3)}
+.value-grid-card:hover{border-color:var(--border-light);background:var(--surface2)}
 .value-grid-card-header{display:flex;align-items:baseline;gap:.4rem;margin-bottom:.25rem}
 .value-grid-card-name{font-size:.8rem;font-weight:700;color:var(--text)}
 .value-grid-card-en{font-size:.68rem;color:var(--text-muted)}
@@ -317,7 +317,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 }
 
 /* ========== MAP PREMISE SECTION ========== */
-.map-premise-section{background:var(--surface2);border:1px solid var(--border);
+.map-premise-section{background:#ffffff;border:1px solid var(--border);
   border-radius:var(--radius-sm);margin-bottom:1rem;overflow:hidden}
 .map-premise-header{display:flex;align-items:center;justify-content:space-between;
   padding:.6rem .8rem;cursor:pointer;transition:var(--transition)}
@@ -8525,17 +8525,11 @@ function renderMap(){
     html += '<svg id="worldMap" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet">';
     html += '<defs>';
     html += '<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-    html += '<radialGradient id="oceanGrad" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#bfdbfe"/></radialGradient>';
-    html += '<filter id="landShadow"><feDropShadow dx="0.3" dy="0.3" stdDeviation="0.6" flood-color="#64748b" flood-opacity="0.15"/></filter>';
     html += '</defs>';
-    html += '<rect width="1000" height="420" fill="url(#oceanGrad)"/>';
-    // Subtle ocean texture lines
-    html += '<g opacity="0.08" stroke="#93c5fd" stroke-width="0.3">';
-    for(let wy=20;wy<420;wy+=35) html += '<path d="M0 '+wy+' Q250 '+(wy-8)+' 500 '+wy+' Q750 '+(wy+8)+' 1000 '+wy+'" fill="none"/>';
-    html += '</g>';
+    html += '<rect width="1000" height="420" fill="#dbeafe"/>';
     // World map paths generated from Natural Earth GeoJSON (286 countries)
-    const landFill = '#e2e8f0', landStroke = '#cbd5e1';
-    html += '<g filter="url(#landShadow)">';
+    const landFill = '#f1f5f9', landStroke = '#94a3b8';
+    html += '<g>';
     html += '<path d="M670 151 L675 151.7 L682.6 145.4 L692.2 146.8 L696.7 143.1 L699.6 147.9 L703.5 145.8 L708.8 146.9 L699.6 148.6 L692.5 161.4 L685.9 163 L684.3 167 L678.2 168.5 L669.1 167.1 L671.6 164.6 L668.2 158.4 L670 151Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Afghanistan
     html += '<path d="M545.4 266.3 L548.5 272.4 L555.8 269.3 L560.4 270.3 L561.5 280.8 L566.4 280.4 L566.7 285.9 L560.9 285.8 L560.8 294.7 L564.5 298.7 L532.6 298.1 L538.2 281.4 L534.2 266.9 L545.4 266.3Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Angola
     html += '<path d="M534.5 265.8 L533.1 264 L535.1 262.3 L534.5 265.8Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Angola
