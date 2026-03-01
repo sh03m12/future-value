@@ -27,7 +27,20 @@
       "Bash(curl:*)",
       "WebFetch(domain:unsplash.com)",
       "WebFetch(domain:commons.wikimedia.org)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(gh auth status:*)",
+      "Bash(where:*)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" auth login --web --git-protocol https)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo create future-value --public --source=\"/c/Users/owner/Documents/claude/future-value\" --remote=origin --push)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" api repos/sh03m12/future-value/pages -X POST -f \"build_type=workflow\" -f \"source[branch]=master\" -f \"source[path]=/\")",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" api repos/sh03m12/future-value/pages -X POST -f \"source[branch]=master\" -f \"source[path]=/\")",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo view sh03m12/future-value --json visibility)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo edit sh03m12/future-value --visibility public)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo edit sh03m12/future-value --visibility public --accept-visibility-change-consequences)",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" api repos/sh03m12/future-value/pages -q '.status')",
+      "Bash(\"/c/Program Files/GitHub CLI/gh.exe\" repo edit sh03m12/future-value --visibility private --accept-visibility-change-consequences)",
+      "Bash(npx wrangler:*)",
+      "WebFetch(domain:intelligence-hub-mu.vercel.app)"
     ]
   }
 }
