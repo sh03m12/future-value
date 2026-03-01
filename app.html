@@ -8522,11 +8522,11 @@ function renderMap(){
     html += '<span class="map-zoom-level" id="mapZoomLevel" onclick="mapZoomReset()" title="リセット">100%</span>';
     html += '<button class="map-zoom-btn" onclick="mapZoom(-1)" title="縮小">－</button>';
     html += '</div>';
-    html += '<svg id="worldMap" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet">';
+    html += '<svg id="worldMap" viewBox="0 0 1000 360" preserveAspectRatio="xMidYMid meet">';
     html += '<defs>';
     html += '<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
     html += '</defs>';
-    html += '<rect width="1000" height="420" fill="#dbeafe"/>';
+    html += '<rect width="1000" height="360" fill="#dbeafe"/>';
     // World map paths generated from Natural Earth 50m GeoJSON (241 countries)
     const landFill = '#f1f5f9', landStroke = '#94a3b8';
     html += '<g>';
@@ -8774,8 +8774,8 @@ function renderMap(){
     html += '</g>'; // close land group
     // --- Graticule lines (subtle grid) ---
     html += '<g stroke="var(--border)" stroke-width="0.15" opacity="0.3">';
-    for(let gLat=0; gLat<=420; gLat+=420/5) html += '<line x1="0" y1="'+gLat+'" x2="1000" y2="'+gLat+'"/>';
-    for(let gLng=0; gLng<=1000; gLng+=1000/12) html += '<line x1="'+gLng+'" y1="0" x2="'+gLng+'" y2="420"/>';
+    for(let gLat=0; gLat<=360; gLat+=360/5) html += '<line x1="0" y1="'+gLat+'" x2="1000" y2="'+gLat+'"/>';
+    for(let gLng=0; gLng<=1000; gLng+=1000/12) html += '<line x1="'+gLng+'" y1="0" x2="'+gLng+'" y2="360"/>';
     html += '</g>';
     // --- Equator line ---
     html += '<line x1="0" y1="250" x2="1000" y2="250" stroke="var(--text-muted)" stroke-width="0.3" stroke-dasharray="4 4" opacity="0.3"/>';
@@ -8849,7 +8849,7 @@ function renderMap(){
 }
 
 // ========== MAP ZOOM & PAN ==========
-let mapViewBox = {x:0, y:0, w:1000, h:420};
+let mapViewBox = {x:0, y:0, w:1000, h:360};
 let mapZoomScale = 1;
 let mapDrag = {active:false, startX:0, startY:0, startVBx:0, startVBy:0};
 
@@ -8860,7 +8860,7 @@ function mapZoom(dir){
   const newScale = dir > 0 ? mapZoomScale + step : mapZoomScale - step;
   mapZoomScale = Math.max(1, Math.min(5, newScale));
   const newW = 1000 / mapZoomScale;
-  const newH = 420 / mapZoomScale;
+  const newH = 360 / mapZoomScale;
   // Keep center
   const cx = mapViewBox.x + mapViewBox.w / 2;
   const cy = mapViewBox.y + mapViewBox.h / 2;
@@ -8874,7 +8874,7 @@ function mapZoom(dir){
 
 function mapZoomReset(){
   mapZoomScale = 1;
-  mapViewBox = {x:0, y:0, w:1000, h:420};
+  mapViewBox = {x:0, y:0, w:1000, h:360};
   applyViewBox();
 }
 
@@ -8882,9 +8882,9 @@ function clampViewBox(){
   if(mapViewBox.x < 0) mapViewBox.x = 0;
   if(mapViewBox.y < 0) mapViewBox.y = 0;
   if(mapViewBox.x + mapViewBox.w > 1000) mapViewBox.x = 1000 - mapViewBox.w;
-  if(mapViewBox.y + mapViewBox.h > 420) mapViewBox.y = 420 - mapViewBox.h;
+  if(mapViewBox.y + mapViewBox.h > 360) mapViewBox.y = 360 - mapViewBox.h;
   if(mapViewBox.w > 1000){ mapViewBox.w = 1000; mapViewBox.x = 0; }
-  if(mapViewBox.h > 420){ mapViewBox.h = 420; mapViewBox.y = 0; }
+  if(mapViewBox.h > 360){ mapViewBox.h = 360; mapViewBox.y = 0; }
 }
 
 function applyViewBox(){
