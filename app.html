@@ -9,17 +9,17 @@
 /* ========== RESET & BASE ========== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0e1a;--surface:#111827;--surface2:#1e293b;--surface3:#283548;
-  --border:#334155;--border-light:#475569;
-  --text:#e2e8f0;--text-dim:#94a3b8;--text-muted:#64748b;
-  --accent:#3b82f6;--accent2:#8b5cf6;--accent3:#06b6d4;
-  --preindustrial:#e11d48;--preindustrial-bg:rgba(225,29,72,.08);--preindustrial-border:rgba(225,29,72,.25);
-  --past:#f59e0b;--past-bg:rgba(245,158,11,.08);--past-border:rgba(245,158,11,.25);
-  --present:#10b981;--present-bg:rgba(16,185,129,.08);--present-border:rgba(16,185,129,.25);
-  --future:#8b5cf6;--future-bg:rgba(139,92,246,.08);--future-border:rgba(139,92,246,.25);
-  --signal-strong:#22c55e;--signal-weak:#eab308;--signal-hypo:#ef4444;
+  --bg:#f8fafc;--surface:#ffffff;--surface2:#f1f5f9;--surface3:#e2e8f0;
+  --border:#e2e8f0;--border-light:#cbd5e1;
+  --text:#1e293b;--text-dim:#475569;--text-muted:#94a3b8;
+  --accent:#3b82f6;--accent2:#7c3aed;--accent3:#0891b2;
+  --preindustrial:#be123c;--preindustrial-bg:rgba(190,18,60,.06);--preindustrial-border:rgba(190,18,60,.2);
+  --past:#d97706;--past-bg:rgba(217,119,6,.06);--past-border:rgba(217,119,6,.2);
+  --present:#059669;--present-bg:rgba(5,150,105,.06);--present-border:rgba(5,150,105,.2);
+  --future:#7c3aed;--future-bg:rgba(124,58,237,.06);--future-border:rgba(124,58,237,.2);
+  --signal-strong:#16a34a;--signal-weak:#ca8a04;--signal-hypo:#dc2626;
   --radius:12px;--radius-sm:8px;
-  --shadow:0 4px 24px rgba(0,0,0,.4);
+  --shadow:0 4px 24px rgba(0,0,0,.08);
   --transition:all .3s cubic-bezier(.4,0,.2,1);
 }
 html{font-size:15px;scroll-behavior:smooth}
@@ -28,16 +28,16 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 
 /* ========== HEADER ========== */
 .hero{position:relative;overflow:hidden;padding:3rem 2rem 2rem;
-  background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0c1631 100%)}
+  background:linear-gradient(135deg,#f8fafc 0%,#ede9fe 50%,#ecfeff 100%)}
 .hero::before{content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.12),transparent 60%),
-             radial-gradient(ellipse at 70% 80%,rgba(139,92,246,.1),transparent 50%)}
+  background:radial-gradient(ellipse at 30% 20%,rgba(59,130,246,.08),transparent 60%),
+             radial-gradient(ellipse at 70% 80%,rgba(139,92,246,.06),transparent 50%)}
 .hero-inner{position:relative;max-width:1400px;margin:0 auto}
 .hero h1{font-size:2.2rem;font-weight:800;letter-spacing:-.02em;
-  background:linear-gradient(135deg,#60a5fa,#a78bfa,#34d399);
+  background:linear-gradient(135deg,#2563eb,#7c3aed,#059669);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero h1 small{display:block;font-size:.45em;font-weight:500;letter-spacing:.05em;
-  background:linear-gradient(90deg,#94a3b8,#64748b);
+  background:linear-gradient(90deg,#64748b,#475569);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:.1rem}
 .hero p{color:var(--text-dim);font-size:.95rem;margin-top:.5rem;max-width:700px}
 .hero-meta{display:flex;gap:1.5rem;margin-top:1.2rem;flex-wrap:wrap}
@@ -50,7 +50,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 
 /* ========== CONTROLS ========== */
 .controls{position:sticky;top:0;z-index:100;
-  background:rgba(10,14,26,.92);backdrop-filter:blur(16px);
+  background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--border);padding:.8rem 2rem}
 .controls-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
 .filter-group{display:flex;gap:.4rem;flex-wrap:wrap}
@@ -85,7 +85,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .category-row.hidden{display:none}
 .category-header{display:flex;align-items:center;justify-content:space-between;
   padding:1rem 1.2rem;cursor:pointer;user-select:none;transition:var(--transition)}
-.category-header:hover{background:rgba(255,255,255,.02)}
+.category-header:hover{background:rgba(0,0,0,.02)}
 .cat-left{display:flex;align-items:center;gap:.8rem}
 .cat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;
   justify-content:center;font-size:1.3rem;flex-shrink:0}
@@ -162,19 +162,19 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   vertical-align:top;color:var(--text-dim);line-height:1.6;min-width:220px}
 .data-table tbody td:first-child{position:sticky;left:0;background:var(--surface);
   font-weight:700;color:var(--text);z-index:5;white-space:nowrap}
-.data-table tbody tr:hover td{background:rgba(255,255,255,.02)}
+.data-table tbody tr:hover td{background:rgba(0,0,0,.02)}
 .data-table .col-preindustrial{border-left:2px solid var(--preindustrial-border)}
 .data-table .col-past{border-left:2px solid var(--past-border)}
 .data-table .col-present{border-left:2px solid var(--present-border)}
 .data-table .col-future{border-left:2px solid var(--future-border)}
 
 /* ========== SIDEBAR DETAIL ========== */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:200;
   backdrop-filter:blur(4px)}
 .overlay.active{display:block}
 .detail-panel{position:fixed;top:0;right:-520px;width:500px;max-width:90vw;height:100vh;
   background:var(--surface);z-index:210;transition:right .4s cubic-bezier(.4,0,.2,1);
-  overflow-y:auto;box-shadow:-8px 0 40px rgba(0,0,0,.5);border-left:1px solid var(--border)}
+  overflow-y:auto;box-shadow:-8px 0 40px rgba(0,0,0,.1);border-left:1px solid var(--border)}
 .detail-panel.active{right:0}
 .detail-close{position:absolute;top:1rem;right:1rem;width:36px;height:36px;border-radius:50%;
   border:1px solid var(--border);background:var(--surface2);color:var(--text);
@@ -229,14 +229,14 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-point.selected .point-ring{opacity:1}
 .point-label{font-size:8px;fill:var(--text);font-weight:600;
   opacity:0;transition:opacity .2s ease;pointer-events:none;
-  text-shadow:0 1px 3px rgba(0,0,0,.8),0 0 6px rgba(0,0,0,.5)}
+  text-shadow:0 1px 2px rgba(255,255,255,.9),0 0 4px rgba(255,255,255,.7)}
 .map-point:hover .point-label{opacity:1}
 .map-point.selected .point-label{opacity:1}
 .map-tooltip{position:absolute;z-index:50;
   background:var(--surface2);border:1px solid var(--border);
   border-radius:8px;padding:0;overflow:hidden;
   pointer-events:none;opacity:0;transition:opacity .2s ease;
-  box-shadow:0 8px 32px rgba(0,0,0,.4),0 2px 8px rgba(0,0,0,.3);width:240px;white-space:normal}
+  box-shadow:0 8px 32px rgba(0,0,0,.1),0 2px 8px rgba(0,0,0,.06);width:240px;white-space:normal}
 .map-tooltip.visible{opacity:1}
 .map-tooltip-img{width:100%;height:100px;object-fit:cover;display:block}
 .map-tooltip-body{padding:.5rem .7rem}
@@ -321,7 +321,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   border-radius:var(--radius-sm);margin-bottom:1rem;overflow:hidden}
 .map-premise-header{display:flex;align-items:center;justify-content:space-between;
   padding:.6rem .8rem;cursor:pointer;transition:var(--transition)}
-.map-premise-header:hover{background:rgba(255,255,255,.03)}
+.map-premise-header:hover{background:rgba(0,0,0,.02)}
 .map-premise-title{font-size:.85rem;font-weight:700;color:var(--text)}
 .map-premise-chevron{width:16px;height:16px;color:var(--text-muted);
   transition:transform .3s ease;flex-shrink:0}
@@ -329,7 +329,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-premise-body{display:none;padding:0 .8rem .6rem}
 .map-premise-section.open .map-premise-body{display:block}
 .map-premise-item{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;
-  padding:.45rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+  padding:.45rem 0;border-bottom:1px solid rgba(0,0,0,.04)}
 .map-premise-item:last-child{border-bottom:none}
 .map-premise-tag{display:inline-block;font-size:.65rem;font-weight:700;
   padding:.15rem .45rem;border-radius:3px;flex-shrink:0;white-space:nowrap;
@@ -345,11 +345,11 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .premise-influences{display:flex;gap:.25rem;flex-shrink:0;margin-left:auto;align-items:center;padding-left:.5rem}
 .premise-influence-badge{width:22px;height:22px;border-radius:4px;
   display:flex;align-items:center;justify-content:center;
-  font-size:.7rem;background:rgba(255,255,255,.05);
+  font-size:.7rem;background:rgba(0,0,0,.04);
   cursor:default;transition:var(--transition);flex-shrink:0}
-.premise-influence-badge:hover{background:rgba(255,255,255,.12);transform:scale(1.15)}
+.premise-influence-badge:hover{background:rgba(0,0,0,.08);transform:scale(1.15)}
 .value-premise-sources{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.4rem;
-  padding-top:.35rem;border-top:1px solid rgba(255,255,255,.04)}
+  padding-top:.35rem;border-top:1px solid rgba(0,0,0,.06)}
 .value-premise-sources.compact{margin-top:.3rem;padding-top:.25rem}
 .value-source-tag{display:inline-block;font-size:.6rem;font-weight:600;
   padding:.1rem .35rem;border-radius:3px;opacity:.85;transition:var(--transition)}
@@ -361,7 +361,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
 .map-premise-item{cursor:pointer;transition:var(--transition);border-radius:4px;
   padding:.45rem .4rem;margin:0 -.4rem}
 .map-premise-item>.research-meta{width:100%;flex-basis:100%;margin-top:.3rem}
-.map-premise-item:hover{background:rgba(255,255,255,.03)}
+.map-premise-item:hover{background:rgba(0,0,0,.02)}
 .map-premise-item.influence-highlighted{background:rgba(59,130,246,.1)}
 .map-premise-item.influence-dimmed{opacity:.3}
 .map-value-card{transition:var(--transition);cursor:pointer}
@@ -382,7 +382,7 @@ body{font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",system-ui
   background:rgba(6,182,212,.04);border:1px solid rgba(6,182,212,.1);
   border-radius:6px;font-size:.74rem;line-height:1.65;animation:fadeIn .2s ease}
 .research-meta-section{margin-bottom:.45rem;padding-bottom:.4rem;
-  border-bottom:1px solid rgba(255,255,255,.04)}
+  border-bottom:1px solid rgba(0,0,0,.06)}
 .research-meta-section:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
 .research-meta-label{display:inline-block;font-weight:700;color:var(--accent3);font-size:.65rem;
   letter-spacing:.04em;margin-bottom:.25rem;padding:.1rem .4rem;
@@ -8525,16 +8525,16 @@ function renderMap(){
     html += '<svg id="worldMap" viewBox="0 0 1000 420" preserveAspectRatio="xMidYMid meet">';
     html += '<defs>';
     html += '<filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>';
-    html += '<radialGradient id="oceanGrad" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#1a2744"/><stop offset="100%" stop-color="#0d1520"/></radialGradient>';
-    html += '<filter id="landShadow"><feDropShadow dx="0.5" dy="0.5" stdDeviation="0.8" flood-color="#000" flood-opacity="0.3"/></filter>';
+    html += '<radialGradient id="oceanGrad" cx="50%" cy="45%" r="60%"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#bfdbfe"/></radialGradient>';
+    html += '<filter id="landShadow"><feDropShadow dx="0.3" dy="0.3" stdDeviation="0.6" flood-color="#64748b" flood-opacity="0.15"/></filter>';
     html += '</defs>';
     html += '<rect width="1000" height="420" fill="url(#oceanGrad)"/>';
     // Subtle ocean texture lines
-    html += '<g opacity="0.04" stroke="#4488cc" stroke-width="0.3">';
+    html += '<g opacity="0.08" stroke="#93c5fd" stroke-width="0.3">';
     for(let wy=20;wy<420;wy+=35) html += '<path d="M0 '+wy+' Q250 '+(wy-8)+' 500 '+wy+' Q750 '+(wy+8)+' 1000 '+wy+'" fill="none"/>';
     html += '</g>';
     // World map paths generated from Natural Earth GeoJSON (286 countries)
-    const landFill = '#1e293b', landStroke = '#334155';
+    const landFill = '#e2e8f0', landStroke = '#cbd5e1';
     html += '<g filter="url(#landShadow)">';
     html += '<path d="M670 151 L675 151.7 L682.6 145.4 L692.2 146.8 L696.7 143.1 L699.6 147.9 L703.5 145.8 L708.8 146.9 L699.6 148.6 L692.5 161.4 L685.9 163 L684.3 167 L678.2 168.5 L669.1 167.1 L671.6 164.6 L668.2 158.4 L670 151Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Afghanistan
     html += '<path d="M545.4 266.3 L548.5 272.4 L555.8 269.3 L560.4 270.3 L561.5 280.8 L566.4 280.4 L566.7 285.9 L560.9 285.8 L560.8 294.7 L564.5 298.7 L532.6 298.1 L538.2 281.4 L534.2 266.9 L545.4 266.3Z" fill="'+landFill+'" stroke="'+landStroke+'" stroke-width="0.3" opacity="0.85"/>'; // Angola
